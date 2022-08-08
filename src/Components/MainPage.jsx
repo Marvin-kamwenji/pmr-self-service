@@ -22,7 +22,7 @@ function MainPage() {
         {/* ----------------------------------------------------------------------------------------------------------------- */}
         {/* ----------------------------------------------------------------------------------------------------------------- */}
               
-        <div className="mt-5 text-left ms-4 text-navBarTextColor font-semibold fs-5">In demand Property</div> 
+        <div className="mt-2 text-left ms-4 text-navBarTextColor font-semibold fs-5">In demand Property</div> 
 
               <div className="row">
 
