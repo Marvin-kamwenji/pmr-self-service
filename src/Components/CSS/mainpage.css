@@ -26,6 +26,7 @@
     transition-duration: 0.4s;
     background-color: #108CFF;
     color: white;
+    border: 2px solid #108CFF;
 }
 
 .tenantAndLandlordButton:hover {
