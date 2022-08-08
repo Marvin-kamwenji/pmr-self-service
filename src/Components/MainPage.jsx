@@ -38,7 +38,7 @@ function MainPage() {
                             Pritt is this lovely apartment with a spacious < br />
                             bright lounge, open plan..
                             </p>
-                            <button className="propertybutton  text-contentBodyBlueColor py-2 px-4 mt-4 rounded">
+                            <button className="propertybutton  text-contentBodyBlueColor py-2 px-5 mt-4 rounded">
                                 View Property
                             </button>
                         </div>
@@ -57,7 +57,7 @@ function MainPage() {
                             Pritt is this lovely apartment with a spacious < br />
                             bright lounge, open plan..
                             </p>
-                            <button className="propertybutton  text-contentBodyBlueColor py-2 px-4 mt-4 rounded">
+                            <button className="propertybutton  text-contentBodyBlueColor py-2 px-5 mt-4 rounded">
                                 View Property
                             </button>
                         </div>
@@ -87,7 +87,7 @@ function MainPage() {
                             Pritt is this lovely apartment with a spacious < br />
                             bright lounge, open plan..
                             </p>
-                            <button className="propertybutton text-contentBodyBlueColor py-2 px-4 mt-4 rounded">
+                            <button className="propertybutton text-contentBodyBlueColor py-2 px-5 mt-4 rounded">
                                 View Property
                             </button>
                         </div>
@@ -107,7 +107,7 @@ function MainPage() {
                             Pritt is this lovely apartment with a spacious < br />
                             bright lounge, open plan..
                             </p>
-                            <button className="propertybutton  text-contentBodyBlueColor py-2 px-4 mt-4 rounded">
+                            <button className="propertybutton  text-contentBodyBlueColor py-2 px-5 mt-4 rounded">
                                 View Property
                             </button>
                         </div>
