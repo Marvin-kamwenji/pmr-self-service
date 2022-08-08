@@ -3,6 +3,8 @@ import house1 from './Assets/mainPageImages/house1.jpg';
 import house2 from './Assets/mainPageImages/house2.png';
 import house3 from './Assets/mainPageImages/house3.jpeg';
 import house4 from './Assets/mainPageImages/house4.jpg';
+import './CSS/mainpage.css';
+
 
 function MainPage() {
     return ( 
@@ -26,8 +28,8 @@ function MainPage() {
 
             {/* PROPERTY A */}
                 <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                    <div className="card ms-5 mt-4 rounded-2xl">
-                    <img src={house1} alt="property A images" className="rounded-2xl"/>
+                    <div className="card ms-5 mt-4 rounded-2xl property">
+                    <img src={house1} alt="property A images" className="propertyimage rounded-2xl"/>
                         <div className="card-body">
                             <h2 className="card-title fw-bolder fs-5 mt-4 text-left">Property A</h2>
                             <p className="card-text text-left">Talk about executive living x1000?? With <br />
@@ -36,9 +38,7 @@ function MainPage() {
                             Pritt is this lovely apartment with a spacious < br />
                             bright lounge, open plan..
                             </p>
-                            <button className="bg-transparent hover:bg-contentBodyBlueColor
-                             text-contentBodyBlueColor hover:text-white border border-contentBodyBlueColor hover:border-transparent
-                             py-2 px-4 mt-4 rounded">
+                            <button className="propertybutton  text-contentBodyBlueColor py-2 px-4 mt-4 rounded">
                                 View Property
                             </button>
                         </div>
@@ -47,8 +47,8 @@ function MainPage() {
         
         {/* PROPERTY B */}
                 <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                    <div className="card me-5 mt-4 rounded-2xl">
-                    <img src={house2} alt="property B images" className="rounded-2xl"/>
+                    <div className="property card me-5 mt-4 rounded-2xl">
+                    <img src={house2} alt="property B images" className="propertyimage rounded-2xl"/>
                         <div className="card-body">
                             <h2 className="card-title fw-bolder fs-5 mt-4 text-left">Property B</h2>
                             <p className="card-text text-left">Talk about executive living x1000?? With <br />
@@ -57,9 +57,7 @@ function MainPage() {
                             Pritt is this lovely apartment with a spacious < br />
                             bright lounge, open plan..
                             </p>
-                            <button className="bg-transparent hover:bg-contentBodyBlueColor
-                             text-contentBodyBlueColor hover:text-white border border-contentBodyBlueColor hover:border-transparent
-                             hover:border-transparent py-2 px-4 mt-4 rounded">
+                            <button className="propertybutton  text-contentBodyBlueColor py-2 px-4 mt-4 rounded">
                                 View Property
                             </button>
                         </div>
@@ -79,8 +77,8 @@ function MainPage() {
 
         {/* PROPERTY C */}
                 <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                    <div className="card ms-5 mt-4 rounded-2xl">
-                    <img src={house3} alt="property C images" className="rounded-2xl"/>
+                    <div className="property card ms-5 mt-4 rounded-2xl">
+                    <img src={house3} alt="property C images" className="propertyimage rounded-2xl"/>
                         <div className="card-body">
                             <h2 className="card-title fw-bolder fs-5 mt-4 text-left">Property C</h2>
                             <p className="card-text text-left">Talk about executive living x1000?? With <br />
@@ -89,9 +87,7 @@ function MainPage() {
                             Pritt is this lovely apartment with a spacious < br />
                             bright lounge, open plan..
                             </p>
-                            <button className="bg-transparent hover:bg-contentBodyBlueColor
-                             text-contentBodyBlueColor hover:text-white border border-contentBodyBlueColor hover:border-transparent
-                             py-2 px-4 mt-4 rounded">
+                            <button className="propertybutton text-contentBodyBlueColor py-2 px-4 mt-4 rounded">
                                 View Property
                             </button>
                         </div>
@@ -101,8 +97,8 @@ function MainPage() {
 
     {/* PROPERTY D */}
                 <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                    <div className="card me-5 mt-4 rounded-2xl">
-                    <img src={house4} alt="property D images" className="rounded-2xl"/>
+                    <div className="property card me-5 mt-4 rounded-2xl">
+                    <img src={house4} alt="property D images" className="propertyimage rounded-2xl"/>
                         <div className="card-body">
                             <h2 className="card-title fw-bolder fs-5 mt-4 text-left">Property D</h2>
                             <p className="card-text text-left">Talk about executive living x1000?? With <br />
@@ -111,9 +107,7 @@ function MainPage() {
                             Pritt is this lovely apartment with a spacious < br />
                             bright lounge, open plan..
                             </p>
-                            <button className="bg-transparent hover:bg-contentBodyBlueColor
-                             text-contentBodyBlueColor hover:text-white border border-contentBodyBlueColor hover:border-transparent
-                             hover:border-transparent py-2 px-4 mt-4 rounded">
+                            <button className="propertybutton  text-contentBodyBlueColor py-2 px-4 mt-4 rounded">
                                 View Property
                             </button>
                         </div>
@@ -142,8 +136,7 @@ function MainPage() {
                             personal information, landlord information <br />
                             and property information
                             </p>
-                            <button className="bg-contentBodyBlueColor hover:bg-white text-white hover-text-contentBodyBlueColor
-                            border-gray px-4 py-2 rounded mt-3">
+                            <button className="tenantAndLandlordButton py-2 px-4 mt-4 rounded">
                                 Register as a Tenant
                             </button>
                         </div>
@@ -158,8 +151,7 @@ function MainPage() {
                             your personal information, and property <br />
                             information
                             </p>
-                            <button className="bg-contentBodyBlueColor hover:bg-white text-white hover-text-contentBodyBlueColor
-                            border-gray px-3 py-2 rounded mt-3">
+                            <button className="tenantAndLandlordButton px-3 py-2 mt-4 rounded">
                                 Register as a Landlord
                             </button>
                         </div>

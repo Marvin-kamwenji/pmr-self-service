@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Styling size of images */
+ .propertyimage {
+    width:350px;
+    height:250px;
+}
+
+
+/* Styling property buttons */
+.propertybutton {
+    float: left;
+    transition-duration: 0.4s;
+    border: 2px solid #108CFF;
+}
+
+.propertybutton:hover {
+    background-color: #108CFF;
+    color: white;
+}
+
+.tenantAndLandlordButton {
+    float: left;
+    transition-duration: 0.4s;
+    background-color: #108CFF;
+    color: white;
+}
+
+.tenantAndLandlordButton:hover {
+    border: 2px solid #108CFF;
+    background-color: white;
+    color: #108CFF;
+}
