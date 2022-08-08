@@ -19,15 +19,18 @@ function MainPage() {
         {/* IN DEMAND PROPERTY */}
         {/* ----------------------------------------------------------------------------------------------------------------- */}
         {/* ----------------------------------------------------------------------------------------------------------------- */}
+              
+        <div className="mt-5 text-left ms-4 text-navBarTextColor font-semibold fs-5">In demand Property</div> 
+
               <div className="row">
 
             {/* PROPERTY A */}
                 <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                    <div className="card ms-5 mt-5 rounded-2xl">
+                    <div className="card ms-5 mt-4 rounded-2xl">
                     <img src={house1} alt="property A images" className="rounded-2xl"/>
                         <div className="card-body">
-                            <h2 className="card-title fw-bolder fs-5 mt-4">Property A</h2>
-                            <p className="card-text">Talk about executive living x1000?? With <br />
+                            <h2 className="card-title fw-bolder fs-5 mt-4 text-left">Property A</h2>
+                            <p className="card-text text-left">Talk about executive living x1000?? With <br />
                             glorious views, this 4 bedroom modern <br />
                             apartments. Strategically located along Dennis < br />
                             Pritt is this lovely apartment with a spacious < br />
@@ -44,11 +47,11 @@ function MainPage() {
         
         {/* PROPERTY B */}
                 <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                    <div className="card me-5 mt-5 rounded-2xl">
+                    <div className="card me-5 mt-4 rounded-2xl">
                     <img src={house2} alt="property B images" className="rounded-2xl"/>
                         <div className="card-body">
-                            <h2 className="card-title fw-bolder fs-5 mt-4">Property B</h2>
-                            <p className="card-text">Talk about executive living x1000?? With <br />
+                            <h2 className="card-title fw-bolder fs-5 mt-4 text-left">Property B</h2>
+                            <p className="card-text text-left">Talk about executive living x1000?? With <br />
                             glorious views, this 4 bedroom modern <br />
                             apartments. Strategically located along Dennis < br />
                             Pritt is this lovely apartment with a spacious < br />
@@ -70,15 +73,17 @@ function MainPage() {
      {/* ---------------------------------------------------------------------------------------------------------------------------------- */}
      {/* ---------------------------------------------------------------------------------------------------------------------------------- */}
           
+     <div className="mt-5 text-left ms-4 text-navBarTextColor font-semibold fs-5">New Property</div> 
+
      <div className="row">
 
         {/* PROPERTY C */}
                 <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                    <div className="card ms-5 mt-5 rounded-2xl">
+                    <div className="card ms-5 mt-4 rounded-2xl">
                     <img src={house3} alt="property C images" className="rounded-2xl"/>
                         <div className="card-body">
-                            <h2 className="card-title fw-bolder fs-5 mt-4">Property C</h2>
-                            <p className="card-text">Talk about executive living x1000?? With <br />
+                            <h2 className="card-title fw-bolder fs-5 mt-4 text-left">Property C</h2>
+                            <p className="card-text text-left">Talk about executive living x1000?? With <br />
                             glorious views, this 4 bedroom modern <br />
                             apartments. Strategically located along Dennis < br />
                             Pritt is this lovely apartment with a spacious < br />
@@ -96,11 +101,11 @@ function MainPage() {
 
     {/* PROPERTY D */}
                 <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                    <div className="card me-5 mt-5 rounded-2xl">
+                    <div className="card me-5 mt-4 rounded-2xl">
                     <img src={house4} alt="property D images" className="rounded-2xl"/>
                         <div className="card-body">
-                            <h2 className="card-title fw-bolder fs-5 mt-4">Property D</h2>
-                            <p className="card-text">Talk about executive living x1000?? With <br />
+                            <h2 className="card-title fw-bolder fs-5 mt-4 text-left">Property D</h2>
+                            <p className="card-text text-left">Talk about executive living x1000?? With <br />
                             glorious views, this 4 bedroom modern <br />
                             apartments. Strategically located along Dennis < br />
                             Pritt is this lovely apartment with a spacious < br />
@@ -132,8 +137,8 @@ function MainPage() {
                     {/* REGISTERING TENANT */}
                     <div className="card rounded-2xl">
                         <div className="card-body py-5">
-                            <h4 className="card-title fs-5 text-contentBodyBlueColor">TENANTS</h4>
-                            <p className="card-text">To register as a tenant kindly capture your <br />
+                            <h4 className="card-title fs-5 text-contentBodyBlueColor text-left">TENANTS</h4>
+                            <p className="card-text text-left">To register as a tenant kindly capture your <br />
                             personal information, landlord information <br />
                             and property information
                             </p>
@@ -148,8 +153,8 @@ function MainPage() {
                     {/* REGISTERING LANDLORD */}
                     <div className="card mt-4 rounded-2xl">
                         <div className="card-body py-5">
-                            <h4 className="card-title fs-5 text-contentBodyBlueColor">LANDLORD</h4>
-                            <p className="card-text">To register as a landlord kindly capture <br />
+                            <h4 className="card-title fs-5 text-contentBodyBlueColor text-left">LANDLORD</h4>
+                            <p className="card-text text-left">To register as a landlord kindly capture <br />
                             your personal information, and property <br />
                             information
                             </p>
