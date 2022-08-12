@@ -157,9 +157,11 @@ function MainPage() {
                                 personal information, landlord information <br />
                                 and property information
                             </p>
-                            <button className="tenantAndLandlordButton py-2 px-4 mt-4 rounded">
-                                Register as a Tenant
-                            </button>
+                            <Link to='/tenantRegistration'>
+                                <button className="tenantAndLandlordButton py-2 px-4 mt-4 rounded">
+                                    Register as a Tenant
+                                </button>
+                            </Link>
                         </div>
                     </div>
 
@@ -172,9 +174,11 @@ function MainPage() {
                                 your personal information, and property <br />
                                 information
                             </p>
-                            <button className="tenantAndLandlordButton px-3 py-2 mt-4 rounded">
-                                Register as a Landlord
-                            </button>
+                            <Link to='/landlordRegistration'>
+                                <button className="tenantAndLandlordButton py-2 px-4 mt-4 rounded">
+                                    Register as a Landlord
+                                </button>
+                            </Link>
                         </div>
                     </div>
 
