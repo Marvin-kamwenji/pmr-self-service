@@ -6,6 +6,7 @@ import house2 from './Assets/mainPageImages/house2.png';
 import house3 from './Assets/mainPageImages/house3.jpeg';
 import house4 from './Assets/mainPageImages/house4.jpg';
 import './CSS/mainpage.css';
+import { Link } from 'react-router-dom';
 
 
 function MainPage() {
@@ -156,9 +157,11 @@ function MainPage() {
                                 personal information, landlord information <br />
                                 and property information
                             </p>
-                            <button className="tenantAndLandlordButton py-2 px-4 mx-4  rounded">
-                                Register as a Tenant
-                            </button>
+                            <Link to='/tenantRegistration'>
+                                <button className="tenantAndLandlordButton py-2 px-4 mt-4 rounded">
+                                    Register as a Tenant
+                                </button>
+                            </Link>
                         </div>
                     </div>
 
@@ -171,9 +174,11 @@ function MainPage() {
                                 your personal information, and property <br />
                                 information
                             </p>
-                            <button className="tenantAndLandlordButton  py-2 px-4 mx-4  rounded">
-                                Register as a Landlord
-                            </button>
+                            <Link to='/landlordRegistration'>
+                                <button className="tenantAndLandlordButton py-2 px-4 mt-4 rounded">
+                                    Register as a Landlord
+                                </button>
+                            </Link>
                         </div>
                     </div>
 
