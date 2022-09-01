@@ -1,0 +1,74 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Styling size of images */
+
+.propertyimage {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    width: 350px;
+    height: 250px;
+}
+.bg-all{
+    background-color: #F7F9FF;
+}
+.overalll {
+    background: transparent linear-gradient(180deg, #FFFFFF 0%, #FFFFFF 38%, #F0F4F9 100%) 0% 0% no-repeat padding-box;
+    box-shadow: 0px 0px 3px #00000029;
+}
+
+/* Styling property buttons */
+.propertybutton {
+    float: left;
+    transition-duration: 0.4s;
+    border: 2px solid #108CFF;
+}
+
+.propertybutton:hover {
+    background-color: #108CFF;
+    color: white;
+}
+
+.tenantAndLandlordButton {
+    float: left;
+    transition-duration: 0.4s;
+    background-color: #108CFF;
+    color: white;
+    border: 2px solid #108CFF;
+}
+
+.tenantAndLandlordButton:hover {
+    border: 2px solid #108CFF;
+    background-color: white;
+    color: #108CFF;
+}
+
+.carousel-control-prev-icon {
+    /* outline: black; */
+    /* background-color: rgba(0, 0, 0, 0.3);  */
+    outline: #108CFF !important;
+    box-shadow: 0px 3px 6px #00000029;
+    border-radius: 6px;
+    opacity: 1;
+    color: #108CFF !important;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23108CFF'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z'/%3e%3c/svg%3e");
+
+}
+
+.carousel-control-next-icon {
+    outline: #108CFF !important;
+    box-shadow: 0px 3px 6px #00000029;
+    border-radius: 6px;
+    opacity: 1;
+
+    color: #108CFF !important;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23108CFF'%3e%3cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+
+}
+
+.caroues {
+    box-shadow: 0px 3px 6px #00000029;
+
+}
