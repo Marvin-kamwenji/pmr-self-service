@@ -7,7 +7,7 @@
 *{
     padding: 0;
     margin: 0;
-    box-sizing: border-box;
+    box-sizing: border-box ;
     
 }
 .propertyimage {
@@ -20,9 +20,13 @@
 .all_tenant{
     background: #FFFFFF 0% 0% no-repeat padding-box;
     border-radius: 22px; 
+    opacity: 1;
+
 }
 .bg-all{
     background-color: #F7F9FF;
+    margin:0;
+    padding:0;
 }
 .overalll {
     background: transparent linear-gradient(180deg, #FFFFFF 0%, #FFFFFF 38%, #F0F4F9 100%) 0% 0% no-repeat padding-box;
