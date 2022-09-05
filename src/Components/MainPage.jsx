@@ -38,10 +38,10 @@ function MainPage() {
                                 <div className="carousel-item active " data-bs-interval="30000">
                                     <div className="d-flex justify-content-center">
 
-                                        <Cards img={house1} propertyTitle={'Property A'} />
+                                        <Cards img={house1} propertyTitle={'Property A'}  className="w-100"/>
                                         {/* PROPERTY B */}
 
-                                        <Cards img={house2} propertyTitle={'Property B'} />
+                                        <Cards img={house2} propertyTitle={'Property B'} className="w-100"/>
 
 
 
@@ -158,7 +158,7 @@ function MainPage() {
                                 and property information
                             </p>
                             <Link to='/tenantRegistration'>
-                                <button className="tenantAndLandlordButton py-2 px-4 mt-4 rounded">
+                                <button className="tenantAndLandlordButton py-2 px-4 ml-5 mt-4 rounded">
                                     Register as a Tenant
                                 </button>
                             </Link>
@@ -175,7 +175,7 @@ function MainPage() {
                                 information
                             </p>
                             <Link to='/landlordRegistration'>
-                                <button className="tenantAndLandlordButton py-2 px-4 mt-4 rounded">
+                                <button className="tenantAndLandlordButton ml-5 py-2 px-4 mt-4 rounded">
                                     Register as a Landlord
                                 </button>
                             </Link>

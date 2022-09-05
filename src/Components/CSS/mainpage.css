@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 /* Styling size of images */
 
 .propertyimage {
@@ -30,6 +31,34 @@
     background-color: #108CFF;
     color: white;
 }
+.MuiStepper-horizontal .MuiStep-horizontal> .MuiStepButton-horizontal > .MuiStepLabel-horizontal> .Mui-active{ 
+    background-color: #108CFF !important;
+    padding: 7px;
+
+}
+.css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root.Mui-active {
+    color: #FFFFFF !important;
+}
+.css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root.Mui-active> .css-117w1su-MuiStepIcon-text{
+    fill:#108CFF !important;
+}
+.css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root {
+    color:#108CFF !important;
+}
+.MuiStepper-horizontal .MuiStep-horizontal> .MuiStepButton-horizontal > .MuiStepLabel-horizontal> .MuiStepLabel-labelContainer> .Mui-active{ 
+    background-color: #108CFF !important;
+    padding:9px;
+    color: #FFFFFF;
+
+}
+.MuiStepper-horizontal .MuiStep-horizontal> .MuiStepButton-horizontal > .MuiStepLabel-horizontal> .MuiStepLabel-labelContainer{ 
+    color: #108CFF;
+
+}
+.css-56h8k4-MuiStepper-root{
+    background-color: #F0F4F9;
+}
+
 
 .tenantAndLandlordButton {
     float: left;
