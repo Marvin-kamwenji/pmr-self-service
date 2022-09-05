@@ -1,5 +1,10 @@
 import React from 'react';
-
+import Box from '@mui/material/Box';
+import Stepper from '@mui/material/Stepper';
+import Step from '@mui/material/Step';
+import StepButton from '@mui/material/StepButton';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 function IndividualPersonalInformation() {
     return ( 
         <div className="container border border-primary mt-4 rounded-2xl">
@@ -17,7 +22,7 @@ function IndividualPersonalInformation() {
                 <label className="form-check-label" for="exampleCheck2">Check me out</label>
               </div>
             </div>
-            
+
         </form>
         </div>  
      );
