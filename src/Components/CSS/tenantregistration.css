@@ -1,0 +1,71 @@
+.contentHeadings {
+    font: normal normal 300 15px/23px Poppins;
+    color: #108CFF;
+    text-align: left;
+    text-indent: 14%;
+
+}
+
+.tenantlabels {
+    top: 254px;
+    left: 324px;
+    width: 176px;
+    height: 23px;
+    text-align: right;
+    font-size: 15px;
+    color: #000000;
+    opacity: 1;
+}
+
+.tenanttyperadiolabel {
+    top: 255px;
+    left: 571px;
+    width: 68px;
+    height: 20px;
+    text-align: left;
+    font-size: 15px;
+    color: #333333;
+    opacity: 1;
+}
+
+::placeholder {
+    color: #707070;
+    text-align: left;
+    font-size: 15px;
+
+}
+
+input[type="text"] {
+    border: 1px solid #CCCCCC;
+    border-radius: 6px;
+    opacity: 1;
+}
+
+select {
+    border: 1px solid #CCCCCC;
+    border-radius: 6px;
+    opacity: 1;
+}
+
+.backButton {
+    border: 1px solid #0071DC;
+    border-radius: 5px;
+    color: #108CFF;
+}
+
+.nextButton {
+    background: #0071DC;
+    border-radius: 5px;
+    color: #FFFFFF;
+}
+
+.headers {
+    background: #F0F4F9;
+    color: #108CFF;
+    font-size: 15px;
+}
+
+.tenantAsteriks{
+    color: #FC0810;;
+}
+
