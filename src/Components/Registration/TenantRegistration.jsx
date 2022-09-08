@@ -121,9 +121,9 @@ function TenantRegistration() {
     setCompleted({});
   };
   return (
-    <div className="all_tenant">
-      <div className="container my-5">
-        <Box sx={{ width: '100%' }} >
+    <div className="bg-all py-5">
+      <div className="container py-3 all_tenant"> 
+        <Box sx={{ width: '100%' }} className="">
           <Stepper nonLinear activeStep={activeStep}
             sx={{
               "& .MuiStepConnector-line": {
