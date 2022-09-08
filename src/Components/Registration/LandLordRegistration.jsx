@@ -5,16 +5,13 @@ import Attachment from '../Landlord/Attachment';
 import LandlordInformation from "../Landlord/LandlordInformation";
 import PropertyPaymentInformation from "../Landlord/PropertyPaymentInformation";
 import PropertyFinancialInformation from "../Landlord/PropertyFinancialInformation";
+import PropertyInformation from "../Landlord/PropertyInformation";
+import LandlordStepper from "../Landlord/LandlordStepper";
 
 function LandlordRegistration() {
   return (
     <div>
-      <h1>Hello Landlord</h1>
-      <PropertyFinancialInformation/>
-      <PropertyPaymentInformation/>
-      <LandlordInformation/>
-      <NextOfKin/>
-      <Attachment/>
+      <LandlordStepper/>
     </div>
   );
 }
