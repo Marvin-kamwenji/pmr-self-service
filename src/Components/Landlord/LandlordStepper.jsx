@@ -30,6 +30,7 @@ function LandlordStepper() {
   const [propertyTypes, setPropertyTypes] = useState([]);
   const [bedrooms, setBedrooms] = useState([]);
   const [banks, setBanks] = useState([]);
+  const [postResponse, setResponse] = useState({});
 
   // shows total steps in a stepper
   const totalSteps = () => {

@@ -36,7 +36,26 @@ function ApiUtil(setCountries, setIdDocuments, setPropertyTypes, setBedrooms, se
         });
 }
 
-function PostLandlord(landlordInfo, nextOfKins, bankDetails, properties, attachments){
+function PostLandlord(landlordInfo, nextOfKins, bankDetails, properties, attachments, setResponse){
+    const landlord = {
+        ...landlordInfo,
+        nextOfKin: nextOfKins,
+        bankDetails: bankDetails,
+        property: Array.from(properties,(property,index) => {
+            property['bankDetail'] = bankDetails[index]
+            return property
+        } ),
+        attachmentFiles: attachments
+    }
+
+    axios.post(`${host}/services/selfOnBoardLandlord/selfOnBoardLandlord`, landlord)
+      .then(function (response) {
+        console.log(response);
+        setResponse(response)
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
 
 }
 export {ApiUtil, PostLandlord}
