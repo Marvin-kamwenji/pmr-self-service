@@ -1,10 +1,17 @@
 
 import React from "react";
+import NextOfKin from "../Landlord/NextOfKin";
+import Attachment from '../Landlord/Attachment';
+import LandlordInformation from "../Landlord/LandlordInformation";
+import PropertyPaymentInformation from "../Landlord/PropertyPaymentInformation";
+import PropertyFinancialInformation from "../Landlord/PropertyFinancialInformation";
+import PropertyInformation from "../Landlord/PropertyInformation";
+import LandlordStepper from "../Landlord/LandlordStepper";
 
 function LandlordRegistration() {
   return (
     <div>
-      <h1>Hello Tenant</h1>
+      <LandlordStepper/>
     </div>
   );
 }
