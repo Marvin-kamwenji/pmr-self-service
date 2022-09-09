@@ -187,7 +187,7 @@ function TenantRegistration() {
                   
                   <Button
                     color="inherit"
-                    disabled={ activeStep == 0}
+                    disabled={ activeStep === 0}
                     hidden={activeStep === 0}
                     onClick={handleBack}
                     sx={{ mr: 1 }}

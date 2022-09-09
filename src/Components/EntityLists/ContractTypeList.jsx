@@ -1,13 +1,15 @@
 import React from 'react';
 import axios from 'axios';
 
+const baseURL = "http://localhost:8080/rest/entities/ContractType";
+
 export default class ContractTypeList extends React.Component {
     state = {
       contractTypes: []
     };
 
     componentDidMount() {
-        axios.get(` http://localhost:8080/rest/entities/ContractType`).then(res => {
+        axios.get(baseURL).then(res => {
           const contractTypes = res.data;
           this.setState({ contractTypes });
         });
@@ -16,8 +18,8 @@ export default class ContractTypeList extends React.Component {
 
       render() {
         return (
-          <select id="inputState" class="form-select">
-            {this.state.contractTypes.map(contractType => <option>{contractType.name}</option>)}
+          <select id="inputState" className="form-select">
+            {this.state.contractTypes.map(contractType => <option key={contractType.id}>{contractType.name}</option>)}
           </select>
         );
       }

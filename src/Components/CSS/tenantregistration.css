@@ -7,10 +7,6 @@
 }
 
 .tenantlabels {
-    top: 254px;
-    left: 324px;
-    width: 176px;
-    height: 23px;
     text-align: right;
     font-size: 15px;
     color: #000000;
@@ -68,4 +64,5 @@ select {
 .tenantAsteriks{
     color: #FC0810;;
 }
+
 
