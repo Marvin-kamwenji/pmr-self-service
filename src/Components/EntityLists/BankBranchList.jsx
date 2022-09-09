@@ -9,9 +9,11 @@ export default class BankBranchList extends React.Component {
     };
 
     componentDidMount() {
-        axios.get(baseURL).then(res => {
-          const banks = res.data;
-          this.setState({ banks });
+        axios.get(baseURL)
+             .then(res => {
+                  const banks = res.data;
+                  this.setState({ banks })
+              .catch(error => console.log(error));
         });
       }
 
