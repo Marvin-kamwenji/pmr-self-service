@@ -14,7 +14,7 @@ function showField(fieldProperties, propertyInfo, setPropertyInfo, properties, i
   switch (fieldProperties.type) {
     case 'text':
       return (
-        <div className='flex flex-row col-6'>
+        <div className='flex flex-row col-6' key={fieldProperties.name}>
           <div className='basis-1/3 text-end mr-2 flex justify-end items-center'>
             <label className='label-style'>{fieldProperties.label}</label>
             {fieldProperties.required ? <label className='asterisk-field'>*</label> : null}
@@ -30,19 +30,28 @@ function showField(fieldProperties, propertyInfo, setPropertyInfo, properties, i
       )
     case 'select':
       return (
-        <div className='flex flex-row col-6'>
+        <div className='flex flex-row col-6' key={fieldProperties.name}>
           <div className='basis-1/3 text-end mr-2 flex justify-end items-center'>
             <label className='label-style'>{fieldProperties.label}</label>
             {fieldProperties.required ? <label className='asterisk-field'>*</label> : null}
           </div>
           <select name={fieldProperties.name} className='basis-2/3 input-field-style pl-4'
-            value={propertyInfo[fieldProperties.name]}
+            value={propertyInfo.hasOwnProperty(fieldProperties.name) ?
+              propertyInfo[fieldProperties.name].id :
+               null}
             onChange={e => {
-              setPropertyInfo({ ...propertyInfo, [fieldProperties.name]:{id: e.target.value} });
-              properties[index] = propertyInfo
+              setPropertyInfo(
+                {
+                  ...propertyInfo,
+                  [fieldProperties.name]: {
+                    id: e.target.value,
+                  }
+                }
+              );
+              properties[index] = propertyInfo;
             }}>
               <option hidden disabled selected value>--- Select {fieldProperties.placeholder} ---</option>
-            {fieldProperties.options.map(option => addOptions(option, fieldProperties.name))}
+            {fieldProperties.options.map(option => addOptions(option, fieldProperties.field))}
           </select>
         </div>
       )
@@ -54,11 +63,11 @@ function showField(fieldProperties, propertyInfo, setPropertyInfo, properties, i
 
 export default function PropertyInformation({properties, property, index, propertyTypes, bedrooms}) {
   const fields = [
-    {name: "propertyType", type: 'select', placeholder: 'Type', value: '', required: true, label: 'Property Type ', options: propertyTypes},
+    {name: "propertyType", type: 'select', placeholder: 'Type', value: '', required: true, label: 'Property Type ', options: propertyTypes, field: 'propertyType'},
     {name: "address", type: 'text', placeholder: 'Address', value: '', required: true, label: 'Address '},
     {name: "propertyName", type: 'text', placeholder: 'Property Name', value: '', required: true, label: 'Property Name '},
     {name: "regMobileNo", type: 'text', placeholder: '700*****', value: '', required: true, label: 'Registered Mobile No '},
-    {name: "description", type: 'select', placeholder: 'No of Bedrooms', value: '', required: true, label: 'Bedroom', options: bedrooms},
+    {name: "bedroom", type: 'select', placeholder: 'No of Bedrooms', value: '', required: true, label: 'Bedroom', options: bedrooms, field: 'description'},
     {name: "email", type: 'text', placeholder: 'sample@example.com', value: '', required: false, label: 'Email '},
     {name: "propertyIdentity", type: 'text', placeholder: 'House 10', value: '', required: true, label: 'Property Identity '},
     {name: "region", type: 'text', placeholder: 'Region', value: '', required: true, label: 'Region '},

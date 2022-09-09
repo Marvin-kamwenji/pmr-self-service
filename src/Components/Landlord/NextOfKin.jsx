@@ -14,7 +14,7 @@ const fields = [
 
 function showField(fieldProperties, nextOfKin, setNextOfKin, kins, index) {
   return (
-    <div className='flex flex-row col-6'>
+    <div className='flex flex-row col-6' key={fieldProperties.name}>
       <div className='basis-1/3 text-end mr-2 flex justify-end items-center'>
         <label className='label-style'>{fieldProperties.label}</label>
         {fieldProperties.required ? <label className='asterisk-field'>*</label>:null}

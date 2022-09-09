@@ -92,6 +92,8 @@ function LandlordStepper() {
     );
   });
 
+  const handleSubmit = () => {};
+
   const showComponent = (step) => {
       switch (step) {
         case 0:
@@ -184,7 +186,7 @@ function LandlordStepper() {
     switch (fieldProperties.type) {
       case 'text':
         return (
-          <div className='flex flex-row col-6'>
+          <div className='flex flex-row col-6' key={fieldProperties.name}>
             <div className='basis-1/3 text-end mr-2 flex justify-end items-center'>
               <label className='label-style'>{fieldProperties.label}</label>
               {fieldProperties.required ? <label className='asterisk-field'>*</label> : null}
@@ -201,20 +203,23 @@ function LandlordStepper() {
 
       case 'select':
         return (
-          <div className='flex flex-row col-6'>
+          <div className='flex flex-row col-6' key={fieldProperties.name}>
             <div className='basis-1/3 text-end mr-2 flex justify-end items-center'>
               <label className='label-style'>{fieldProperties.label}</label>
               {fieldProperties.required ? <label className='asterisk-field'>*</label> : null}
             </div>
             <select name={fieldProperties.name}
-              value={object[fieldProperties.name]}
+              value={object.hasOwnProperty(fieldProperties.name) ?
+                object[fieldProperties.name].id :
+                  null
+                }
               className='basis-2/3 input-field-style pl-4'
               onChange={e => {
                 setObject({ ...object, [fieldProperties.name]:{id: e.target.value} });
               }}
             >
               <option hidden disabled selected value>--- Select {fieldProperties.placeholder} ---</option>
-              {fieldProperties.options.map(option => addOptions(option, fieldProperties.name))}
+              {fieldProperties.options.map(option => addOptions(option, fieldProperties.field))}
             </select>
           </div>
         )

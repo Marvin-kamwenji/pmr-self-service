@@ -13,9 +13,9 @@ export default function LandlordInformation({landlord, setLandlord, countries, i
         { name: "address", type: 'text', placeholder: 'Address', value: '', required: true, label: 'Address ' },
         { name: "mobileNo", type: 'text', placeholder: '7743****', value: '', required: true, label: 'Registered Mobile Number ' },
         { name: "email", type: 'text', placeholder: 'sample@example.com', value: '', required: false, label: 'Email ' },
-        { name: "countryName", type: 'select', placeholder: 'Country', value: '', required: true, label: 'Nationality ' , options: countries},
+        { name: "country", type: 'select', placeholder: 'Country', value: {}, required: true, label: 'Nationality ' , options: countries, field: 'countryName'},
         { name: "tin", type: 'text', placeholder: 'TIN', value: '', required: true, label: 'TIN ' },
-        { name: "identificationName", type: 'select', placeholder: 'Identification Document', value: '', required: true, label: 'Identification Document ', options: idDocuments},
+        { name: "identificationType", type: 'select', placeholder: 'Identification Document', value: {}, required: true, label: 'Identification Document ', options: idDocuments, field: 'identificationName'},
         { name: "identificationNo", type: 'text', placeholder: 'Identification No', value: '', required: true, label: 'Identification Number '},
     ]
     
@@ -30,13 +30,13 @@ export default function LandlordInformation({landlord, setLandlord, countries, i
                     <label className='asterisk-field'>*</label>
                 </div>
                 <div className='col-span-2'>
-                    <input type='radio' id='individual' name='landlordType' className='radio-style'
+                    <input type='radio' id='individual' name='landlordType' className='radio-style' value='INDIVIDUAL'
                         onChange={e => {
                             setLandlord({ ...landlord, [e.target.id]: e.target.value });
                         }}
                     />
-                    <label for='individual' className='label-style pl-2 pr-2'>Individual</label>
-                    <input type='radio' id='corporate' name='landlordType' className='radio-style'
+                    <label for='individual' className='label-style pl-2 pr-2' >Individual</label>
+                    <input type='radio' id='corporate' name='landlordType' className='radio-style' value='CORPORATE'
                         onChange={e => {
                             setLandlord({ ...landlord, [e.target.id]: e.target.value });
                         }}

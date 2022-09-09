@@ -11,7 +11,7 @@ function showField(fieldProperties, bankDetail, setBankDetail, bankDetails, inde
   switch (fieldProperties.type) {
     case 'text':
       return (
-        <div className='flex flex-row col-6'>
+        <div className='flex flex-row col-6' key={fieldProperties.name}>
           <div className='basis-1/3 text-end mr-2 flex justify-end items-center'>
             <label className='label-style'>{fieldProperties.label}</label>
             {fieldProperties.required ? <label className='asterisk-field'>*</label> : null}
@@ -27,13 +27,13 @@ function showField(fieldProperties, bankDetail, setBankDetail, bankDetails, inde
       )
     case 'select':
       return (
-        <div className='flex flex-row col-6'>
+        <div className='flex flex-row col-6' key={fieldProperties.name}>
           <div className='basis-1/3 text-end mr-2 flex justify-end items-center'>
             <label className='label-style'>{fieldProperties.label}</label>
             {fieldProperties.required ? <label className='asterisk-field'>*</label> : null}
           </div>
           <select name={fieldProperties.name} className='basis-2/3 input-field-style pl-4'
-            value={bankDetail[fieldProperties.name]}
+            value={bankDetail.hasOwnProperty([fieldProperties.name]) ? bankDetail[fieldProperties.name].id : null}
             onChange={e => {
               if(fieldProperties.name === 'bank'){
                 setBranches(fieldProperties.options.find(bank => bank.id == e.target.value).bankBranches)

@@ -5,7 +5,7 @@ const person = {firstName:"John", lastName:"Doe", age:50, eyeColor:"blue"};
 
 function showField(key, object){
     return (
-        <div className='flex flex-row basis-1/2'>
+        <div className='flex flex-row basis-1/2' key={key}>
             <div className='basis-1/3 text-end mr-2 flex justify-start items-center'>
                 <label className='label-style-conf'>{key}</label>
             </div>

@@ -13,7 +13,7 @@ const fields = [
 
 function showField(fieldProperties) {
     return (
-        <div className='flex flex-row basis-1/2'>
+        <div className='flex flex-row basis-1/2' key={fieldProperties.name}>
             <div className='basis-1/3 text-end mr-2 flex justify-end items-center'>
                 <label className='label-style'>{fieldProperties.label}</label>
                 {fieldProperties.required ? <label className='asterisk-field'>*</label> : null}
