@@ -1,23 +1,27 @@
 import React from 'react';
 import axios from 'axios';
 
+const baseURL = "http://localhost:8080/rest/entities/Bank?fetchPlan=bank-fetch-plan";
+
 export default class BankBranchList extends React.Component {
     state = {
       banks: []
     };
 
     componentDidMount() {
-        axios.get(` http://localhost:8080/rest/entities/Bank?fetchPlan=bank-fetch-plan`).then(res => {
-          const banks = res.data;
-          this.setState({ banks });
+        axios.get(baseURL)
+             .then(res => {
+                  const banks = res.data;
+                  this.setState({ banks })
+              .catch(error => console.log(error));
         });
       }
 
 
       render() {
         return (
-          <select id="inputState" class="form-select">
-            {this.state.banks.map(bank => <option>{bank.name}</option>)}
+          <select id="inputState" className="form-select">
+            {this.state.banks.map(bank => <option key={bank.id}>{bank.name}</option>)}
           </select>
         );
       }

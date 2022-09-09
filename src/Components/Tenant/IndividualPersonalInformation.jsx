@@ -6,14 +6,22 @@ import EmploymentTypeList from '../EntityLists/EmploymentTypeList';
 import ContractTypeList from '../EntityLists/ContractTypeList';
 import BankList from '../EntityLists/BankList';
 import BankBranchList from '../EntityLists/BankBranchList';
+import axios from 'axios';
+import TenantServiceProvidersList from '../EntityLists/TenantServiceProviders';
 
 
 function IndividualPersonalInformation({formData, setFormData}) {
 
+    const submitHandler = event => {
+       event.preventDefault();
+       console.log(formData);
+       axios.post('http://localhost:8080/rest/services/selfOnBoardTenant/selfOnBoard')
+     }
+
     return ( 
         <div>
         <h1 className="contentHeadings mt-2 mb-2">INDIVIDUAL TENANT INFORMATION</h1>
-        <form>
+        <form onSubmit={submitHandler}>
 
          {/* ============================================================================================= */}
          {/* ======================================= TENANT TYPE ROW ===================================== */}
@@ -26,12 +34,12 @@ function IndividualPersonalInformation({formData, setFormData}) {
                <div className="col-sm-3">
                  <div className="form-check form-check-inline">
                    <input className="form-check-input tenanttyperadio" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"/>
-                   <label className="form-check-label tenanttyperadiolabel" for="inlineRadio1">Individual</label>
+                   <label className="form-check-label tenanttyperadiolabel" htmlFor="inlineRadio1">Individual</label>
                  </div>
 
                 <div className="form-check form-check-inline ">
                   <input className="form-check-input tenanttyperadio" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2" />
-                  <label className="form-check-label tenanttyperadiolabel" for="inlineRadio2">Corporate</label>
+                  <label className="form-check-label tenanttyperadiolabel" htmlFor="inlineRadio2">Corporate</label>
                 </div>
                 </div>
               
@@ -278,10 +286,12 @@ function IndividualPersonalInformation({formData, setFormData}) {
                         <label className="tenantAsteriks ml-1">*</label>
                   </label>
                   <div className="col-sm-4">
-                     <select id="inputState" class="form-select">
+
+                    <TenantServiceProvidersList />
+                     {/* <select id="inputState" class="form-select">
                          <option value="default" selected>MTN</option>
                          <option>...</option>
-                      </select>
+                      </select> */}
                  </div>
 
               </div>
@@ -438,13 +448,67 @@ function IndividualPersonalInformation({formData, setFormData}) {
               <hr />
 
               <div>
+
                <h1 className="contentHeadings mb-2 mt-2">ATTACHMENTS</h1>
 
-               <label>
-               <input type="file" multiple />
-               </label>
-               
+                <div className="form-group row g-3 mb-3">
+
+                 <label className="col-sm-2 col-form-label tenantlabels">Attach Photo 
+                       <label className="tenantAsteriks ml-1">*</label>
+                 </label>
+                 <div className="col-sm-4">
+                     <input type="file"  required/>
+                 </div>
+
+                 <label className="col-sm-3 col-form-label tenantlabels">Last 3 Months Bank Statements 
+                       <label className="tenantAsteriks ml-1">*</label>
+                 </label>
+                 <div className="col-sm-3">
+                     <input type="file" multiple required/>
+                 </div>
+   
               </div>
+
+              {/* ================================================================================================= */}
+              {/* ========================================== ID/PASSPORTS ROW ===================================== */}
+              {/* ================================================================================================= */}
+               <div className="form-group row g-3 mb-3">
+
+                 <label className="col-sm-2 col-form-label tenantlabels">Attach ID/Passport Front 
+                       <label className="tenantAsteriks ml-1">*</label>
+                 </label>
+                 <div className="col-sm-4">
+                     <input type="file"  required/>
+                 </div>
+
+                 <label className="col-sm-3 col-form-label tenantlabels">Attach Last 3 Months Pay Slip
+                       <label className="tenantAsteriks ml-1">*</label>
+                 </label>
+                 <div className="col-sm-3">
+                     <input type="file" multiple required/>
+                 </div>
+   
+              </div>
+
+
+              {/* ================================================================================================ */}
+              {/* ===================================== ATTACH ID/PASSPORT BACK ===================================*/}
+              {/* ================================================================================================ */}
+
+               
+               <div className="form-group row g-3 mb-3">
+
+                 <label className="col-sm-2 col-form-label tenantlabels">Attach ID/Passport Back 
+                       <label className="tenantAsteriks ml-1">*</label>
+                 </label>
+                 <div className="col-sm-4">
+                     <input type="file"  required/>
+                 </div>
+
+                 </div>
+
+
+           </div>
 
 
 

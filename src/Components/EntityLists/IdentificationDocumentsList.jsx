@@ -1,13 +1,15 @@
 import React from 'react';
 import axios from 'axios';
 
+const baseURL = "http://localhost:8080/rest/entities/IdentificationDocuments";
+
 export default class IdentificationDocumentsList extends React.Component {
     state = {
       documents: []
     };
 
     componentDidMount() {
-        axios.get(`http://localhost:8080/rest/entities/IdentificationDocuments`).then(res => {
+        axios.get(baseURL).then(res => {
           const documents = res.data;
           this.setState({ documents });
         });
@@ -15,8 +17,8 @@ export default class IdentificationDocumentsList extends React.Component {
 
       render() {
         return (
-          <select id="inputState" class="form-select">
-            {this.state.documents.map(document => <option>{document.identificationName}</option>)}
+          <select id="inputState" className="form-select">
+            {this.state.documents.map(document => <option key={document.id}>{document.identificationName}</option>)}
           </select>
 
         );

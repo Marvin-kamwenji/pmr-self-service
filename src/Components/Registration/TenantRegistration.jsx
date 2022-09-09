@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, Fragment} from "react";
 import '../CSS/tenantregistration.css';
 import NavBar from "../Common/NavBar";
 import IndividualPersonalInformation from "../Tenant/IndividualPersonalInformation";
@@ -124,25 +124,11 @@ function TenantRegistration() {
     <div className="bg-all py-5">
       <div className="container py-3 all_tenant"> 
         <Box sx={{ width: '100%' }} className="">
-          <Stepper nonLinear activeStep={activeStep}
+          <Stepper activeStep={activeStep}
             sx={{
               "& .MuiStepConnector-line": {
                 border: "0",
               },
-              //   "&.MuiStepLabel-horizontal":{
-              //      "&.MuiStepLabel-labelContainer":{
-              //     "&.Mui-active":{
-              //        background:"#108CFF"
-
-              //     },
-              //   },
-              // },
-              // "&.MuiStepper-horizontal .MuiStep-horizontal .Mui-active":{
-              //     background:"#108CFF"
-
-              //   },
-
-
 
             }}>
             {steps.map((label, index) => (
@@ -153,9 +139,14 @@ function TenantRegistration() {
               </Step>
             ))}
           </Stepper>
+
+          <form onSubmit={e => {
+            e.preventDefault();
+          }}>
+
           <div>
             {allStepsCompleted() ? (
-              <React.Fragment>
+              <Fragment>
                 <Typography sx={{ mt: 2, mb: 1 }}>
                   {/* displayy this when steps are finished */}
                   All steps completed - you&apos;re finished
@@ -165,12 +156,9 @@ function TenantRegistration() {
                   <Box sx={{ flex: '1 1 auto' }} />
                   <Button onClick={handleReset}>Reset</Button>
                 </Box>
-              </React.Fragment>
+              </Fragment>
             ) : (
-              <React.Fragment>
-                {/* <Typography sx={{ mt: 2, mb: 1, py: 1 }}>
-                  Step {activeStep + 1}
-                </Typography> */}
+              <Fragment>
 
                 {/* ========================================================================================== */}
                 {/* ====================================THIS DISPLAYS THE FORMS=============================== */}
@@ -180,6 +168,7 @@ function TenantRegistration() {
               
                 
                 <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+                <Box sx={{ flex: '1 1 auto' }} />
 
                   {/* ======================================================================================== */}
                   {/*===================handles back event and its disabled on the first step================= */}
@@ -187,20 +176,20 @@ function TenantRegistration() {
                   
                   <Button
                     color="inherit"
-                    disabled={ activeStep == 0}
+                    disabled={ activeStep === 0}
                     hidden={activeStep === 0}
                     onClick={handleBack}
                     sx={{ mr: 1 }}
                   >
                     Back
                   </Button>
-                  <Box sx={{ flex: '1 1 auto' }} />
 
                   {/* ============================================================================================= */}
                   {/* handles next event and shows completed when all steps are completed or current step completed */}
                   {/* ============================================================================================= */}
 
-                  <Button onClick={handleNext} sx={{ mr: 1 }}>
+                  <Button hidden={isLastStep()}
+                          onClick={handleNext} sx={{ mr: 1 }}>
                     Next
                   </Button>
                   {activeStep !== steps.length &&
@@ -210,15 +199,17 @@ function TenantRegistration() {
                       </Typography>
                     ) : (
                       <Button onClick={handleComplete}>
-                        {completedSteps() === totalSteps() - 1
+                        {isLastStep()
+                        // completedSteps() === totalSteps() - 1
                           ? 'Finish'
-                          : 'Complete Step'}
+                          : ''}
                       </Button>
                     ))}
                 </Box>
-              </React.Fragment>
+              </Fragment>
             )}
           </div>
+          </form>
         </Box>
       </div>
     </div>

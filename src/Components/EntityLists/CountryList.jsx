@@ -1,13 +1,15 @@
 import React from 'react';
 import axios from 'axios';
 
+const baseURL = "http://localhost:8080/rest/entities/Country";
+
 export default class CountryList extends React.Component {
     state = {
       countries: []
     };
 
     componentDidMount() {
-        axios.get(` http://localhost:8080/rest/entities/Country`).then(res => {
+        axios.get(baseURL).then(res => {
           const countries = res.data;
           this.setState({ countries });
         });
@@ -16,8 +18,8 @@ export default class CountryList extends React.Component {
 
       render() {
         return (
-          <select id="inputState" class="form-select">
-            {this.state.countries.map(country => <option>{country.countryName}</option>)}
+          <select id="inputState" className="form-select">
+            {this.state.countries.map(country => <option key={country.id}>{country.countryName}</option>)}
           </select>
         );
       }
