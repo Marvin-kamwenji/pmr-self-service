@@ -61,7 +61,7 @@ function showField(fieldProperties, propertyInfo, setPropertyInfo, properties, i
   
 }
 
-export default function PropertyInformation({properties, property, index, propertyTypes, bedrooms}) {
+export default function PropertyInformation({properties, property, index, propertyTypes, bedrooms, regions}) {
   const fields = [
     {name: "propertyType", type: 'select', placeholder: 'Type', value: '', required: true, label: 'Property Type ', options: propertyTypes, field: 'propertyType'},
     {name: "address", type: 'text', placeholder: 'Address', value: '', required: true, label: 'Address '},
@@ -70,7 +70,7 @@ export default function PropertyInformation({properties, property, index, proper
     {name: "bedroom", type: 'select', placeholder: 'No of Bedrooms', value: '', required: true, label: 'Bedroom', options: bedrooms, field: 'description'},
     {name: "email", type: 'text', placeholder: 'sample@example.com', value: '', required: false, label: 'Email '},
     {name: "propertyIdentity", type: 'text', placeholder: 'House 10', value: '', required: true, label: 'Property Identity '},
-    {name: "region", type: 'text', placeholder: 'Region', value: '', required: true, label: 'Region '},
+    {name: "region", type: 'select', placeholder: 'Region', value: '', required: true, label: 'Region ', options: regions, field:'geographicRegionName'},
     {name: "road", type: 'text', placeholder: 'Road A', value: '', required: true, label: 'Road '},
     {name: "landlordRequest", type: 'text', placeholder: '50,000', value: '', required: true, label: 'Landlord Request '},
     {name: "gpsLocation", type: 'text', placeholder: 'GPS Location', value: '', required: true, label: 'GPS Location '},

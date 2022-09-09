@@ -51,11 +51,11 @@ function showField(fieldProperties, bankDetail, setBankDetail, bankDetails, inde
   }
 }
 
-export default function PropertyPaymentInformation({bankDetail, bankDetails, index, banks}) {  
+export default function PropertyPaymentInformation({bankDetail, bankDetails, index, banks, providers}) {  
   const [bankBranches, setBranches] = useState([]);
   const fields = [
     { name: "bank", type: 'select', placeholder: 'Bank Name', value: '', required: true, label: 'Bank Name ',options: banks, field:'name' },
-    { name: "serviceProvider", type: 'text', placeholder: 'Service Name', value: '', required: false, label: 'Mobile Network ' },
+    { name: "serviceProvider", type: 'select', placeholder: 'Service Name', value: '', required: false, label: 'Mobile Network ', options: providers, field: 'name' },
     { name: "bankBranch", type: 'select', placeholder: 'Branch Name', value: '', required: true, label: 'Bank Branch ', options: bankBranches, field:'bankBranchName' },
     { name: "accountName", type: 'text', placeholder: 'Account Name', value: '', required: true, label: 'Account Name ' },
     { name: "accountNo", type: 'text', placeholder: 'Account No', value: '', required: false, label: 'Account No ' },

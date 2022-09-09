@@ -1,14 +1,9 @@
 import React from 'react';
 import '../CSS/landlord.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEnvelope, faCloudUpload } from '@fortawesome/free-solid-svg-icons'
+import { faCloudUpload } from '@fortawesome/free-solid-svg-icons'
+import {PostFile} from './ApiUtil';
 
-
-const fields = [
-    { name: "profilePhoto", type: 'file', placeholder: 'Choose File', value: '', required: true, label: 'Photo' },
-    { name: "idOrPassportFront", type: 'file', placeholder: 'Choose File', value: '', required: false, label: 'Id/Passport Front ' },
-    { name: "idOrPassportBack", type: 'file', placeholder: 'Choose File', value: '', required: true, label: 'Id/Passprt Back ' }
-]
 
 
 function showField(fieldProperties) {
@@ -20,7 +15,14 @@ function showField(fieldProperties) {
             </div>
             <label className='basis-5/12 file-field-style flex items-center' for={fieldProperties.name}>
                 <FontAwesomeIcon icon={faCloudUpload} size='2x' className='pl-2 cloud-upload-icon'/>
-                <input id={fieldProperties.name} className='invisible-field' type={fieldProperties.type} placeholder={fieldProperties.placeholder} id={fieldProperties.name} />
+                <input
+                    id={fieldProperties.name} className='invisible-field'
+                    type={fieldProperties.type} placeholder={fieldProperties.placeholder}
+                    onChange={e => {
+                        PostFile(createFormData(e.target.files[0]))
+                    }
+                    }
+                />
                 <span className='pl-2'>some-file.name</span>
             </label>
             <div className='basis-3/12 flex items-center ml-2'>
@@ -30,9 +32,22 @@ function showField(fieldProperties) {
     )
 }
 
+function createFormData(file){
+    var formData = new FormData();
+    formData.append("file", file);
+    return formData;
+}
 
-
-export default function Attachment({attachmentOwner}) {
+export default function Attachment({attachmentOwner, attachments, documentTypes}) {
+    const fields = [];
+    documentTypes.map(doc =>{
+        const field = { 
+            name: doc.documentTypeName, type: 'file', 
+            placeholder: 'Choose File', value: '', 
+            required: true, label:doc.documentTypeName
+        }
+        fields.push(field);
+    })
   return (
       <div className='flex flex-column'>
           <div className='w-1/2 grid grid-cols-3 mb-4'>

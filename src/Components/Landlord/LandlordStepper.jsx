@@ -30,6 +30,9 @@ function LandlordStepper() {
   const [propertyTypes, setPropertyTypes] = useState([]);
   const [bedrooms, setBedrooms] = useState([]);
   const [banks, setBanks] = useState([]);
+  const [geographicRegions, setRegions] = useState([]);
+  const [serviceProviders, setProviders] = useState([]);
+  const [documentTypes, setDocumentTypes] = useState([]);
   const [postResponse, setResponse] = useState({});
 
   // shows total steps in a stepper
@@ -88,7 +91,10 @@ function LandlordStepper() {
       setIdDocuments,
       setPropertyTypes,
       setBedrooms,
-      setBanks
+      setBanks,
+      setRegions,
+      setProviders,
+      setDocumentTypes
     );
   });
 
@@ -106,7 +112,7 @@ function LandlordStepper() {
                 idDocuments={idDocuments}
                 showField={showField}
               />
-              <SegmentSeparator/>
+              <SegmentSeparator />
               {nextOfKins.map((kin, index) => {
                 return (
                   <NextOfKin
@@ -116,17 +122,12 @@ function LandlordStepper() {
                   />
                 )
               })}
-              <SegmentSeparator/>
-              {attachments.map((attach, index) => {
-                return (
-                  <Attachment
-                    attachments={attachments}
-                    attachment={attach}
-                    index={index}
-                    attachmentOwner={'Landlord'}
-                  />
-                )
-              })}
+              <SegmentSeparator />
+              <Attachment
+                attachments={attachments}
+                documentTypes = {documentTypes}
+                attachmentOwner={'Landlord'}
+              />
             </div>            
           )
         case 1:
@@ -141,6 +142,7 @@ function LandlordStepper() {
                     index={index}
                     propertyTypes={propertyTypes}
                     bedrooms={bedrooms}
+                    regions= {geographicRegions}
                   />
                 )
               })}
@@ -150,15 +152,10 @@ function LandlordStepper() {
                   <PropertyPaymentInformation
                     bankDetail={bankDetail}
                     bankDetails={bankDetails}
+                    providers={serviceProviders}
                     index={index}
                     banks={banks}
                   />
-                )
-              })}
-              <SegmentSeparator/>
-              {attachments.map((attach, index) => {
-                return (
-                  <Attachment attachments={attachments} attachment={attach} index={index} attachmentOwner={'Property'}/>
                 )
               })}
             </div>
