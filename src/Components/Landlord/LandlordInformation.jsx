@@ -4,8 +4,59 @@ import '../CSS/landlord.css'
 
 const selectDummy = ['a','b','c','d']
 
+function addOptions(value, name) {
+    return <option value={value.id}>{value[name]}</option>
+  }
 
-export default function LandlordInformation({landlord, setLandlord, countries, idDocuments, showField}) {
+  function showField(fieldProperties, object, setObject) {
+    switch (fieldProperties.type) {
+      case 'text':
+        return (
+          <div className='flex flex-row col-6' key={fieldProperties.name}>
+            <div className='basis-1/3 text-end mr-2 flex justify-end items-center'>
+              <label className='label-style'>{fieldProperties.label}</label>
+              {fieldProperties.required ? <label className='asterisk-field'>*</label> : null}
+            </div>
+            <input placeholder={fieldProperties.placeholder}
+              value={object[fieldProperties.name]}
+              className='basis-2/3 input-field-style pl-4'
+              id={fieldProperties.name}
+              onChange={e => {
+                setObject({ ...object, [fieldProperties.name]: e.target.value });
+              }} />
+          </div>
+        )
+
+      case 'select':
+        return (
+          <div className='flex flex-row col-6' key={fieldProperties.name}>
+            <div className='basis-1/3 text-end mr-2 flex justify-end items-center'>
+              <label className='label-style'>{fieldProperties.label}</label>
+              {fieldProperties.required ? <label className='asterisk-field'>*</label> : null}
+            </div>
+            <select name={fieldProperties.name}
+              value={object.hasOwnProperty(fieldProperties.name) ?
+                object[fieldProperties.name].id :
+                  null
+                }
+              className='basis-2/3 input-field-style pl-4'
+              onChange={e => {
+                setObject({ ...object, [fieldProperties.name]:{id: e.target.value} });
+              }}
+            >
+              <option hidden disabled selected value>--- Select {fieldProperties.placeholder} ---</option>
+              {fieldProperties.options.map(option => addOptions(option, fieldProperties.field))}
+            </select>
+          </div>
+        )
+      default:
+        break;
+    }
+
+  }
+
+
+export default function LandlordInformation({landlord, setLandlord, countries, idDocuments}) {
     const fields = [
         { name: "firstName", type: 'text', placeholder: 'First Name', value: '', required: true, label: 'First Name ' },
         { name: "middleName", type: 'text', placeholder: 'Middle Name', value: '', required: false, label: 'Middle Name ' },
