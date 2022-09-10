@@ -73,11 +73,9 @@ function LandlordStepper() {
   };
 
   //sets complete to a stepper when done
+  //meshack this is the method note::::
   const handleComplete = () => {
-    const newCompleted = completed;
-    newCompleted[activeStep] = true;
-    setCompleted(newCompleted);
-    handleNext();
+  
   };
   //handles reset to a stepper
   const handleReset = () => {
@@ -219,18 +217,22 @@ function LandlordStepper() {
 
                   <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                     {/* handles back event and its disabled on the first step */}
+                 
+                    <Box sx={{ flex: '1 1 auto' }} />
+                    {/* handles next event and shows completed when all steps are completed or current step completed */}
                     <Button
-                      color="inherit"
+                      
                       hidden={activeStep === 0}
                       onClick={handleBack}
                       sx={{ mr: 1 }}
                     >
                       Back
                     </Button>
-                    <Box sx={{ flex: '1 1 auto' }} />
-                    {/* handles next event and shows completed when all steps are completed or current step completed */}
-
-                    <Button onClick={handleNext} sx={{ mr: 1 }}>
+                    <Button
+                    hidden={isLastStep()}
+                     onClick={handleNext} sx={{ mr: 1 }}
+                    >
+                      
                       Next
                     </Button>
                     {activeStep !== steps.length &&
@@ -240,14 +242,15 @@ function LandlordStepper() {
                         </Typography>
                       ) : (
                         <Button onClick={handleComplete}>
-                          {completedSteps() === totalSteps() - 1
+                          {isLastStep()
                             ? 'Finish'
-                            : 'Complete Step'}
+                            : ''}
                         </Button>
                       ))}
                   </Box>
                 </Fragment>
-              )}
+              )
+              }
             </div>
           </form>
           
