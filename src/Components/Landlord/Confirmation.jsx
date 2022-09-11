@@ -34,22 +34,22 @@ function showObject(object, title){
     )
 }
 
-export default function Confirmation({landlord, properties, bankDetails, nextOfKins, attachments}) {
+export default function Confirmation({landlord}) {
     return (
         <div>
-            {showObject(landlord,'Personal')}
+            {showObject(landlord.landlordInfo,'Personal')}
             {
-                properties.map((property) => showObject(property, 'Property'))
+                landlord.properties.map((property) => showObject(property, 'Property'))
             }
             
             {
-                bankDetails.map((bankDetail) => showObject(bankDetail, 'Payment'))
+                landlord.paymentDetails.map((bankDetail) => showObject(bankDetail, 'Payment'))
             }
             {
-                nextOfKins.map((nextOfKin) => showObject(nextOfKin, 'Next Of Kin'))
+                landlord.nextOfKins.map((nextOfKin) => showObject(nextOfKin, 'Next Of Kin'))
             }
             {
-                attachments.map((attach) => showObject(attach, 'Attachment'))
+                landlord.attachmentFiles.map((attach) => showObject(attach, 'Attachment'))
             }
         </div>
         

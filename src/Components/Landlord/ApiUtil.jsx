@@ -62,16 +62,13 @@ function PostFile(formData) {
         });
 }
 
-function PostLandlord(landlordInfo, nextOfKins, bankDetails, properties, attachments, setResponse){
+function PostLandlord(currentState, setResponse){
     const landlord = {
-        ...landlordInfo,
-        nextOfKin: nextOfKins,
-        bankDetails: bankDetails,
-        property: Array.from(properties,(property,index) => {
-            property['bankDetail'] = bankDetails[index]
-            return property
-        } ),
-        attachmentFiles: attachments
+        ...currentState.landlordInfo,
+        nextOfKin: currentState.nextOfKins,
+        bankDetails: currentState.paymentDetails,
+        property: currentState.properties,
+        attachmentFiles: currentState.attachmentFiles
     }
 
     axios.post(`${host}/services/selfOnBoardLandlord/selfOnBoardLandlord`, landlord)

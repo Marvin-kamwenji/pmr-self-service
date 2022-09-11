@@ -13,17 +13,24 @@ import PropertyPaymentInformation from './PropertyPaymentInformation';
 import Confirmation from "./Confirmation";
 import SegmentSeparator from "./SegmentSeparator";
 import { useEffect } from "react";
-import {ApiUtil} from "./ApiUtil";
+import {ApiUtil, PostLandlord} from "./ApiUtil";
+import { connect } from "react-redux";
 
 const steps = ['Personal Information', 'Property Information', 'Confirmation']
 
-function LandlordStepper() {
+function mapStateToProps(state){
+  return {
+    currentState: {
+      landlord: state.landlordInfoReducer
+    }
+  }
+}
+
+function LandlordStepper({currentState}) {
   const [activeStep, setActiveStep] = useState(0);
   const [completed, setCompleted] = useState({});
-  const [landlord, setLandlord] = useState({});
-  const [nextOfKins, setNextOfKins] = useState([{}]);
-  const [bankDetails, setBankDetails] = useState([{}]);
-  const [properties, setProperties] = useState([{}]);
+  const [kinIndex, setKinIndex] = useState([0]);
+  const [propertyIndex, setPropertyIndex] = useState([0]);
   const [attachments, setAttachments] = useState([{}]);
   const [countries, setCountries] = useState([]);
   const [idDocuments, setIdDocuments] = useState([]);
@@ -34,6 +41,7 @@ function LandlordStepper() {
   const [serviceProviders, setProviders] = useState([]);
   const [documentTypes, setDocumentTypes] = useState([]);
   const [postResponse, setResponse] = useState({});
+
 
   // shows total steps in a stepper
   const totalSteps = () => {
@@ -75,7 +83,8 @@ function LandlordStepper() {
   //sets complete to a stepper when done
   //meshack this is the method note::::
   const handleComplete = () => {
-  
+    console.log(currentState.landlord);
+    PostLandlord(currentState.landlord, setResponse);
   };
   //handles reset to a stepper
   const handleReset = () => {
@@ -94,7 +103,7 @@ function LandlordStepper() {
       setProviders,
       setDocumentTypes
     );
-  });
+  },[]);
 
   const showComponent = (step) => {
       switch (step) {
@@ -102,17 +111,13 @@ function LandlordStepper() {
           return (
             <div className="col-10">
               <LandlordInformation
-                landlord={landlord}
-                setLandlord={setLandlord}
                 countries={countries}
                 idDocuments={idDocuments}
               />
               <SegmentSeparator />
-              {nextOfKins.map((kin, index) => {
+              {kinIndex.map((kin, index) => {
                 return (
                   <NextOfKin
-                    nextOfKin={kin}
-                    kins={nextOfKins}
                     index={index}
                   />
                 )
@@ -129,40 +134,30 @@ function LandlordStepper() {
           return (
             <div className='col-10'>
               <SegmentSeparator border= {false}/>
-              {properties.map((property, index) => {
+              {propertyIndex.map((property, index) => {
                 return (
-                  <PropertyInformation
-                    properties={properties}
-                    property={property}
-                    index={index}
-                    propertyTypes={propertyTypes}
-                    bedrooms={bedrooms}
-                    regions= {geographicRegions}
-                  />
-                )
-              })}
-              <SegmentSeparator/>
-              {bankDetails.map((bankDetail, index) => {
-                return (
-                  <PropertyPaymentInformation
-                    bankDetail={bankDetail}
-                    bankDetails={bankDetails}
-                    providers={serviceProviders}
-                    index={index}
-                    banks={banks}
-                  />
+                  <div>
+                    <PropertyInformation
+                      index={index}
+                      propertyTypes={propertyTypes}
+                      bedrooms={bedrooms}
+                      regions={geographicRegions}
+                    />
+                    <SegmentSeparator/>
+                    <PropertyPaymentInformation
+                      providers={serviceProviders}
+                      index={index}
+                      banks={banks}
+                    />
+                  </div>
+                  
                 )
               })}
             </div>
           )  
         case 2:
           return (
-            <Confirmation
-              landlord={landlord}
-              properties={properties}
-              bankDetails={bankDetails}
-              nextOfKins={nextOfKins}
-              attachments={attachments}
+            <Confirmation landlord={currentState.landlord}
             />
           )
         default:
@@ -260,4 +255,4 @@ function LandlordStepper() {
   )
 }
 
-export default LandlordStepper
+export default connect(mapStateToProps)(LandlordStepper)

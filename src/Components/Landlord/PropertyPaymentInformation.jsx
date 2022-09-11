@@ -1,13 +1,28 @@
 import React, {useState} from 'react';
 import '../CSS/landlord.css';
 
-const selectDummy = ['a','b','c','d']
+import {connect} from 'react-redux';
+import * as ACTIONS from '../../actions/actions'
+
+function mapStateToProps(state){
+  return {
+    currentState: {
+      paymentDetails: state.landlordInfoReducer.paymentDetails
+    }
+  }
+}
+
+function mapDispatchToProps(dispatch){
+  return{
+    updatePaymentDetails: (paymentDetails) => dispatch(ACTIONS.payment_info(paymentDetails))
+  }
+}
 
 function addOptions(value, name) {
   return <option value={value.id}>{value[name]}</option>
 }
 
-function showField(fieldProperties, bankDetail, setBankDetail, bankDetails, index, setBranches) {
+function showField(fieldProperties, payDetail, setPayDetail, payDetails, updatePayDetails, setBranches) {
   switch (fieldProperties.type) {
     case 'text':
       return (
@@ -18,10 +33,12 @@ function showField(fieldProperties, bankDetail, setBankDetail, bankDetails, inde
           </div>
           <input placeholder={fieldProperties.placeholder}
             className='basis-2/3 input-field-style pl-4' id={fieldProperties.name}
-            value={bankDetail[fieldProperties.name]}
+            value={payDetail.hasOwnProperty([fieldProperties.name]) ? payDetail[fieldProperties.name] : null}
             onChange={e => {
-              setBankDetail({ ...bankDetail, [fieldProperties.name]: e.target.value });
-              bankDetails[index] = bankDetail
+              setPayDetail({ ...payDetail, [fieldProperties.name]: e.target.value });
+              let payDetailsCopy = [...payDetails];
+              payDetailsCopy[payDetail.index]= payDetail;
+              updatePayDetails(payDetailsCopy);
             }} />
         </div>
       )
@@ -33,13 +50,15 @@ function showField(fieldProperties, bankDetail, setBankDetail, bankDetails, inde
             {fieldProperties.required ? <label className='asterisk-field'>*</label> : null}
           </div>
           <select name={fieldProperties.name} className='basis-2/3 input-field-style pl-4'
-            value={bankDetail.hasOwnProperty([fieldProperties.name]) ? bankDetail[fieldProperties.name].id : null}
+            value={payDetail.hasOwnProperty([fieldProperties.name]) ? payDetail[fieldProperties.name].id : null}
             onChange={e => {
               if(fieldProperties.name === 'bank'){
-                setBranches(fieldProperties.options.find(bank => bank.id == e.target.value).bankBranches)
+                setBranches(fieldProperties.options.find(bank => bank.id === e.target.value).bankBranches)
               }
-              setBankDetail({ ...bankDetail, [fieldProperties.name]:{id: e.target.value} });
-              bankDetails[index] = bankDetail
+              setPayDetail({ ...payDetail, [fieldProperties.name]:{id: e.target.value} });
+              let payDetailsCopy = [...payDetails];
+              payDetailsCopy[payDetail.index]= payDetail;
+              updatePayDetails(payDetailsCopy);
             }}>
               <option hidden disabled selected value>--- Select {fieldProperties.placeholder} ---</option>
             {fieldProperties.options.map(option => addOptions(option, fieldProperties.field))}
@@ -51,7 +70,7 @@ function showField(fieldProperties, bankDetail, setBankDetail, bankDetails, inde
   }
 }
 
-export default function PropertyPaymentInformation({bankDetail, bankDetails, index, banks, providers}) {  
+function PropertyPaymentInformation({index, banks, providers, currentState, updatePaymentDetails}) {  
   const [bankBranches, setBranches] = useState([]);
   const fields = [
     { name: "bank", type: 'select', placeholder: 'Bank Name', value: '', required: true, label: 'Bank Name ',options: banks, field:'name' },
@@ -61,7 +80,15 @@ export default function PropertyPaymentInformation({bankDetail, bankDetails, ind
     { name: "accountNo", type: 'text', placeholder: 'Account No', value: '', required: false, label: 'Account No ' },
     { name: "accountNoMobile", type: 'text', placeholder: 'Account No', value: '', required: false, label: 'Account No ' },
 ]
-  const [bank, setBank] = useState(bankDetail);
+
+var payDetailFromState = currentState.paymentDetails.find(p => p.index === index);
+if (typeof payDetailFromState === 'undefined'){
+  payDetailFromState = {index}
+}
+
+const [payDetail, setPayDetail] = useState(payDetailFromState);
+
+
   return (
       <div className='flex flex-column'>
           <div className='flex'>
@@ -73,8 +100,10 @@ export default function PropertyPaymentInformation({bankDetail, bankDetails, ind
               </div>
           </div>
           <div className='flex flex-row flex-wrap justify-center space-y-3' >
-              {fields.map((field) => {return (showField(field, bank, setBank, bankDetails, index, setBranches))})}
+              {fields.map((field) => {return (showField(field, payDetail, setPayDetail, currentState.paymentDetails, updatePaymentDetails, setBranches))})}
           </div>
       </div>
   )
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(PropertyPaymentInformation)

@@ -1,14 +1,30 @@
-import React from 'react';
-import '../CSS/landlord.css'
+import React, { useState } from 'react';
+import '../CSS/landlord.css';
+import {connect} from 'react-redux';
+import * as ACTIONS from '../../actions/actions'
 
 
-const selectDummy = ['a','b','c','d']
+
+function mapStateToProps(state){
+  return{
+    currentState: {
+      landlordInfo: state.landlordInfoReducer.landlordInfo
+    }
+  }
+}
+
+function mapDispatchToProps(dispatch){
+  return {
+    updateLandlordInfo: (landlordInfo) => dispatch(ACTIONS.landlord_info(landlordInfo))
+  }
+}
+
 
 function addOptions(value, name) {
     return <option value={value.id}>{value[name]}</option>
   }
 
-  function showField(fieldProperties, object, setObject) {
+  function showField(fieldProperties, landlordInfo, setLandlordInfo, updateLandlordInfo) {
     switch (fieldProperties.type) {
       case 'text':
         return (
@@ -18,11 +34,12 @@ function addOptions(value, name) {
               {fieldProperties.required ? <label className='asterisk-field'>*</label> : null}
             </div>
             <input placeholder={fieldProperties.placeholder}
-              value={object[fieldProperties.name]}
+              value={landlordInfo.hasOwnProperty([fieldProperties.name]) ? landlordInfo[fieldProperties.name] : null}
               className='basis-2/3 input-field-style pl-4'
               id={fieldProperties.name}
               onChange={e => {
-                setObject({ ...object, [fieldProperties.name]: e.target.value });
+                setLandlordInfo({...landlordInfo, [fieldProperties.name]: e.target.value});
+                updateLandlordInfo(landlordInfo);
               }} />
           </div>
         )
@@ -35,13 +52,14 @@ function addOptions(value, name) {
               {fieldProperties.required ? <label className='asterisk-field'>*</label> : null}
             </div>
             <select name={fieldProperties.name}
-              value={object.hasOwnProperty(fieldProperties.name) ?
-                object[fieldProperties.name].id :
+              value={landlordInfo.hasOwnProperty(fieldProperties.name) ?
+                landlordInfo[fieldProperties.name].id :
                   null
                 }
               className='basis-2/3 input-field-style pl-4'
               onChange={e => {
-                setObject({ ...object, [fieldProperties.name]:{id: e.target.value} });
+                setLandlordInfo({...landlordInfo, [fieldProperties.name]: {id: e.target.value}});
+                updateLandlordInfo(landlordInfo);
               }}
             >
               <option hidden disabled selected value>--- Select {fieldProperties.placeholder} ---</option>
@@ -55,8 +73,7 @@ function addOptions(value, name) {
 
   }
 
-
-export default function LandlordInformation({landlord, setLandlord, countries, idDocuments}) {
+function LandlordInformation({countries, idDocuments, currentState, updateLandlordInfo}) {
     const fields = [
         { name: "firstName", type: 'text', placeholder: 'First Name', value: '', required: true, label: 'First Name ' },
         { name: "middleName", type: 'text', placeholder: 'Middle Name', value: '', required: false, label: 'Middle Name ' },
@@ -69,6 +86,8 @@ export default function LandlordInformation({landlord, setLandlord, countries, i
         { name: "identificationType", type: 'select', placeholder: 'Identification Document', value: {}, required: true, label: 'Identification Document ', options: idDocuments, field: 'identificationName'},
         { name: "identificationNo", type: 'text', placeholder: 'Identification No', value: '', required: true, label: 'Identification Number '},
     ]
+
+    const [landlordInfo, setLandlordInfo] = useState(currentState.landlordInfo);
     
     return (
         <div className='flex flex-column mt-4'>
@@ -83,21 +102,26 @@ export default function LandlordInformation({landlord, setLandlord, countries, i
                 <div className='col-span-2'>
                     <input type='radio' id='individual' name='landlordType' className='radio-style' value='INDIVIDUAL'
                         onChange={e => {
-                            setLandlord({ ...landlord, [e.target.id]: e.target.value });
+                            setLandlordInfo({...landlordInfo, [e.target.name]: e.target.value});
+                            updateLandlordInfo(landlordInfo);
                         }}
                     />
                     <label for='individual' className='label-style pl-2 pr-2' >Individual</label>
                     <input type='radio' id='corporate' name='landlordType' className='radio-style' value='CORPORATE'
                         onChange={e => {
-                            setLandlord({ ...landlord, [e.target.id]: e.target.value });
+                            setLandlordInfo({...landlordInfo, [e.target.name]: e.target.value});
+                            updateLandlordInfo(landlordInfo);
                         }}
                     />
                     <label for='corporate' className='label-style pl-2 pr-2' >Corporate</label>
                 </div>
             </div>
             <div className='flex flex-row flex-wrap justify-center space-y-3' >
-                {fields.map((field) => { return (showField(field, landlord, setLandlord))})}
+                {fields.map((field) => { return (showField(field, landlordInfo, setLandlordInfo, updateLandlordInfo))})}
             </div>
         </div>
     )
 }
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(LandlordInformation);
