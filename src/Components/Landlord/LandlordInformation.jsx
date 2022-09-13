@@ -75,9 +75,9 @@ function addOptions(value, name) {
 
 function LandlordInformation({countries, idDocuments, currentState, updateLandlordInfo}) {
     const fields = [
-        { name: "firstName", type: 'text', placeholder: 'First Name', value: '', required: true, label: 'First Name ' },
-        { name: "middleName", type: 'text', placeholder: 'Middle Name', value: '', required: false, label: 'Middle Name ' },
-        { name: "lastName", type: 'text', placeholder: 'Last Name', value: '', required: true, label: 'Last Name ' },
+        { name: "landlordFirstName", type: 'text', placeholder: 'First Name', value: '', required: true, label: 'First Name ' },
+        { name: "landlordMiddleName", type: 'text', placeholder: 'Middle Name', value: '', required: false, label: 'Middle Name ' },
+        { name: "landlordLastName", type: 'text', placeholder: 'Last Name', value: '', required: true, label: 'Last Name ' },
         { name: "address", type: 'text', placeholder: 'Address', value: '', required: true, label: 'Address ' },
         { name: "mobileNo", type: 'text', placeholder: '7743****', value: '', required: true, label: 'Registered Mobile Number ' },
         { name: "email", type: 'text', placeholder: 'sample@example.com', value: '', required: false, label: 'Email ' },

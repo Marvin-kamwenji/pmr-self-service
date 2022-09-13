@@ -73,7 +73,7 @@ function showField(fieldProperties, payDetail, setPayDetail, payDetails, updateP
 function PropertyPaymentInformation({index, banks, providers, currentState, updatePaymentDetails}) {  
   const [bankBranches, setBranches] = useState([]);
   const fields = [
-    { name: "bank", type: 'select', placeholder: 'Bank Name', value: '', required: true, label: 'Bank Name ',options: banks, field:'name' },
+    { name: "Bank", type: 'select', placeholder: 'Bank Name', value: '', required: true, label: 'Bank Name ',options: banks, field:'name' },
     { name: "serviceProvider", type: 'select', placeholder: 'Service Name', value: '', required: false, label: 'Mobile Network ', options: providers, field: 'name' },
     { name: "bankBranch", type: 'select', placeholder: 'Branch Name', value: '', required: true, label: 'Bank Branch ', options: bankBranches, field:'bankBranchName' },
     { name: "accountName", type: 'text', placeholder: 'Account Name', value: '', required: true, label: 'Account Name ' },

@@ -85,7 +85,7 @@ function PropertyInformation({index, propertyTypes, bedrooms, regions, currentSt
     {name: "propertyType", type: 'select', placeholder: 'Type', value: '', required: true, label: 'Property Type ', options: propertyTypes, field: 'propertyType'},
     {name: "address", type: 'text', placeholder: 'Address', value: '', required: true, label: 'Address '},
     {name: "propertyName", type: 'text', placeholder: 'Property Name', value: '', required: true, label: 'Property Name '},
-    {name: "regMobileNo", type: 'text', placeholder: '700*****', value: '', required: true, label: 'Registered Mobile No '},
+    {name: "mobile", type: 'text', placeholder: '700*****', value: '', required: true, label: 'Registered Mobile No '},
     {name: "bedroom", type: 'select', placeholder: 'No of Bedrooms', value: '', required: true, label: 'Bedroom', options: bedrooms, field: 'description'},
     {name: "email", type: 'text', placeholder: 'sample@example.com', value: '', required: false, label: 'Email '},
     {name: "propertyIdentity", type: 'text', placeholder: 'House 10', value: '', required: true, label: 'Property Identity '},
