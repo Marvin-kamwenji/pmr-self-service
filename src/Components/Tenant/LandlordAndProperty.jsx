@@ -6,7 +6,7 @@ function LandlordAndProperty() {
         <div>
             <h1 className="contentHeadings mb-2 mt-2">LANDLORD INFORMATION</h1>
 
-            <form>
+            {/* <form> */}
             {/* ============================================================================================== */}
             {/* ============================= LANDLORD FIRST NAME ROW ======================================== */}
             {/* ============================================================================================== */}
@@ -86,8 +86,8 @@ function LandlordAndProperty() {
                      <label className="tenantAsteriks ml-1">*</label>
                </label>
                     <div className="col-sm-4">
-                        <select id="inputState" class="form-select">
-                             <option value="default" selected>Apartment</option>
+                        <select id="inputState" className="form-select">
+                             <option value="default">Apartment</option>
                              <option>...</option>
                         </select>
                    </div>
@@ -135,8 +135,8 @@ function LandlordAndProperty() {
                      <label className="tenantAsteriks ml-1">*</label>
                </label>
                     <div className="col-sm-4">
-                        <select id="inputState" class="form-select">
-                             <option value="default" selected>2 Bedroom</option>
+                        <select id="inputState" className="form-select">
+                             <option value="default" >2 Bedroom</option>
                              <option>...</option>
                         </select>
                    </div>
@@ -172,8 +172,8 @@ function LandlordAndProperty() {
                   <label className="tenantAsteriks ml-1">*</label>
              </label>
                    <div className="col-sm-4">
-                        <select id="inputState" class="form-select">
-                             <option value="default" selected disabled>Region</option>
+                        <select id="inputState" className="form-select">
+                             <option value="default" disabled>Region</option>
                              <option>...</option>
                         </select>
                    </div>
@@ -207,7 +207,7 @@ function LandlordAndProperty() {
                     </div>
              </div>
 
-            </form>
+            {/* </form> */}
         </div>
      );
 

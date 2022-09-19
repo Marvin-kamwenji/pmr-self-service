@@ -11,6 +11,7 @@ import Step from '@mui/material/Step';
 import StepButton from '@mui/material/StepButton';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import axios from 'axios';
 
 
 
@@ -46,6 +47,12 @@ function TenantRegistration() {
     landlordFirstName: "",
     
   });
+
+  const submitHandler = event => {
+    event.preventDefault();
+    axios.post('http://localhost:8080/rest/services/selfOnBoardTenant/selfOnBoard')
+    console.log(formData);
+  }
 
   /*======================================================================================================== */
   /*=========================================================================================================*/
@@ -140,9 +147,11 @@ function TenantRegistration() {
             ))}
           </Stepper>
 
-          <form onSubmit={e => {
+          {/* <form onSubmit={e => {
             e.preventDefault();
-          }}>
+          }}> */}
+
+          <form onSubmit={submitHandler}>
 
           <div>
             {allStepsCompleted() ? (
@@ -198,9 +207,9 @@ function TenantRegistration() {
                         Step {activeStep + 1} already completed
                       </Typography>
                     ) : (
-                      <Button onClick={handleComplete}>
+                      <Button type="submit" onClick={handleComplete}>
                         {isLastStep()
-                        // completedSteps() === totalSteps() - 1
+                        // completedSteps() === totalSteps() - 1 
                           ? 'Finish'
                           : ''}
                       </Button>

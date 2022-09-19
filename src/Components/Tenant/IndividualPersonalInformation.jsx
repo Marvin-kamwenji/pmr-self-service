@@ -21,7 +21,7 @@ function IndividualPersonalInformation({formData, setFormData}) {
     return ( 
         <div>
         <h1 className="contentHeadings mt-2 mb-2">INDIVIDUAL TENANT INFORMATION</h1>
-        <form onSubmit={submitHandler}>
+        {/* <form onSubmit={submitHandler}> */}
 
          {/* ============================================================================================= */}
          {/* ======================================= TENANT TYPE ROW ===================================== */}
@@ -58,7 +58,7 @@ function IndividualPersonalInformation({formData, setFormData}) {
                      <div className="col-sm-4">
                          <input type="text" className="form-control" placeholder="Search or Enter Tenant" 
                                aria-label="First name" value={formData.firstName}
-                               onChange={(event) => setFormData({...formData, firstName: event.target.value})} required/>
+                               onChange={(event) => setFormData({...formData, firstName: event.target.value})} />
                     </div>
 
                     <label className="col-sm-2 col-form-label tenantlabels">Identification Document</label>
@@ -106,7 +106,7 @@ function IndividualPersonalInformation({formData, setFormData}) {
                   <div className="col-sm-4">
                      <input type="text" className="form-control" placeholder="Last Name" 
                      aria-label="Last name" value={formData.lastName}
-                     onChange={(event) => setFormData({...formData, lastName: event.target.value})} required/>
+                     onChange={(event) => setFormData({...formData, lastName: event.target.value})} />
                  </div>
 
                 
@@ -116,7 +116,7 @@ function IndividualPersonalInformation({formData, setFormData}) {
                   <div className="col-sm-4">
                     <input type="text" className="form-control" placeholder="Address"
                        aria-label="Address" value={formData.tenantAddress}
-                       onChange={(event) => setFormData({...formData, tenantAddress: event.target.value})} required/>
+                       onChange={(event) => setFormData({...formData, tenantAddress: event.target.value})} />
                   </div>
 
               </div>
@@ -141,7 +141,7 @@ function IndividualPersonalInformation({formData, setFormData}) {
                     <div className="col-sm-4">
                        <input type="text" className="form-control" placeholder="700 *** ****" 
                           aria-label="Registered Mobile Number" value={formData.tenantMobileNumber}
-                          onChange={(event) => setFormData({...formData, tenantMobileNumber: event.target.value})} required />   
+                          onChange={(event) => setFormData({...formData, tenantMobileNumber: event.target.value})} />   
                     </div>
 
               </div>
@@ -161,7 +161,7 @@ function IndividualPersonalInformation({formData, setFormData}) {
                     <div className="col-sm-4">
                      <input type="text" className="form-control" placeholder="GH00000023" 
                        aria-label="TIN" value={formData.tin}
-                       onChange={(event) => setFormData({...formData, tin: event.target.value})} required/>
+                       onChange={(event) => setFormData({...formData, tin: event.target.value})} />
                    </div>
 
                 
@@ -192,7 +192,7 @@ function IndividualPersonalInformation({formData, setFormData}) {
                   <div className="col-sm-4">
                      <input type="text" className="form-control" placeholder="First Name" 
                         aria-label="Kin First name" value={formData.kinFirstName}
-                        onChange={(event) => setFormData({...formData, kinFirstName: event.target.value})} required/>
+                        onChange={(event) => setFormData({...formData, kinFirstName: event.target.value})} />
                   </div>
 
                 
@@ -202,7 +202,7 @@ function IndividualPersonalInformation({formData, setFormData}) {
                    <div className="col-sm-4">
                       <input type="text" className="form-control" placeholder="Address" 
                            aria-label="Kin Last name" value={formData.kinAddress}
-                           onChange={(event) => setFormData({...formData, kinAddress: event.target.value})} required/>   
+                           onChange={(event) => setFormData({...formData, kinAddress: event.target.value})} />   
                      </div>
 
               </div>
@@ -228,7 +228,7 @@ function IndividualPersonalInformation({formData, setFormData}) {
                   <div className="col-sm-4">
                     <input type="text" className="form-control" placeholder="700 *** ****" 
                        aria-label="Kin Mobile number" value={formData.kinMobileNumber}
-                       onChange={(event) => setFormData({...formData, kinMobileNumber: event.target.value})} required/>
+                       onChange={(event) => setFormData({...formData, kinMobileNumber: event.target.value})} />
                   </div>
 
               </div>
@@ -246,7 +246,7 @@ function IndividualPersonalInformation({formData, setFormData}) {
                    <div className="col-sm-4">
                        <input type="text" className="form-control" placeholder="Last Name" 
                          aria-label="Kin Last name" value={formData.kinLastName}
-                         onChange={(event) => setFormData({...formData, kinLastName: event.target.value})} required/> 
+                         onChange={(event) => setFormData({...formData, kinLastName: event.target.value})} /> 
                    </div>
 
                 
@@ -324,7 +324,7 @@ function IndividualPersonalInformation({formData, setFormData}) {
                     <div className="col-sm-4">
                       <input type="text" className="form-control" placeholder="0700000000" 
                           aria-label="Phone Number" value={formData.bankPhoneNumber}
-                          onChange={(event) => setFormData({...formData, bankPhoneNumber: event.target.value})} required/>  
+                          onChange={(event) => setFormData({...formData, bankPhoneNumber: event.target.value})} />  
                     </div>
 
               </div>
@@ -341,7 +341,7 @@ function IndividualPersonalInformation({formData, setFormData}) {
                     <div className="col-sm-4">
                       <input type="text" className="form-control" placeholder="Account Number" 
                          aria-label="Account Number" value={formData.bankAccountNumber}
-                         onChange={(event) => setFormData({...formData, bankAccountNumber: event.target.value})} required/>
+                         onChange={(event) => setFormData({...formData, bankAccountNumber: event.target.value})} />
                     </div>
 
               </div>
@@ -371,7 +371,7 @@ function IndividualPersonalInformation({formData, setFormData}) {
                   <div className="col-sm-4">
                      <input type="text" className="form-control" placeholder="Address" 
                          aria-label="Employer Address" value={formData.employerAddress}
-                         onChange={(event) => setFormData({...formData, employerAddress: event.target.value})} required/>
+                         onChange={(event) => setFormData({...formData, employerAddress: event.target.value})} />
                   </div>
 
               </div>
@@ -395,7 +395,7 @@ function IndividualPersonalInformation({formData, setFormData}) {
                      <div className="col-sm-4">
                         <input type="text" className="form-control" placeholder="700 *** ****" 
                             aria-label="Employer Mobile Number" value={formData.employerMobileNumber}
-                            onChange={(event) => setFormData({...formData, employerMobileNumber: event.target.value})} required/>
+                            onChange={(event) => setFormData({...formData, employerMobileNumber: event.target.value})} />
                      </div>
 
               </div>
@@ -415,7 +415,7 @@ function IndividualPersonalInformation({formData, setFormData}) {
                    <div className="col-sm-4">
                       <input type="text" className="form-control" placeholder="300,000" 
                         aria-label="Monthly Net Salary" value={formData.monthlyNetSalary}
-                        onChange={(event) => setFormData({...formData, monthlyNetSalary: event.target.value})} required/>  
+                        onChange={(event) => setFormData({...formData, monthlyNetSalary: event.target.value})} />  
                    </div>
 
                  
@@ -440,7 +440,7 @@ function IndividualPersonalInformation({formData, setFormData}) {
                     <div className="col-sm-4">
                        <input type="text" className="form-control" placeholder="Employer Name" 
                            aria-label="Employer Name" value={formData.employerName}
-                           onChange={(event) => setFormData({...formData, employerName: event.target.value})} required/>
+                           onChange={(event) => setFormData({...formData, employerName: event.target.value})} />
                     </div>
 
               </div>
@@ -457,14 +457,14 @@ function IndividualPersonalInformation({formData, setFormData}) {
                        <label className="tenantAsteriks ml-1">*</label>
                  </label>
                  <div className="col-sm-4">
-                     <input type="file"  required/>
+                     <input type="file" />
                  </div>
 
                  <label className="col-sm-3 col-form-label tenantlabels">Last 3 Months Bank Statements 
                        <label className="tenantAsteriks ml-1">*</label>
                  </label>
                  <div className="col-sm-3">
-                     <input type="file" multiple required/>
+                     <input type="file" multiple />
                  </div>
    
               </div>
@@ -478,14 +478,14 @@ function IndividualPersonalInformation({formData, setFormData}) {
                        <label className="tenantAsteriks ml-1">*</label>
                  </label>
                  <div className="col-sm-4">
-                     <input type="file"  required/>
+                     <input type="file"  />
                  </div>
 
                  <label className="col-sm-3 col-form-label tenantlabels">Attach Last 3 Months Pay Slip
                        <label className="tenantAsteriks ml-1">*</label>
                  </label>
                  <div className="col-sm-3">
-                     <input type="file" multiple required/>
+                     <input type="file" multiple />
                  </div>
    
               </div>
@@ -502,7 +502,7 @@ function IndividualPersonalInformation({formData, setFormData}) {
                        <label className="tenantAsteriks ml-1">*</label>
                  </label>
                  <div className="col-sm-4">
-                     <input type="file"  required/>
+                     <input type="file" />
                  </div>
 
                  </div>
@@ -513,7 +513,7 @@ function IndividualPersonalInformation({formData, setFormData}) {
 
 
             
-        </form>
+        {/* </form> */}
         </div>  
      );
 
