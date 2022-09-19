@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 
-const baseURL = "http://localhost:8080/rest/entities/Bank?fetchPlan=bank-fetch-plan";
+// const baseURL = "http://localhost:8080/rest/entities/Bank?fetchPlan=bank-fetch-plan";
 
 export default class BankBranchList extends React.Component {
     state = {
@@ -9,11 +9,11 @@ export default class BankBranchList extends React.Component {
     };
 
     componentDidMount() {
-        axios.get(baseURL)
+        axios.get("http://localhost:8080/rest/entities/Bank?fetchPlan=bank-fetch-plan")
              .then(res => {
                   const banks = res.data;
-                  this.setState({ banks })
-              .catch(error => console.log(error));
+                  this.setState({ banks });
+             
         });
       }
 
