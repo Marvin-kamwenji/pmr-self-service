@@ -40,7 +40,7 @@ function TenantRegistration() {
     bankName: "", serviceProviders: "",
     bankPhoneNumber: "",
     bankAccountNumber: "",
-    employerAddress: "",
+    employerAddress: "", 
     employerMobileNumber: "",
     monthlyNetSalary: "", employerEmailAddress: "",
     employerName: "",
@@ -70,7 +70,7 @@ function TenantRegistration() {
     } 
   
      else {
-    return <Confirmation />;
+    return <Confirmation formData={formData}/>;
     }
   
   }
