@@ -21,27 +21,32 @@ function mapDispatchToProps(dispatch){
   }
 }
 
-function showField(fieldProperties, nextOfKin, setNextOfKin, nextOfKins, updateNextOfKins) {
+function showField(fieldProperties, nextOfKin, setNextOfKin, nextOfKins, updateNextOfKins, props) {
   return (
     <div className='flex flex-row col-6' key={fieldProperties.name}>
-      <div className='basis-1/3 text-end mr-2 flex justify-end items-center'>
+      <div className='w-1/3 text-end mr-2 flex justify-end items-center'>
         <label className='label-style'>{fieldProperties.label}</label>
         {fieldProperties.required ? <label className='asterisk-field'>*</label>:null}
-      </div>     
-      <input placeholder={fieldProperties.placeholder}
-        className='basis-2/3 input-field-style pl-4' id={fieldProperties.name}
+      </div>    
+      <div className='w-2/3'>
+        <input placeholder={fieldProperties.placeholder}
+        className='input-field-style pl-4' id={fieldProperties.name}
         value={nextOfKin.hasOwnProperty([fieldProperties.name]) ? nextOfKin[fieldProperties.name] : null}
         onChange={e => {
           let nextKins = [...nextOfKins];
           setNextOfKin({ ...nextOfKin, [fieldProperties.name]: e.target.value });
           nextKins[nextOfKin.index]= nextOfKin;
           updateNextOfKins(nextKins); 
+          props.handleChange(e)
         }} />
+        {props.errors[fieldProperties.name] && <div className='validation-style'>{props.errors[fieldProperties.name] }</div>}
+      </div> 
+      
     </div>
   )
 }
 
-function NextOfKin({index, currentState, updateNextOfKins}) {
+function NextOfKin({index, currentState, updateNextOfKins, props}) {
   const fields = [
     {name: "kinFirstName", type: 'text', placeholder: 'First Name', value: '', required: true, label: 'First Name '},
     {name: "kinMiddleName", type: 'text', placeholder: 'Middle Name', value: '', required: false, label: 'Middle Name '},
@@ -64,7 +69,7 @@ function NextOfKin({index, currentState, updateNextOfKins}) {
         <h5 className='form-title-style col-span-2 col-start-2'>Landlord Next Of Kin</h5>
       </div>
       <div className='flex flex-row flex-wrap justify-center space-y-3' >
-        {fields.map((field) => {return (showField(field, kin, setNextOfKin, currentState.nextOfKins, updateNextOfKins))})}
+        {fields.map((field) => {return (showField(field, kin, setNextOfKin, currentState.nextOfKins, updateNextOfKins, props))})}
       </div>        
     </div>
   )

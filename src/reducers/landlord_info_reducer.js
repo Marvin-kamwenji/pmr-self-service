@@ -1,7 +1,9 @@
 import * as ACTION_TYPES from '../actions/action_types'
 
 const initialState = {
-    landlordInfo:{},
+    landlordInfo:{
+        landlordType: 'INDIVIDUAL'
+    },
     nextOfKins:[],
     properties: [],
     paymentDetails: [],
@@ -37,6 +39,8 @@ const landlordInfoReducer = (state = initialState, action) => {
                 ...state,
                 attachmentFiles: action.payload
         }
+        case ACTION_TYPES.LANDLORD:
+            return action.payload
         default:
             return state;
     }

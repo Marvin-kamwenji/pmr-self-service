@@ -7,6 +7,7 @@ import PropertyPaymentInformation from "../Landlord/PropertyPaymentInformation";
 import PropertyFinancialInformation from "../Landlord/PropertyFinancialInformation";
 import PropertyInformation from "../Landlord/PropertyInformation";
 import LandlordStepper from "../Landlord/LandlordStepper";
+import Playgroung from "../Landlord/Playground";
 
 function LandlordRegistration() {
   return (

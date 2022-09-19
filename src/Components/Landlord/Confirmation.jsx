@@ -36,21 +36,35 @@ function showObject(object, title){
 
 export default function Confirmation({landlord}) {
     return (
-        <div>
-            {showObject(landlord.landlordInfo,'Personal')}
-            {
+        <div> Confirm
+            {/* {showObject(landlord.landlordInfo,'Personal')} */}
+            {/* {
                 landlord.properties.map((property) => showObject(property, 'Property'))
-            }
+            } */}
             
-            {
+            {/* {
                 landlord.paymentDetails.map((bankDetail) => showObject(bankDetail, 'Payment'))
-            }
-            {
+            } */}
+            {/* {
                 landlord.nextOfKins.map((nextOfKin) => showObject(nextOfKin, 'Next Of Kin'))
-            }
-            {
-                landlord.attachmentFiles.map((attach) => showObject(attach, 'Attachment'))
-            }
+            } */}
+
+            {/* <div>
+                <div className=' grid grid-cols-12'>
+                    <div className='h-10 w-full mt-4 confirmation-banner col-span-10 col-start-2'>
+                        <h5 className='form-title-style-conf'>Attachment Information</h5>
+                    </div>
+                </div>
+                <div className=' grid grid-cols-16 mt-2'>
+                    <div className='flex flex-row flex-wrap col-span-10 col-start-3 space-y-1'>
+                        {
+                            landlord.attachmentFiles.map((attach) => attach.hasOwnProperty(attach.name) ?
+                            showField(attach.attachmentDocumentType.name, attach.name):null)
+                        }
+                    </div>
+                </div>
+            </div> */}
+            
         </div>
         
     )

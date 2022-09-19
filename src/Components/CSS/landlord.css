@@ -3,20 +3,20 @@
 @tailwind utilities;
 
 body{
-    font-family: 'Poppins'
+    font: normal normal normal 14px/23px Poppins;
 }
 .asterisk-field{
     color: red!important;
 }
 .input-field-style {
-    width: 450px;
+    width: 100%;
     height: 40px;
     border: 1px solid #CCCCCC;
     border-radius: 6px;
     opacity: 1;
 }
 .label-style {
-    font: normal normal normal 15px/23px Poppins;
+    font: normal normal normal 14px/23px Poppins;
     letter-spacing: 0px;
     color: #000000;
     text-transform: capitalize;
@@ -24,7 +24,7 @@ body{
 }
 .form-title-style {
     text-align: left;
-    font: normal normal 300 15px/23px Poppins;
+    font: normal normal 300 14px/23px Poppins;
     letter-spacing: 0px;
     color: #108CFF;
     text-transform: uppercase;
@@ -32,7 +32,7 @@ body{
 }
 .form-title-style-conf {
     text-align: left;
-    font: normal normal 300 15px/23px Poppins;
+    font: normal normal 300 14px/23px Poppins;
     letter-spacing: 0px;
     color: #108CFF;
     text-transform: capitalize;
@@ -43,7 +43,7 @@ body{
 }
 .file-field-style {
     width: 450px;
-    height: 50px;
+    height: 40px;
     border: 1px solid #CCCCCC;
     border-radius: 6px;
     opacity: 1;
@@ -53,7 +53,7 @@ body{
     color:rgb(114, 108, 108);
 }
 .label-style-conf {
-    font: normal normal normal 15px/23px Poppins;
+    font: normal normal normal 14px/23px Poppins;
     letter-spacing: 0px;
     color: #000000;
     text-transform: capitalize;
@@ -61,7 +61,7 @@ body{
 }
 .confirm-field {
     text-align: left;
-    font: normal normal 300 15px/23px Poppins;
+    font: normal normal 300 14px/23px Poppins;
     letter-spacing: 0px;
     color: #707070;
     opacity: 1;
@@ -71,4 +71,25 @@ body{
     opacity: 1;
     padding: 10px;
     text-transform: capitalize;
+}
+.success-title {
+    color: #6BC1B5;
+    font: normal normal normal 25px/38px Poppins;
+}
+
+.success-message {
+    text-align: center;
+    color: #909090;
+    font: normal normal medium 22px/33px Poppins;
+}
+
+.success-container {
+    height: 70vh;
+}
+
+.validation-style {
+    color: rgb(255, 6, 6);
+    text-align: left;
+    font-size: x-small;
+    padding-left: 10px;
 }

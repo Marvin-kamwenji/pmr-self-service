@@ -22,24 +22,28 @@ function addOptions(value, name) {
   return <option value={value.id}>{value[name]}</option>
 }
 
-function showField(fieldProperties, payDetail, setPayDetail, payDetails, updatePayDetails, setBranches) {
+function showField(fieldProperties, payDetail, setPayDetail, payDetails, updatePayDetails, setBranches, props) {
   switch (fieldProperties.type) {
     case 'text':
       return (
         <div className='flex flex-row col-6' key={fieldProperties.name}>
-          <div className='basis-1/3 text-end mr-2 flex justify-end items-center'>
+          <div className='w-1/3 text-end mr-2 flex justify-end items-center'>
             <label className='label-style'>{fieldProperties.label}</label>
             {fieldProperties.required ? <label className='asterisk-field'>*</label> : null}
           </div>
-          <input placeholder={fieldProperties.placeholder}
-            className='basis-2/3 input-field-style pl-4' id={fieldProperties.name}
+          <div className='w-2/3'>
+            <input placeholder={fieldProperties.placeholder}
+            className='input-field-style pl-4' id={fieldProperties.name}
             value={payDetail.hasOwnProperty([fieldProperties.name]) ? payDetail[fieldProperties.name] : null}
             onChange={e => {
               setPayDetail({ ...payDetail, [fieldProperties.name]: e.target.value });
               let payDetailsCopy = [...payDetails];
               payDetailsCopy[payDetail.index]= payDetail;
               updatePayDetails(payDetailsCopy);
+              props.handleChange(e);
             }} />
+            {props.errors[fieldProperties.name] && <div className='validation-style'>{props.errors[fieldProperties.name] }</div>}
+          </div>
         </div>
       )
     case 'select':
@@ -52,7 +56,7 @@ function showField(fieldProperties, payDetail, setPayDetail, payDetails, updateP
           <select name={fieldProperties.name} className='basis-2/3 input-field-style pl-4'
             value={payDetail.hasOwnProperty([fieldProperties.name]) ? payDetail[fieldProperties.name].id : null}
             onChange={e => {
-              if(fieldProperties.name === 'bank'){
+              if(fieldProperties.name === 'Bank'){
                 setBranches(fieldProperties.options.find(bank => bank.id === e.target.value).bankBranches)
               }
               setPayDetail({ ...payDetail, [fieldProperties.name]:{id: e.target.value} });
@@ -70,7 +74,7 @@ function showField(fieldProperties, payDetail, setPayDetail, payDetails, updateP
   }
 }
 
-function PropertyPaymentInformation({index, banks, providers, currentState, updatePaymentDetails}) {  
+function PropertyPaymentInformation({index, banks, providers, currentState, updatePaymentDetails, props}) {  
   const [bankBranches, setBranches] = useState([]);
   const fields = [
     { name: "Bank", type: 'select', placeholder: 'Bank Name', value: '', required: true, label: 'Bank Name ',options: banks, field:'name' },
@@ -81,10 +85,10 @@ function PropertyPaymentInformation({index, banks, providers, currentState, upda
     { name: "accountNoMobile", type: 'text', placeholder: 'Account No', value: '', required: false, label: 'Account No ' },
 ]
 
-var payDetailFromState = currentState.paymentDetails.find(p => p.index === index);
-if (typeof payDetailFromState === 'undefined'){
-  payDetailFromState = {index}
-}
+  var payDetailFromState = currentState.paymentDetails.find(p => p.index === index);
+  if (typeof payDetailFromState === 'undefined'){
+    payDetailFromState = {index}
+  }
 
 const [payDetail, setPayDetail] = useState(payDetailFromState);
 
@@ -100,7 +104,7 @@ const [payDetail, setPayDetail] = useState(payDetailFromState);
               </div>
           </div>
           <div className='flex flex-row flex-wrap justify-center space-y-3' >
-              {fields.map((field) => {return (showField(field, payDetail, setPayDetail, currentState.paymentDetails, updatePaymentDetails, setBranches))})}
+              {fields.map((field) => {return (showField(field, payDetail, setPayDetail, currentState.paymentDetails, updatePaymentDetails, setBranches, props))})}
           </div>
       </div>
   )

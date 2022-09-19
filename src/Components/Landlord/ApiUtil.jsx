@@ -14,7 +14,7 @@ const host = 'https://pmr-dev.k8s.tracom.co.ke:8445/rest';
     *service providers
 */
 
-function ApiUtil(setCountries, setIdDocuments, setPropertyTypes, setBedrooms, setBanks, setRegions, setProviders, setDocumentTypes) {
+function ApiUtil(setCountries, setIdDocuments, setPropertyTypes, setBedrooms, setBanks, setRegions, setProviders, updateAttachmentFiles) {
     Promise.all(
         [
             axios.get(`${host}/entities/Country`),
@@ -35,14 +35,32 @@ function ApiUtil(setCountries, setIdDocuments, setPropertyTypes, setBedrooms, se
             setBanks(response[4].data);
             setRegions(response[5].data);
             setProviders(response[6].data);
-            setDocumentTypes(response[7].data);
+            updateAttachments(updateAttachmentFiles, response[7].data)
         })
         .catch(error => {
             console.log(error)
         });
 }
 
+function updateAttachments(updateAttachmentFiles, documentTypes){
+    let tempAttachments = [];
+    documentTypes.map(
+      (docType) => {
+        tempAttachments.push(
+          {
+            attachmentDocumentType:{
+              id: docType.id,
+              name: docType.documentTypeName
+            }
+          }
+        )
+      }
+    );
+    updateAttachmentFiles(tempAttachments);
+}
+
 function PostFile(formData) {
+  const postPromise =
     axios
         .post(
             `${host}/files`,
@@ -53,32 +71,28 @@ function PostFile(formData) {
                 }
             }
         )
-        .then((response) => {
-            console.log(response.data)
-            return response.data;
-        })
+  const dataRefPromise = postPromise
+        .then((response) => response.data)
         .catch(function (error) {
             console.log(error);
         });
+
+  return dataRefPromise;
 }
 
-function PostLandlord(currentState, setResponse){
+function PostLandlord(currentState){
     const landlord = {
+      landlord: {
         ...currentState.landlordInfo,
         nextOfKin: currentState.nextOfKins,
         bankDetails: currentState.paymentDetails,
         property: currentState.properties,
         attachmentFiles: currentState.attachmentFiles
     }
+    }
 
-    axios.post(`${host}/services/selfOnBoardLandlord/selfOnBoardLandlord`, landlord)
-      .then(function (response) {
-        console.log(response);
-        setResponse(response)
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-
+    const postData = axios.post(`${host}/services/selfOnBoardLandlord/selfOnBoardLandlord`, landlord)
+    const postResponsePromise = postData.then((response) => response)
+    return postResponsePromise;
 }
 export {ApiUtil, PostLandlord, PostFile}

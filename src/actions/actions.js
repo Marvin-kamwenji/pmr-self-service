@@ -1,5 +1,8 @@
 import * as ACTION_TYPES from './action_types';
 
+
+
+
 export const landlord_info = (landlord_info) => {
     return {
         type : ACTION_TYPES.LANDLORD_INFO,
@@ -28,9 +31,29 @@ export const payment_info = (payment_info) => {
     }
 }
 
-export const attachment_info = (attachment_info) => {
+export const attachments_info = (attachments_info) => {
     return {
         type : ACTION_TYPES.ATTACHMENT_INFO,
-        payload: attachment_info
+        payload: attachments_info
+    }
+}
+
+export const landlord_success = () => {
+    return {
+        type : ACTION_TYPES.SUBMIT_SUCCESS
+    }
+}
+
+export const landlord_failure = (failure_cause) => {
+    return {
+        type: ACTION_TYPES.SUBMIT_FAILURE,
+        payload: failure_cause
+    }
+}
+
+export const landlord = (landlord) => {
+    return {
+        type: ACTION_TYPES.LANDLORD,
+        payload: landlord
     }
 }

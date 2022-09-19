@@ -25,24 +25,29 @@ function addOptions(value, name) {
   return <option value={value.id}>{value[name]}</option>
 }
 
-function showField(fieldProperties, propertyInfo, setPropertyInfo, properties, updateProperties) {
+function showField(fieldProperties, propertyInfo, setPropertyInfo, properties, updateProperties, props) {
   switch (fieldProperties.type) {
     case 'text':
       return (
         <div className='flex flex-row col-6' key={fieldProperties.name}>
-          <div className='basis-1/3 text-end mr-2 flex justify-end items-center'>
+          <div className='w-1/3 text-end mr-2 flex justify-end items-center'>
             <label className='label-style'>{fieldProperties.label}</label>
             {fieldProperties.required ? <label className='asterisk-field'>*</label> : null}
           </div>
-          <input placeholder={fieldProperties.placeholder}
-            className='basis-2/3 input-field-style pl-4' id={fieldProperties.name}
+          <div className='w-2/3'>
+            <input placeholder={fieldProperties.placeholder}
+            className='input-field-style pl-4' id={fieldProperties.name}
             value={propertyInfo.hasOwnProperty([fieldProperties.name]) ? propertyInfo[fieldProperties.name] : null}
             onChange={e => {
               setPropertyInfo({ ...propertyInfo, [fieldProperties.name]: e.target.value });
               let propertiesCopy = [...properties];
               propertiesCopy[propertyInfo.index]= propertyInfo;
               updateProperties(propertiesCopy);
+              props.handleChange(e)
             }} />
+            {props.errors[fieldProperties.name] && <div className='validation-style'>{props.errors[fieldProperties.name] }</div>}
+          </div>
+          
         </div>
       )
     case 'select':
@@ -80,7 +85,7 @@ function showField(fieldProperties, propertyInfo, setPropertyInfo, properties, u
   
 }
 
-function PropertyInformation({index, propertyTypes, bedrooms, regions, currentState, updateProperties}) {
+function PropertyInformation({index, propertyTypes, bedrooms, regions, currentState, updateProperties, props}) {
   const fields = [
     {name: "propertyType", type: 'select', placeholder: 'Type', value: '', required: true, label: 'Property Type ', options: propertyTypes, field: 'propertyType'},
     {name: "address", type: 'text', placeholder: 'Address', value: '', required: true, label: 'Address '},
@@ -109,39 +114,11 @@ function PropertyInformation({index, propertyTypes, bedrooms, regions, currentSt
       <div className='w-1/2 grid grid-cols-3 mb-4'>
         <h5 className='form-title-style col-span-2 col-start-2'>Property Information</h5>
       </div>
-      <div className='grid grid-cols-3 mb-2 w-1/2'>
-        <div className='text-start mr-2 flex justify-end items-center'>
-          <label className='label-style'>Property Type</label>
-          <label className='asterisk-field'>*</label>
-        </div>
-        <div className='col-span-2'>
-          <input type='radio' id='individual' name='landlordType' className='radio-style'
-            value='INDIVIDUAL'
-            onChange={e => {
-              setPropertyInfo({ ...propertyInfo, [e.target.id]: e.target.value });
-              let properties = [...currentState.properties];
-              properties[propertyInfo.index]= propertyInfo;
-              updateProperties(properties);
-            }}
-          />
-          <label for='individual' className='label-style pl-2 pr-2'>Individual</label>
-          <input type='radio' id='corporate' name='landlordType' className='radio-style'
-            value='CORPORATE'
-            onChange={e => {
-              setPropertyInfo({ ...propertyInfo, [e.target.id]: e.target.value });
-              let properties = [...currentState.properties];
-              properties[propertyInfo.index]= propertyInfo;
-              updateProperties(properties);
-            }}
-          />
-          <label for='corporate' className='label-style pl-2 pr-2' >Corporate</label>
-        </div>
-      </div>
       <div className='flex flex-row flex-wrap justify-center space-y-3' >
-        {fields.map((field) => {return showField(field, propertyInfo, setPropertyInfo, currentState.properties, updateProperties)})}
+        {fields.map((field) => {return showField(field, propertyInfo, setPropertyInfo, currentState.properties, updateProperties, props)})}
       </div>
       <SegmentSeparator/>
-      <PropertyFinancialInformation index={index}/>        
+      <PropertyFinancialInformation index={index} props={props}/>        
     </div>
   )
 }

@@ -15,23 +15,39 @@ import SegmentSeparator from "./SegmentSeparator";
 import { useEffect } from "react";
 import {ApiUtil, PostLandlord} from "./ApiUtil";
 import { connect } from "react-redux";
+import LandlordSuccess from "./LandlordSuccess";
+import * as ACTIONS from '../../actions/actions';
+import { Formik, Form, Field } from 'formik';
+import { LandlordInfoSchema } from "./ValidationSchema";
 
 const steps = ['Personal Information', 'Property Information', 'Confirmation']
 
 function mapStateToProps(state){
   return {
     currentState: {
-      landlord: state.landlordInfoReducer
+      landlord: state.landlordInfoReducer,
+      submissionSuccess: state.landlordSubmissionReducer
     }
   }
 }
 
-function LandlordStepper({currentState}) {
+function mapDispatchToProps(dispatch){
+  return {
+    submitSuccessful: () => dispatch(ACTIONS.landlord_success()),
+    submitFailed: (failure_cause) => dispatch(ACTIONS.landlord_failure(failure_cause)),
+    updateAttachmentFiles: (attachments) => dispatch(ACTIONS.attachments_info(attachments)),
+    updateLandlordFromStorage: (landlord) => dispatch(ACTIONS.landlord(landlord)),
+  }
+}
+
+function LandlordStepper({currentState, submitSuccessful, submitFailed, updateAttachmentFiles, updateLandlordFromStorage}) {
+
+
   const [activeStep, setActiveStep] = useState(0);
   const [completed, setCompleted] = useState({});
   const [kinIndex, setKinIndex] = useState([0]);
   const [propertyIndex, setPropertyIndex] = useState([0]);
-  const [attachments, setAttachments] = useState([{}]);
+  const [bankDetailIndex, setBankDetailIndex] = useState([0]);
   const [countries, setCountries] = useState([]);
   const [idDocuments, setIdDocuments] = useState([]);
   const [propertyTypes, setPropertyTypes] = useState([]);
@@ -39,9 +55,6 @@ function LandlordStepper({currentState}) {
   const [banks, setBanks] = useState([]);
   const [geographicRegions, setRegions] = useState([]);
   const [serviceProviders, setProviders] = useState([]);
-  const [documentTypes, setDocumentTypes] = useState([]);
-  const [postResponse, setResponse] = useState({});
-
 
   // shows total steps in a stepper
   const totalSteps = () => {
@@ -69,11 +82,13 @@ function LandlordStepper({currentState}) {
         steps.findIndex((step, i) => !(i in completed))
         : activeStep + 1;
     setActiveStep(newActiveStep);
+    localStorage.setItem('landlord_state', JSON.stringify(currentState.landlord));
   };
 
   //handles back event by decrementing  active step
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    localStorage.setItem('landlord_state',  JSON.stringify(currentState.landlord));
   };
 
   const handleStep = (step) => () => {
@@ -84,7 +99,19 @@ function LandlordStepper({currentState}) {
   //meshack this is the method note::::
   const handleComplete = () => {
     console.log(currentState.landlord);
-    PostLandlord(currentState.landlord, setResponse);
+    PostLandlord(currentState.landlord)
+    .then((res) => {
+      console.log(res)
+      if(res.status === 200 && res.data.code === 200){
+        submitSuccessful();
+      } else {
+        submitFailed(res.data)
+      }
+    }
+    )
+    .catch((error) => {
+      console.log('contact administrator')
+    });
   };
   //handles reset to a stepper
   const handleReset = () => {
@@ -101,11 +128,24 @@ function LandlordStepper({currentState}) {
       setBanks,
       setRegions,
       setProviders,
-      setDocumentTypes
+      updateAttachmentFiles
     );
+    
   },[]);
+ 
+// Feature: Retrieve state from local storage
 
-  const showComponent = (step) => {
+  // useEffect(() => {
+  //   try {
+  //     const landlord = JSON.parse(localStorage.getItem('landlord_state'));
+  //     updateLandlordFromStorage(landlord);
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // },[])
+
+
+  const showComponent = (step, props) => {
       switch (step) {
         case 0:
           return (
@@ -113,20 +153,21 @@ function LandlordStepper({currentState}) {
               <LandlordInformation
                 countries={countries}
                 idDocuments={idDocuments}
+                props = {props}
               />
               <SegmentSeparator />
               {kinIndex.map((kin, index) => {
                 return (
                   <NextOfKin
                     index={index}
+                    props = {props}
                   />
                 )
               })}
               <SegmentSeparator />
               <Attachment
-                attachments={attachments}
-                documentTypes = {documentTypes}
                 attachmentOwner={'Landlord'}
+                props = {props}
               />
             </div>            
           )
@@ -142,24 +183,35 @@ function LandlordStepper({currentState}) {
                       propertyTypes={propertyTypes}
                       bedrooms={bedrooms}
                       regions={geographicRegions}
-                    />
-                    <SegmentSeparator/>
-                    <PropertyPaymentInformation
-                      providers={serviceProviders}
-                      index={index}
-                      banks={banks}
+                      props = {props}
                     />
                   </div>
                   
                 )
               })}
+              <SegmentSeparator/>
+              {bankDetailIndex.map((detail, index) => {
+                return (<PropertyPaymentInformation
+                  providers={serviceProviders}
+                  index={index}
+                  banks={banks}
+                  props={props}
+                />)
+              })}
             </div>
           )  
         case 2:
-          return (
-            <Confirmation landlord={currentState.landlord}
-            />
-          )
+          if (currentState.submissionSuccess.submitSuccess) {
+            return (
+              <LandlordSuccess />
+            )
+          } else {
+            return (
+              <Confirmation landlord={currentState.landlord}
+              />
+            )
+          }
+          
         default:
           break;
       }
@@ -183,71 +235,79 @@ function LandlordStepper({currentState}) {
               </Step>
             ))}
           </Stepper>
-          <form onSubmit={e => {
-            e.preventDefault();
-          }}>
-            <div>
-              {allStepsCompleted() ? (
-                <Fragment>
-                  <Typography sx={{ mt: 2, mb: 1 }}>
-                    {/* displayy this when steps are finished */}
-                    All steps completed - you&apos;re finished
-                  </Typography>
-                  {/* handle reset by clicking reset btn */}
-                  <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-                    <Box sx={{ flex: '1 1 auto' }} />
-                    <Button onClick={handleReset}>Reset</Button>
-                  </Box>
-                </Fragment>
-              ) : (
-                <Fragment>
+          <Formik
+            initialValues={{...currentState.landlord}}
+            onSubmit={handleComplete}
+            validationSchema = {LandlordInfoSchema}
+          >
+            {props => (
+              <form onSubmit={props.handleSubmit}>
+                <div>
+                  {allStepsCompleted() ? (
+                    <Fragment>
+                      <Typography sx={{ mt: 2, mb: 1 }}>
+                        {/* displayy this when steps are finished */}
+                        All steps completed - you&apos;re finished
+                      </Typography>
+                      {/* handle reset by clicking reset btn */}
+                      <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+                        <Box sx={{ flex: '1 1 auto' }} />
+                        <Button onClick={handleReset}>Reset</Button>
+                      </Box>
+                    </Fragment>
+                  ) : (
+                    <Fragment>
 
-                  <div className="container">
-                    <div className='row justify-content-center'>
-                      {showComponent(activeStep)}
-                    </div>
-                  </div>
+                      <div className="container">
+                        <div className='row justify-content-center'>
+                          {showComponent(activeStep, props)}
+                        </div>
+                      </div>
 
 
 
-                  <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-                    {/* handles back event and its disabled on the first step */}
-                 
-                    <Box sx={{ flex: '1 1 auto' }} />
-                    {/* handles next event and shows completed when all steps are completed or current step completed */}
-                    <Button
-                      
-                      hidden={activeStep === 0}
-                      onClick={handleBack}
-                      sx={{ mr: 1 }}
-                    >
-                      Back
-                    </Button>
-                    <Button
-                    hidden={isLastStep()}
-                     onClick={handleNext} sx={{ mr: 1 }}
-                    >
-                      
-                      Next
-                    </Button>
-                    {activeStep !== steps.length &&
-                      (completed[activeStep] ? (
-                        <Typography variant="caption" sx={{ display: 'inline-block' }}>
-                          Step {activeStep + 1} already completed
-                        </Typography>
-                      ) : (
-                        <Button onClick={handleComplete}>
-                          {isLastStep()
-                            ? 'Finish'
-                            : ''}
+                      <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+                        {/* handles back event and its disabled on the first step */}
+
+                        <Box sx={{ flex: '1 1 auto' }} />
+                        {/* handles next event and shows completed when all steps are completed or current step completed */}
+                        <Button
+
+                          hidden={activeStep === 0}
+                          onClick={handleBack}
+                          sx={{ mr: 1 }}
+                        >
+                          Back
                         </Button>
-                      ))}
-                  </Box>
-                </Fragment>
-              )
-              }
-            </div>
-          </form>
+                        <Button
+                          hidden={isLastStep()}
+                          onClick={handleNext} sx={{ mr: 1 }}
+                        >
+
+                          Next
+                        </Button>
+                        {activeStep !== steps.length &&
+                          (completed[activeStep] ? (
+                            <Typography variant="caption" sx={{ display: 'inline-block' }}>
+                              Step {activeStep + 1} already completed
+                            </Typography>
+                          ) : (
+                            <Button type="submit" disabled = {props.isValid === false}>
+                              {isLastStep()
+                                ? 'Finish'
+                                : ''}
+                            </Button>
+                          ))}
+                      </Box>
+                    </Fragment>
+                  )
+                  }
+                </div>
+              </form>
+            )}
+            
+          </Formik>
+          
           
         </Box>
       </div>
@@ -255,4 +315,4 @@ function LandlordStepper({currentState}) {
   )
 }
 
-export default connect(mapStateToProps)(LandlordStepper)
+export default connect(mapStateToProps, mapDispatchToProps)(LandlordStepper)

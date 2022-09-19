@@ -26,25 +26,30 @@ function addOptions(value) {
   return <option value={value}>{value}</option>
 }
 
-function showField(fieldProperties, propertyInfo, setPropertyInfo, properties, updateProperties) {
+function showField(fieldProperties, propertyInfo, setPropertyInfo, properties, updateProperties, props) {
   
   switch (fieldProperties.type) {
     case 'text':
       return (
         <div className='flex flex-row col-6' key={fieldProperties.name}>
-          <div className='basis-1/3 text-end mr-2 flex justify-end items-center'>
+          <div className='w-1/3 text-end mr-2 flex justify-end items-center'>
             <label className='label-style'>{fieldProperties.label}</label>
             {fieldProperties.required ? <label className='asterisk-field'>*</label> : null}
           </div>
-          <input placeholder={fieldProperties.placeholder}
-            className='basis-2/3 input-field-style pl-4' id={fieldProperties.name}
-            value={propertyInfo.hasOwnProperty([fieldProperties.name]) ? propertyInfo[fieldProperties.name] : null}
-            onChange={e => {
-              setPropertyInfo({ ...propertyInfo, [fieldProperties.name]: e.target.value });
-              let propertiesCopy = [...properties];
-              propertiesCopy[propertyInfo.index]= propertyInfo;
-              updateProperties(propertiesCopy);
-            }} />
+          <div className='w-2/3'>
+            <input placeholder={fieldProperties.placeholder}
+              className='input-field-style pl-4' id={fieldProperties.name}
+              value={propertyInfo.hasOwnProperty([fieldProperties.name]) ? propertyInfo[fieldProperties.name] : null}
+              onChange={e => {
+                setPropertyInfo({ ...propertyInfo, [fieldProperties.name]: e.target.value });
+                let propertiesCopy = [...properties];
+                propertiesCopy[propertyInfo.index] = propertyInfo;
+                updateProperties(propertiesCopy);
+                props.handleChange(e)
+              }} />
+            {props.errors[fieldProperties.name] && <div className='validation-style'>{props.errors[fieldProperties.name]}</div>}
+          </div>
+  
         </div>
       )
     case 'select':
@@ -82,7 +87,7 @@ function showField(fieldProperties, propertyInfo, setPropertyInfo, properties, u
   }
 }
 
-function PropertyFinancialInformation({index, currentState, updateProperties}) {
+function PropertyFinancialInformation({index, currentState, updateProperties, props}) {
   const fields = [
   {name: "minimumOccupancyPeriod", type: 'text', placeholder: '12 Months', value: '', required: true, label: 'MinimumOccupancyPeriod '},
   {name: "totalDeposit", type: 'text', placeholder: '433000', value: '', required: false, label: 'Total Deposit '},
@@ -103,7 +108,7 @@ const [propertyInfo, setPropertyInfo] = useState(propertyFromState);
   return (
     <div className='flex flex-column'>
       <div className='flex flex-row flex-wrap justify-center space-y-3' >
-        {fields.map((field) => {return showField(field, propertyInfo, setPropertyInfo, currentState.properties, updateProperties)})}
+        {fields.map((field) => {return showField(field, propertyInfo, setPropertyInfo, currentState.properties, updateProperties, props)})}
       </div>        
     </div>
   )
