@@ -2,22 +2,19 @@ import React from 'react';
 import '../CSS/landlord.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCloudUpload } from '@fortawesome/free-solid-svg-icons'
+import PhoneInput from 'react-phone-input-2'
+import 'react-phone-input-2/lib/style.css'
 
-export default function Playgroung() {
+export default function Playground() {
   return (
-      <div>
-          <input type='file' className='invisible-field'/>
-          <label className='basis-5/12 file-field-style flex items-center' for='uploadedFile'>
-              <FontAwesomeIcon icon={faCloudUpload} size='2x' className='pl-2 cloud-upload-icon' />
-              <input
-                  name='uploadedFile' 
-                  className='invisible-field'
-                  type='file' placeholder='Choose File'
-              //   onChange={e =>
-              //       console.log(e.target.files)
-              //   }
-              />
-          </label>
+      <div className='flex justify-center items-center w-full'>        
+        <PhoneInput
+            country={'us'}
+            placeholder='Enter Phone No'
+            buttonClass='border-none bg-phone-dropdown-bg'
+            containerClass='w-fit'
+            dropdownClass='flex flex-column items-start'
+        />
       </div>
     
   )

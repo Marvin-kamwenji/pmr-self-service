@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import '../CSS/landlord.css';
 import {connect} from 'react-redux';
-import * as ACTIONS from '../../actions/actions'
+import * as ACTIONS from '../../actions/actions';
+import PhoneInput from 'react-phone-input-2'
+import 'react-phone-input-2/lib/style.css'
 
 
 
@@ -73,6 +75,33 @@ function addOptions(value, name) {
             </select>
           </div>
         )
+
+      case 'phone':
+        return (
+          <div className='flex flex-row col-6' key={fieldProperties.name}>
+            <div className='w-1/3 text-end mr-2 flex justify-end items-center'>
+              <label className='label-style'>{fieldProperties.label}</label>
+              {fieldProperties.required ? <label className='asterisk-field'>*</label> : null}
+            </div>
+            <div className='w-2/3'>
+              <PhoneInput
+                country={'us'}
+                placeholder={fieldProperties.placeholder}
+                value={landlordInfo.hasOwnProperty([fieldProperties.name]) ? landlordInfo[fieldProperties.name] : null}
+                buttonClass='border-none bg-phone-dropdown-bg'
+                containerClass='w-full h-10 pl-0'
+                dropdownClass='flex flex-column items-start'
+                inputClass='h-full w-full'
+                onChange={number => {
+                  setLandlordInfo({ ...landlordInfo, [fieldProperties.name]: number });
+                }}
+                inputProps={{required:true}}
+              /> 
+              {props.errors[fieldProperties.name] && <div className='validation-style'>{props.errors[fieldProperties.name] }</div>}
+            </div>
+            
+          </div>
+        )
       default:
         break;
     }
@@ -85,7 +114,7 @@ function LandlordInformation({countries, idDocuments, currentState, updateLandlo
         { name: "landlordMiddleName", type: 'text', placeholder: 'Middle Name', value: '', required: false, label: 'Middle Name ' },
         { name: "landlordLastName", type: 'text', placeholder: 'Last Name', value: '', required: true, label: 'Last Name ' },
         { name: "address", type: 'text', placeholder: 'Address', value: '', required: true, label: 'Address ' },
-        { name: "mobileNo", type: 'text', placeholder: '7743****', value: '', required: true, label: 'Registered Mobile Number ' },
+        { name: "mobileNo", type: 'phone', placeholder: '7743****', value: '', required: true, label: 'Registered Mobile Number ' },
         { name: "email", type: 'text', placeholder: 'sample@example.com', value: '', required: false, label: 'Email ' },
         { name: "country", type: 'select', placeholder: 'Country', value: {}, required: true, label: 'Nationality ' , options: countries, field: 'countryName'},
         { name: "tin", type: 'text', placeholder: 'TIN', value: '', required: true, label: 'TIN ' },
