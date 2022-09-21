@@ -1,10 +1,11 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import '../CSS/landlord.css'
 
 
 import {connect} from 'react-redux';
 import * as ACTIONS from '../../actions/actions'
+import { AddButton, EntityTrackerTableNextOfKin } from './EntityTrackerTable';
 
 
 function mapStateToProps(state){
@@ -32,11 +33,8 @@ function showField(fieldProperties, nextOfKin, setNextOfKin, nextOfKins, updateN
         <input placeholder={fieldProperties.placeholder}
         className='input-field-style pl-4' id={fieldProperties.name}
         value={nextOfKin.hasOwnProperty([fieldProperties.name]) ? nextOfKin[fieldProperties.name] : null}
-        onChange={e => {
-          let nextKins = [...nextOfKins];
+        onChange={(e) => {          
           setNextOfKin({ ...nextOfKin, [fieldProperties.name]: e.target.value });
-          nextKins[nextOfKin.index]= nextOfKin;
-          updateNextOfKins(nextKins); 
           props.handleChange(e)
         }} />
         {props.errors[fieldProperties.name] && <div className='validation-style'>{props.errors[fieldProperties.name] }</div>}
@@ -46,7 +44,7 @@ function showField(fieldProperties, nextOfKin, setNextOfKin, nextOfKins, updateN
   )
 }
 
-function NextOfKin({index, currentState, updateNextOfKins, props}) {
+function NextOfKin({ currentState, updateNextOfKins, props}) {
   const fields = [
     {name: "kinFirstName", type: 'text', placeholder: 'First Name', value: '', required: true, label: 'First Name '},
     {name: "kinMiddleName", type: 'text', placeholder: 'Middle Name', value: '', required: false, label: 'Middle Name '},
@@ -56,22 +54,48 @@ function NextOfKin({index, currentState, updateNextOfKins, props}) {
     {name: "kinEmail", type: 'text', placeholder: 'sample@example.com', value: '', required: false, label: 'Email '}
   ]
 
-  var kinFromState = currentState.nextOfKins.find(k => k.index === index);
-  if (typeof kinFromState === 'undefined'){
-    kinFromState = {index}
-  }
-  const [kin, setNextOfKin] = useState(kinFromState);
+  const [kinIndex, setKinIndex] = useState(0);
+  const [kin, setNextOfKin] = useState({});
 
+  useEffect(() => {
+    var kinFromState = currentState.nextOfKins.find(k => k.index === kinIndex);
+    if (typeof kinFromState === 'undefined') {
+      kinFromState = { index: kinIndex };
+    }
+    setNextOfKin(kinFromState);
+  },[kinIndex])
   
+  useEffect(() => {
+    let nextKins = [...currentState.nextOfKins];
+    let indexToReplace = kin.index
+    nextKins[indexToReplace] = kin;
+    updateNextOfKins(nextKins); 
+  },[kin])
+
+  const removeKin = (index) => {
+    let newkins = currentState.nextOfKins.filter((kin) => kin.index !== index)
+    updateNextOfKins(newkins)
+    setKinIndex(newkins[0].index)
+  }
+
   return (
-    <div className='flex flex-column'>
-      <div className='w-1/2 grid grid-cols-3 mb-4'>
-        <h5 className='form-title-style col-span-2 col-start-2'>Landlord Next Of Kin</h5>
+    <div>
+      <div className='flex flex-column'>
+        <div className='w-1/2 grid grid-cols-3 mb-4'>
+          <h5 className='form-title-style col-span-2 col-start-2'>Landlord Next Of Kin</h5>
+        </div>
+        <div className='flex flex-row flex-wrap justify-center space-y-3' >
+          {fields.map((field) => { return (showField(field, kin, setNextOfKin, currentState.nextOfKins, updateNextOfKins, props)) })}
+        </div>
       </div>
-      <div className='flex flex-row flex-wrap justify-center space-y-3' >
-        {fields.map((field) => {return (showField(field, kin, setNextOfKin, currentState.nextOfKins, updateNextOfKins, props))})}
-      </div>        
+      <AddButton 
+        text='Next Of Kin' 
+        setIndex={setKinIndex} 
+        index={currentState.nextOfKins.length === 0 ? 0 : currentState.nextOfKins.at(-1).index + 1}
+      />
+      <EntityTrackerTableNextOfKin nextOfKins={currentState.nextOfKins} setIndex={setKinIndex} removeKin={removeKin}/>
     </div>
+    
   )
 }
 

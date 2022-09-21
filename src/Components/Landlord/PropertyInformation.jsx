@@ -2,7 +2,8 @@ import React from 'react';
 import '../CSS/landlord.css';
 import SegmentSeparator from './SegmentSeparator';
 import PropertyFinancialInformation from './PropertyFinancialInformation';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { AddButton, EntityTrackerTableProperty } from './EntityTrackerTable';
 
 import {connect} from 'react-redux';
 import * as ACTIONS from '../../actions/actions'
@@ -21,11 +22,16 @@ function mapDispatchToProps(dispatch){
   }
 }
 
+function removeProperty(index, properties, updateProperties){
+  var newProperties = properties.filter(property => property.index === index);
+  updateProperties(newProperties)
+}
+
 function addOptions(value, name) {
   return <option value={value.id}>{value[name]}</option>
 }
 
-function showField(fieldProperties, propertyInfo, setPropertyInfo, properties, updateProperties, props) {
+function showField(fieldProperties, propertyInfo, setPropertyInfo, props) {
   switch (fieldProperties.type) {
     case 'text':
       return (
@@ -40,10 +46,7 @@ function showField(fieldProperties, propertyInfo, setPropertyInfo, properties, u
             value={propertyInfo.hasOwnProperty([fieldProperties.name]) ? propertyInfo[fieldProperties.name] : null}
             onChange={e => {
               setPropertyInfo({ ...propertyInfo, [fieldProperties.name]: e.target.value });
-              let propertiesCopy = [...properties];
-              propertiesCopy[propertyInfo.index]= propertyInfo;
-              updateProperties(propertiesCopy);
-              props.handleChange(e)
+              props.handleChange(e);
             }} />
             {props.errors[fieldProperties.name] && <div className='validation-style'>{props.errors[fieldProperties.name] }</div>}
           </div>
@@ -67,14 +70,13 @@ function showField(fieldProperties, propertyInfo, setPropertyInfo, properties, u
                   ...propertyInfo,
                   [fieldProperties.name]: {
                     id: e.target.value,
+                    optionName: e.target.selectedOptions[0].label
                   }
                 }
               );
-              let propertiesCopy = [...properties];
-              propertiesCopy[propertyInfo.index]= propertyInfo;
-              updateProperties(propertiesCopy);
+              props.handleChange(e);
             }}>
-              <option hidden disabled selected value>--- Select {fieldProperties.placeholder} ---</option>
+            <option hidden selected value>--- Select {fieldProperties.placeholder} ---</option>
             {fieldProperties.options.map(option => addOptions(option, fieldProperties.field))}
           </select>
         </div>
@@ -85,7 +87,7 @@ function showField(fieldProperties, propertyInfo, setPropertyInfo, properties, u
   
 }
 
-function PropertyInformation({index, propertyTypes, bedrooms, regions, currentState, updateProperties, props}) {
+function PropertyInformation({ propertyTypes, bedrooms, regions, currentState, updateProperties, props}) {
   const fields = [
     {name: "propertyType", type: 'select', placeholder: 'Type', value: '', required: true, label: 'Property Type ', options: propertyTypes, field: 'propertyType'},
     {name: "address", type: 'text', placeholder: 'Address', value: '', required: true, label: 'Address '},
@@ -101,25 +103,52 @@ function PropertyInformation({index, propertyTypes, bedrooms, regions, currentSt
     {name: "threeMonthRent", type: 'text', placeholder: '5000000', value: '', required: false, label: '3 Month rent '},
   ] ;
 
-  var propertyFromState = currentState.properties.find(p => p.index === index);
-  if (typeof propertyFromState === 'undefined'){
-    propertyFromState = {index}
+  const [propertyIndex, setPropertyIndex] = useState(0);
+  const [propertyInfo, setPropertyInfo] = useState({});
+
+  useEffect(() => {
+    var propertyFromState = currentState.properties.find(p => p.index === propertyIndex);
+    if (typeof propertyFromState === 'undefined') {
+      propertyFromState = { index: propertyIndex };
+    }
+    setPropertyInfo(propertyFromState);
+  },[propertyIndex])
+
+  useEffect(() => {
+    let propertiesCopy = [...currentState.properties];
+    propertiesCopy[propertyInfo.index]= propertyInfo;
+    updateProperties(propertiesCopy);
+  },[propertyInfo])
+
+  const removeProperty = (index) => {
+    let properties = currentState.properties.filter((p) => p.index !== index)
+    updateProperties(properties)
+    setPropertyIndex(properties[0].index)
   }
 
-  const [propertyInfo, setPropertyInfo] = useState(propertyFromState);
-
-
   return (
-    <div className='flex flex-column'>
-      <div className='w-1/2 grid grid-cols-3 mb-4'>
-        <h5 className='form-title-style col-span-2 col-start-2'>Property Information</h5>
+    <div>
+      <div className='flex flex-column'>
+        <div className='w-1/2 grid grid-cols-3 mb-4'>
+          <h5 className='form-title-style col-span-2 col-start-2'>Property Information</h5>
+        </div>
+        <div className='flex flex-row flex-wrap justify-center space-y-3' >
+          {fields.map((field) => { return showField(field, propertyInfo, setPropertyInfo, props) })}
+        </div>
+        <SegmentSeparator />
+        <PropertyFinancialInformation propertyIndex={propertyIndex} props={props} />
       </div>
-      <div className='flex flex-row flex-wrap justify-center space-y-3' >
-        {fields.map((field) => {return showField(field, propertyInfo, setPropertyInfo, currentState.properties, updateProperties, props)})}
-      </div>
-      <SegmentSeparator/>
-      <PropertyFinancialInformation index={index} props={props}/>        
+      <AddButton text='Property' 
+              setIndex={setPropertyIndex} 
+              index={currentState.properties.length === 0 ? 0 : currentState.properties.at(-1).index + 1} 
+      />
+      <EntityTrackerTableProperty
+        properties={currentState.properties}
+        setIndex={setPropertyIndex}
+        removeProperty={removeProperty}
+      />
     </div>
+    
   )
 }
 

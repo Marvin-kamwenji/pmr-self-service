@@ -47,6 +47,7 @@ function showField(fieldProperties, updateAttachmentFiles, currentFiles, props) 
                                     name: refData.name
                                 }
                                 updateAttachmentFiles(tempFiles)
+                                console.log(currentFiles)
                             });
                         props.handleChange(e);
                     }

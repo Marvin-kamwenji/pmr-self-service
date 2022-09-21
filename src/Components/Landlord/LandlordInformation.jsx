@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../CSS/landlord.css';
 import {connect} from 'react-redux';
 import * as ACTIONS from '../../actions/actions'
@@ -42,7 +42,6 @@ function addOptions(value, name) {
                 id={fieldProperties.name}
                 onChange={e => {
                   setLandlordInfo({ ...landlordInfo, [fieldProperties.name]: e.target.value });
-                  updateLandlordInfo(landlordInfo);
                   props.handleChange(e);
                 }} />
               {props.errors[fieldProperties.name] && <div className='validation-style'>{props.errors[fieldProperties.name] }</div>}
@@ -65,12 +64,11 @@ function addOptions(value, name) {
                 }
               className='basis-2/3 input-field-style pl-4'
               onChange={e => {
-                setLandlordInfo({...landlordInfo, [fieldProperties.name]: {id: e.target.value}});
-                updateLandlordInfo(landlordInfo);
-                props.handleChange()
+                setLandlordInfo({...landlordInfo, [fieldProperties.name]: {id: e.target.value, optionName: e.target.selectedOptions[0].label}});
+                props.handleChange(e)
               }}
             >
-              <option hidden disabled selected value>--- Select {fieldProperties.placeholder} ---</option>
+              <option hidden selected value>--- Select {fieldProperties.placeholder} ---</option>
               {fieldProperties.options.map(option => addOptions(option, fieldProperties.field))}
             </select>
           </div>
@@ -106,6 +104,10 @@ function LandlordInformation({countries, idDocuments, currentState, updateLandlo
   ]
 
     const [landlordInfo, setLandlordInfo] = useState(currentState.landlordInfo);
+
+    useEffect(() => {
+      updateLandlordInfo(landlordInfo);
+    },[landlordInfo])
     
     return (
         <div className='flex flex-column mt-4'>

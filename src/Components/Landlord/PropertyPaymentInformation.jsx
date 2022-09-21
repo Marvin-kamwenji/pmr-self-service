@@ -1,8 +1,9 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import '../CSS/landlord.css';
 
 import {connect} from 'react-redux';
 import * as ACTIONS from '../../actions/actions'
+import { EntityTrackerTableBankDetail, AddButton } from './EntityTrackerTable';
 
 function mapStateToProps(state){
   return {
@@ -37,9 +38,6 @@ function showField(fieldProperties, payDetail, setPayDetail, payDetails, updateP
             value={payDetail.hasOwnProperty([fieldProperties.name]) ? payDetail[fieldProperties.name] : null}
             onChange={e => {
               setPayDetail({ ...payDetail, [fieldProperties.name]: e.target.value });
-              let payDetailsCopy = [...payDetails];
-              payDetailsCopy[payDetail.index]= payDetail;
-              updatePayDetails(payDetailsCopy);
               props.handleChange(e);
             }} />
             {props.errors[fieldProperties.name] && <div className='validation-style'>{props.errors[fieldProperties.name] }</div>}
@@ -59,12 +57,14 @@ function showField(fieldProperties, payDetail, setPayDetail, payDetails, updateP
               if(fieldProperties.name === 'Bank'){
                 setBranches(fieldProperties.options.find(bank => bank.id === e.target.value).bankBranches)
               }
-              setPayDetail({ ...payDetail, [fieldProperties.name]:{id: e.target.value} });
-              let payDetailsCopy = [...payDetails];
-              payDetailsCopy[payDetail.index]= payDetail;
-              updatePayDetails(payDetailsCopy);
+              setPayDetail({ ...payDetail,
+                 [fieldProperties.name]:{id: e.target.value, optionName: e.target.selectedOptions[0].label},
+                 [`${fieldProperties.name}T`]: e.target.selectedOptions[0].label
+                 });
+              console.log(e)
+              props.handleChange(e);
             }}>
-              <option hidden disabled selected value>--- Select {fieldProperties.placeholder} ---</option>
+              <option hidden selected value>--- Select {fieldProperties.placeholder} ---</option>
             {fieldProperties.options.map(option => addOptions(option, fieldProperties.field))}
           </select>
         </div>
@@ -74,7 +74,7 @@ function showField(fieldProperties, payDetail, setPayDetail, payDetails, updateP
   }
 }
 
-function PropertyPaymentInformation({index, banks, providers, currentState, updatePaymentDetails, props}) {  
+function PropertyPaymentInformation({banks, providers, currentState, updatePaymentDetails, props}) {  
   const [bankBranches, setBranches] = useState([]);
   const fields = [
     { name: "Bank", type: 'select', placeholder: 'Bank Name', value: '', required: true, label: 'Bank Name ',options: banks, field:'name' },
@@ -85,13 +85,28 @@ function PropertyPaymentInformation({index, banks, providers, currentState, upda
     { name: "accountNoMobile", type: 'text', placeholder: 'Account No', value: '', required: false, label: 'Account No ' },
 ]
 
-  var payDetailFromState = currentState.paymentDetails.find(p => p.index === index);
-  if (typeof payDetailFromState === 'undefined'){
-    payDetailFromState = {index}
+  const [payIndex, setPayIndex] = useState(0);
+  const [payDetail, setPayDetail] = useState({});
+
+  useEffect(() => {
+    var payDetailFromState = currentState.paymentDetails.find(p => p.index === payIndex);
+    if (typeof payDetailFromState === 'undefined') {
+      payDetailFromState = { index: payIndex };
+    }
+    setPayDetail(payDetailFromState);
+  }, [payIndex])
+
+  useEffect(() => {
+    let payDetailsCopy = [...currentState.paymentDetails];
+    payDetailsCopy[payDetail.index]= payDetail;
+    updatePaymentDetails(payDetailsCopy);
+  }, [payDetail])
+
+  const removePayDetail = (index) => {
+    let payDetails = currentState.paymentDetails.filter((p) => p.index !== index)
+    updatePaymentDetails(payDetails)
+    setPayIndex(payDetails[0].index)
   }
-
-const [payDetail, setPayDetail] = useState(payDetailFromState);
-
 
   return (
       <div className='flex flex-column'>
@@ -106,6 +121,10 @@ const [payDetail, setPayDetail] = useState(payDetailFromState);
           <div className='flex flex-row flex-wrap justify-center space-y-3' >
               {fields.map((field) => {return (showField(field, payDetail, setPayDetail, currentState.paymentDetails, updatePaymentDetails, setBranches, props))})}
           </div>
+          <AddButton text='Payment Detail' setIndex={setPayIndex} 
+            index={currentState.paymentDetails.length === 0 ? 0 : currentState.paymentDetails.at(-1).index + 1}
+          />
+          <EntityTrackerTableBankDetail bankDetails={currentState.paymentDetails} setIndex={setPayIndex} removePayDetail={removePayDetail}/>  
       </div>
   )
 }

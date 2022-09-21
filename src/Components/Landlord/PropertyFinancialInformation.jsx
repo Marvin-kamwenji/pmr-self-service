@@ -2,7 +2,7 @@ import React from 'react';
 import '../CSS/landlord.css';
 import {connect} from 'react-redux';
 import * as ACTIONS from '../../actions/actions';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 function mapStateToProps(state){
   return {
@@ -42,10 +42,8 @@ function showField(fieldProperties, propertyInfo, setPropertyInfo, properties, u
               value={propertyInfo.hasOwnProperty([fieldProperties.name]) ? propertyInfo[fieldProperties.name] : null}
               onChange={e => {
                 setPropertyInfo({ ...propertyInfo, [fieldProperties.name]: e.target.value });
-                let propertiesCopy = [...properties];
-                propertiesCopy[propertyInfo.index] = propertyInfo;
-                updateProperties(propertiesCopy);
                 props.handleChange(e)
+                console.log(propertyInfo.index)
               }} />
             {props.errors[fieldProperties.name] && <div className='validation-style'>{props.errors[fieldProperties.name]}</div>}
           </div>
@@ -73,11 +71,9 @@ function showField(fieldProperties, propertyInfo, setPropertyInfo, properties, u
                   }
                 }
               );
-              let propertiesCopy = [...properties];
-              propertiesCopy[propertyInfo.index]= propertyInfo;
-              updateProperties(propertiesCopy);
+              props.handleChange(e)
             }}>
-              <option hidden disabled selected value>--- Select {fieldProperties.placeholder} ---</option>
+              <option hidden selected value>--- Select {fieldProperties.placeholder} ---</option>
             {selectDummy.map(addOptions)}
           </select>
         </div>
@@ -87,7 +83,7 @@ function showField(fieldProperties, propertyInfo, setPropertyInfo, properties, u
   }
 }
 
-function PropertyFinancialInformation({index, currentState, updateProperties, props}) {
+function PropertyFinancialInformation({propertyIndex, currentState, updateProperties, props}) {
   const fields = [
   {name: "minimumOccupancyPeriod", type: 'text', placeholder: '12 Months', value: '', required: true, label: 'MinimumOccupancyPeriod '},
   {name: "totalDeposit", type: 'text', placeholder: '433000', value: '', required: false, label: 'Total Deposit '},
@@ -97,12 +93,21 @@ function PropertyFinancialInformation({index, currentState, updateProperties, pr
   {name: "landlordDisbursement", type: 'text', placeholder: '545000', value: '', required: false, label: 'Landlord Disbursemnt '},
 ]
 
-var propertyFromState = currentState.properties.find(p => p.index === index);
-if (typeof propertyFromState === 'undefined'){
-  propertyFromState = {index}
-}
+const [propertyInfo, setPropertyInfo] = useState({});
 
-const [propertyInfo, setPropertyInfo] = useState(propertyFromState);
+useEffect(() => {
+  var propertyFromState = currentState.properties.find(p => p.index === propertyIndex);
+  if (typeof propertyFromState === 'undefined') {
+    propertyFromState = { index: propertyIndex };
+  }
+  setPropertyInfo(propertyFromState);
+},[propertyIndex])
+
+useEffect(() => {
+  let propertiesCopy = [...currentState.properties];
+  propertiesCopy[propertyInfo.index]= propertyInfo;
+  updateProperties(propertiesCopy);
+},[propertyInfo])
 
 
   return (

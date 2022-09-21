@@ -19,6 +19,7 @@ import LandlordSuccess from "./LandlordSuccess";
 import * as ACTIONS from '../../actions/actions';
 import { Formik, Form, Field } from 'formik';
 import { LandlordInfoSchema } from "./ValidationSchema";
+import { EntityTrackerTableNextOfKin } from "./EntityTrackerTable";
 
 const steps = ['Personal Information', 'Property Information', 'Confirmation']
 
@@ -45,9 +46,6 @@ function LandlordStepper({currentState, submitSuccessful, submitFailed, updateAt
 
   const [activeStep, setActiveStep] = useState(0);
   const [completed, setCompleted] = useState({});
-  const [kinIndex, setKinIndex] = useState([0]);
-  const [propertyIndex, setPropertyIndex] = useState([0]);
-  const [bankDetailIndex, setBankDetailIndex] = useState([0]);
   const [countries, setCountries] = useState([]);
   const [idDocuments, setIdDocuments] = useState([]);
   const [propertyTypes, setPropertyTypes] = useState([]);
@@ -156,14 +154,9 @@ function LandlordStepper({currentState, submitSuccessful, submitFailed, updateAt
                 props = {props}
               />
               <SegmentSeparator />
-              {kinIndex.map((kin, index) => {
-                return (
-                  <NextOfKin
-                    index={index}
-                    props = {props}
-                  />
-                )
-              })}
+              <NextOfKin
+                props = {props}
+              />
               <SegmentSeparator />
               <Attachment
                 attachmentOwner={'Landlord'}
@@ -175,29 +168,18 @@ function LandlordStepper({currentState, submitSuccessful, submitFailed, updateAt
           return (
             <div className='col-10'>
               <SegmentSeparator border= {false}/>
-              {propertyIndex.map((property, index) => {
-                return (
-                  <div>
-                    <PropertyInformation
-                      index={index}
-                      propertyTypes={propertyTypes}
-                      bedrooms={bedrooms}
-                      regions={geographicRegions}
-                      props = {props}
-                    />
-                  </div>
-                  
-                )
-              })}
+              <PropertyInformation
+                propertyTypes={propertyTypes}
+                bedrooms={bedrooms}
+                regions={geographicRegions}
+                props = {props}
+              />
               <SegmentSeparator/>
-              {bankDetailIndex.map((detail, index) => {
-                return (<PropertyPaymentInformation
-                  providers={serviceProviders}
-                  index={index}
-                  banks={banks}
-                  props={props}
-                />)
-              })}
+              <PropertyPaymentInformation
+                providers={serviceProviders}
+                banks={banks}
+                props={props}
+              />
             </div>
           )  
         case 2:
