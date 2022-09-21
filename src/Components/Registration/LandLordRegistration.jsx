@@ -7,8 +7,8 @@ import PropertyPaymentInformation from "../Landlord/PropertyPaymentInformation";
 import PropertyFinancialInformation from "../Landlord/PropertyFinancialInformation";
 import PropertyInformation from "../Landlord/PropertyInformation";
 import LandlordStepper from "../Landlord/LandlordStepper";
-import Playgroung from "../Landlord/Playground";
 import {EntityTrackerTableDynamic, EntityTrackerTableNextOfKin} from "../Landlord/EntityTrackerTable";
+import Playground from "../Landlord/Playground";
 
 
 
