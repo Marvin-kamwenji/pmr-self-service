@@ -48,9 +48,20 @@ function TenantRegistration() {
     
   });
 
-  const submitHandler = event => {
+  const submitHandler = async (event) => {
     event.preventDefault();
-    axios.post('http://localhost:8080/rest/services/selfOnBoardTenant/selfOnBoard')
+
+    const tenantObject = {
+     formData: formData
+    }
+
+    try {
+      const res = await  axios.post('http://localhost:8080/rest/services/selfOnBoardTenant/selfOnBoard', tenantObject)
+      console.log(res.data)
+    } catch (event) {
+
+      alert(event)
+    }
     console.log(formData);
   }
 
