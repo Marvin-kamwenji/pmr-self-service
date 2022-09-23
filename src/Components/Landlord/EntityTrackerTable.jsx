@@ -1,15 +1,31 @@
+/**
+ * @author Mesh
+ * @classdesc
+ * This class contains table components to track section of the form that have a one to many relation
+ * @example NextOfKins has a one to many relation with the landlord hence the form has a table giving capability to add more
+ */
 import React from 'react'
 import { TableContainer, Paper, Table, TableHead, TableRow, TableBody, TableCell } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid';
 import { faPenToSquare, faPen, faTrash, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
+/**
+ * @funtion to Format string appearance from camel case to normal case
+ * @param {string} camelCase a string that is in camel case
+ * @returns normal string version of the camel case
+ */
 function toTitleCase (camelCase){
     return camelCase
         .replace(/([A-Z])/g, ' $1')
         .replace(/^./, function (str) { return str.toUpperCase(); });
 }
 
+/**
+ * @function EntityTrackerTableDynamic Proof of concept, I will revisit make it the only function
+ * @param {object} a list of object to be displayed 
+ * @returns 
+ */
 function EntityTrackerTableDynamic({objectList}) {
     const columns = [];
     Object.keys(objectList[0]).map((key)=> {
@@ -30,6 +46,13 @@ function EntityTrackerTableDynamic({objectList}) {
     )
 }
 
+/**
+ * @function AddButton component to display add function to the section
+ * @param {string} text text to be displayed on the button
+ * @param {string} setIndex to update index of entity being edited
+ * @param {string} index index of the newly added kin
+ * @returns the add button
+ */
 function AddButton({text, setIndex, index}) {
   return (
       <div className='w-1/2 grid grid-cols-3 mb-4 mt-3'>
@@ -48,6 +71,13 @@ function AddButton({text, setIndex, index}) {
   )
 }
 
+/**
+ * @function EntityTrackerTableNextOfKin tracker table for the next of kin
+ * @param {string} nextOfKins Current kins in the reducer
+ * @param {function} setIndex update the enntity on the form
+ * @param {function} removeKin remove kin from the form
+ * @returns 
+ */
 function EntityTrackerTableNextOfKin({nextOfKins, setIndex, removeKin}) {
     return (
         <div className='flex justify-center'>
@@ -119,6 +149,13 @@ function EntityTrackerTableNextOfKin({nextOfKins, setIndex, removeKin}) {
     )
 }
 
+/**
+ * @function EntityTrackerTableProperty tracker table for the properties
+ * @param {string} properties Current propertirs in the reducer
+ * @param {function} setIndex update the enntity on the form
+ * @param {function} removeProperty remove property from the form
+ * @returns 
+ */
 function EntityTrackerTableProperty({properties, setIndex, removeProperty}) {
     return (
         <div className='flex justify-center'>
@@ -187,6 +224,13 @@ function EntityTrackerTableProperty({properties, setIndex, removeProperty}) {
     )
 }
 
+/**
+ * @function EntityTrackerTableBankDetail tracker table for the bank detail
+ * @param {string} bankDetails Current bankDetails in the reducer
+ * @param {function} setIndex update the entity on the form
+ * @param {function} removePayDetail remove payment from the form
+ * @returns 
+ */
 function EntityTrackerTableBankDetail({bankDetails  , setIndex, removePayDetail}) {
     return (
         <div className='flex justify-center'>
@@ -255,4 +299,4 @@ function EntityTrackerTableBankDetail({bankDetails  , setIndex, removePayDetail}
     )
 }
 
-export {EntityTrackerTableDynamic, EntityTrackerTableNextOfKin, AddButton, EntityTrackerTableProperty, EntityTrackerTableBankDetail}
+export {EntityTrackerTableDynamic, EntityTrackerTableNextOfKin, AddButton, EntityTrackerTableProperty, EntityTrackerTableBankDetail, toTitleCase}

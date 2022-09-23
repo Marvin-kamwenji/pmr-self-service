@@ -1,3 +1,7 @@
+/**
+ * @author Mesh
+ * Just for doing tests
+ */
 import React from 'react';
 import '../CSS/landlord.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'

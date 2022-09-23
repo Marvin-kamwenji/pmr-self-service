@@ -1,3 +1,7 @@
+/**
+ * @author Mesh
+ * @classdesc Component displaying payment information of the landlord
+ */
 import React, {useState, useEffect} from 'react';
 import '../CSS/landlord.css';
 
@@ -5,6 +9,11 @@ import {connect} from 'react-redux';
 import * as ACTIONS from '../../actions/actions'
 import { EntityTrackerTableBankDetail, AddButton } from './EntityTrackerTable';
 
+/**
+ * @function mapStateToProps to get state from reducer
+ * @param {object} state from reducer
+ * @returns state in the reducer
+ */
 function mapStateToProps(state){
   return {
     currentState: {
@@ -13,16 +22,38 @@ function mapStateToProps(state){
   }
 }
 
+/**
+ * @function mapDispatchToProps get dispatcher function
+ * @param {function} dispatch changes to reducer
+ * @returns a reducer function
+ */
 function mapDispatchToProps(dispatch){
   return{
     updatePaymentDetails: (paymentDetails) => dispatch(ACTIONS.payment_info(paymentDetails))
   }
 }
 
+/**
+ * @function addOptions to display option
+ * @param {object} value 
+ * @param {string} name of property to be displayed
+ * @returns option field
+ */
 function addOptions(value, name) {
   return <option value={value.id}>{value[name]}</option>
 }
 
+/**
+ * @function showField to display a field based on properties
+ * @param {object} fieldProperties containing attributes of field to be displayed
+ * @param {object} payDetail with state being updated
+ * @param {function} setPayDetail to change state
+ * @deprecated @param {array} payDetails properties from reducer
+ * @deprecated @param {function} updatePayDetails dispatch properties
+ * @param {function} setBranches update branches to be displayed in the dropdown
+ * @param {object} props for formik validation
+ * @returns A field
+ */
 function showField(fieldProperties, payDetail, setPayDetail, payDetails, updatePayDetails, setBranches, props) {
   switch (fieldProperties.type) {
     case 'text':
@@ -74,6 +105,15 @@ function showField(fieldProperties, payDetail, setPayDetail, payDetails, updateP
   }
 }
 
+/**
+ * @function PropertyPaymentInformation to display property information section
+ * @param {array} banks to be displayed in the dropdown 
+ * @param {array} providers to be displayed in the dropdown 
+ * @param {object} currentState state from reducer
+ * @param {function} updatePaymentDetails dispatch update to reducer
+ * @param {object} props to update formik
+ * @returns Section of property information
+ */
 function PropertyPaymentInformation({banks, providers, currentState, updatePaymentDetails, props}) {  
   const [bankBranches, setBranches] = useState([]);
   const fields = [
@@ -85,9 +125,18 @@ function PropertyPaymentInformation({banks, providers, currentState, updatePayme
     { name: "accountNoMobile", type: 'text', placeholder: 'Account No', value: '', required: false, label: 'Account No ' },
 ]
 
+/**
+ * update Index to change state
+ */
   const [payIndex, setPayIndex] = useState(0);
+/**
+ * Update state of the pay detail to edit
+ */
   const [payDetail, setPayDetail] = useState({});
 
+  /**
+   * Update State to edit based on Change in index
+   */
   useEffect(() => {
     var payDetailFromState = currentState.paymentDetails.find(p => p.index === payIndex);
     if (typeof payDetailFromState === 'undefined') {
@@ -96,12 +145,30 @@ function PropertyPaymentInformation({banks, providers, currentState, updatePayme
     setPayDetail(payDetailFromState);
   }, [payIndex])
 
+  /**
+   * Update the state of pay detail
+   */
   useEffect(() => {
     let payDetailsCopy = [...currentState.paymentDetails];
     payDetailsCopy[payDetail.index]= payDetail;
     updatePaymentDetails(payDetailsCopy);
   }, [payDetail])
 
+/**
+ * Update bank branches on refresh
+ */
+  useEffect(() => {
+    try {
+      setBranches(banks.find(bank => bank.id === payDetail.Bank.id).bankBranches)
+    } catch (error) {
+      console.log(error)
+    }
+  },[])
+
+  /**
+   * @function removePayDetail to remove an item from detail
+   * @param {number} index to be removed
+   */
   const removePayDetail = (index) => {
     let payDetails = currentState.paymentDetails.filter((p) => p.index !== index)
     updatePaymentDetails(payDetails)
