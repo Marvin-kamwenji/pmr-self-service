@@ -1,3 +1,7 @@
+/**
+ * @author Mesh
+ * @classdesc to display the attachment based on the document types from api call
+ */
 import React from 'react';
 import '../CSS/landlord.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -6,6 +10,11 @@ import {PostFile} from './ApiUtil';
 import {connect} from 'react-redux';
 import * as ACTIONS from '../../actions/actions'
 
+/**
+ * 
+ * @param {object} state  State from landlord reducer
+ * @returns current state which has attachment files array
+ */
 function mapStateToProps(state){
     return {
       currentState: {
@@ -14,11 +23,25 @@ function mapStateToProps(state){
     }
   }
   
+  /**
+   * 
+   * @param {function} dispatch Dispatcer from landlord reducer
+   * @returns functions to update reducer state
+   */
   function mapDispatchToProps(dispatch){
     return{
       updateAttachmentFiles: (attachs) => dispatch(ACTIONS.attachments_info(attachs))
     }
   }
+
+/**
+ * @function showField to show a field based on the properties object passed
+ * @param {object} fieldProperties attributes of the field to be displayed
+ * @param {function} updateAttachmentFiles update the reducer with list of attachment files
+ * @param {array} currentFiles List of the current attachment files
+ * @param {object} props Props from formik for validation
+ * @returns An attachment field input of type file
+ */
 
 function showField(fieldProperties, updateAttachmentFiles, currentFiles, props) {
     return (
@@ -63,15 +86,33 @@ function showField(fieldProperties, updateAttachmentFiles, currentFiles, props) 
     )
 }
 
-
+/**
+ * @function postFile make a post to upload a file to storage
+ * @param {*} file 
+ * @returns promise to return an object with file reference
+ */
 const postFile = (file) => {
     let formData = new FormData();
     formData.append("file", file);
     return PostFile(formData);
 } 
 
+/**
+ * @function Attachment Display fields for attachments to be uploaded
+ * @param {string} attachmentOwner String to display at the section header
+ * @param {object} currentState Current state from the landlord reducer
+ * @param {function} updateAttachmentFiles Change the reducer state of attachment files
+ * @param {object} props validation object for Formik
+ * @returns 
+ */
 function Attachment({attachmentOwner, currentState, updateAttachmentFiles, props}) {
+    /**
+     * Array of objects defining attributes of fields to be displayed
+     */
     const fields = [];
+    /**
+     * Logic appending field properties mapped from the attachment filess requiired
+     */
     currentState.attachmentFiles.map(attach => {
         const field = { 
             name: attach.attachmentDocumentType.name, type: 'file', 
@@ -82,6 +123,9 @@ function Attachment({attachmentOwner, currentState, updateAttachmentFiles, props
         }
         fields.push(field);
     })
+    /**
+     * Return the attachment upload section
+     */
   return (
       <div className='flex flex-column '>
           <div className='w-1/2 grid grid-cols-3 mb-4'>
