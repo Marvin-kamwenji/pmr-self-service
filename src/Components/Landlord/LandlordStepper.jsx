@@ -107,9 +107,13 @@ function LandlordStepper({currentState, submitSuccessful, submitFailed, updateAt
       if(res.status === 200 && res.data.code === 200){
         submitSuccessful();
       } else {
-        submitFailed(res.data.message);
         if(res.status === 200){
+          submitFailed(res.data.message);
           notify(res.data.message)
+        }
+        else{
+          submitFailed(res.data);
+          notify(res.data)
         }
       }
     }
