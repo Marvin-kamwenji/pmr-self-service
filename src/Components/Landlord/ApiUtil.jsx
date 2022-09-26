@@ -48,7 +48,7 @@ function ApiUtil(setCountries, setIdDocuments, setPropertyTypes, setBedrooms, se
             setBanks(response[4].data);
             setRegions(response[5].data);
             setProviders(response[6].data);
-            updateAttachments(updateAttachmentFiles, response[7].data)
+            updateAttachments(updateAttachmentFiles, filterDocumentTypes(response[7].data));
         })
         .catch(error => {
             console.log(error)
@@ -75,6 +75,18 @@ function updateAttachments(updateAttachmentFiles, documentTypes){
       }
     );
     updateAttachmentFiles(tempAttachments);
+}
+
+/**
+ * @function filterDocumentTypes to filter documents to the ones required for landlord
+ * @param {array} docTypes to be filtered
+ */
+function filterDocumentTypes(docTypes){
+  return docTypes.filter(
+    docType => 
+    docType.hasOwnProperty('landlord') 
+    && docType.landlord === true
+  )
 }
 
 /**
