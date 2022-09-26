@@ -1,17 +1,30 @@
+/**
+ * @author Mesh
+ * @classdesc
+ * API utility to make all API requests for the landlord.
+ * Contains @function ApiUtil to make get requests required in the form
+ * Contains @function updateAttachments to get add the fetched attachment drscriptions to state
+ * Contains @function PostFile to post an uploaded file to storage
+ * Contains @function PostLandlord to post landlord information to the Backend service
+ */
+
 import axios from 'axios';
 
+/**
+ * @link host base URl to which API calls are made
+ */
 const host = 'https://pmr-dev.k8s.tracom.co.ke:8445/rest';
 
 /** 
-    * country
-    *identification document
-    *property type
-    *bedroom
-    *region
-    *occupancy period
-    *disbursement schedule
-    *bank
-    *service providers
+ * @function ApiUtil get all required data for the form and save them to state
+ * @param {function} setCountries - Sets its aguments to the couuntries state
+ * @param {function} setIdDocuments - Set fetched documents to documents state
+ * @param {function} setPropertyTypes - Set fetched Property types to Property types state
+ * @param {function} setBedrooms - Set fetched bedrooms to bedroom state
+ * @param {function} setBanks - Set fetched banks to Banks state
+ * @param {function} setRegions - Set fetched regions to regions state
+ * @param {function} setProviders - Set fetched providers to providers state
+ * @param {function} updateAttachmentFiles- Update the fetched document types to global state
 */
 
 function ApiUtil(setCountries, setIdDocuments, setPropertyTypes, setBedrooms, setBanks, setRegions, setProviders, updateAttachmentFiles) {
@@ -42,6 +55,11 @@ function ApiUtil(setCountries, setIdDocuments, setPropertyTypes, setBedrooms, se
         });
 }
 
+/**
+ * @function updateAttachments update global reducer state of landlord's attachmentFiles property
+ * @param {function} updateAttachmentFiles  update global state of the landlord
+ * @param {object} documentTypes data of the required documents to be uploaded
+ */
 function updateAttachments(updateAttachmentFiles, documentTypes){
     let tempAttachments = [];
     documentTypes.map(
@@ -59,6 +77,11 @@ function updateAttachments(updateAttachmentFiles, documentTypes){
     updateAttachmentFiles(tempAttachments);
 }
 
+/**
+ * @function PostFile post a file to REST and awat a response
+ * @param {object} formData Form data object for posting to files API endpoint
+ * @returns Promise with the file reference link
+ */
 function PostFile(formData) {
   const postPromise =
     axios
@@ -80,6 +103,11 @@ function PostFile(formData) {
   return dataRefPromise;
 }
 
+/**
+ * @function PostLandlord posts landlord data to backend
+ * @param {object} currentState the current global reducer state of the landlord
+ * @returns Promise of either success or failure response
+ */
 function PostLandlord(currentState){
     const landlord = {
       landlord: {

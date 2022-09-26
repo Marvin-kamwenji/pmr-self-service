@@ -1,12 +1,21 @@
+/**
+ * @author Mesh
+ * @classdesc Section of the form displaying landlord information
+ */
 import React, { useState, useEffect } from 'react';
 import '../CSS/landlord.css';
 import {connect} from 'react-redux';
 import * as ACTIONS from '../../actions/actions';
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
+import { array } from 'yup';
 
 
-
+/**
+ * @function mapStateToProps retrieve state from props
+ * @param {object} state from the landlord_info_reducer
+ * @returns landlord info property
+ */
 function mapStateToProps(state){
   return{
     currentState: {
@@ -15,100 +24,131 @@ function mapStateToProps(state){
   }
 }
 
+/**
+ * @function to dispatch actions to reducer
+ * @param {function} dispatch function to be dispatch action
+ * @returns function definition
+ */
 function mapDispatchToProps(dispatch){
   return {
     updateLandlordInfo: (landlordInfo) => dispatch(ACTIONS.landlord_info(landlordInfo))
   }
 }
 
-
+/**
+ * @function addOptions to add option in select fields
+ * @param {object} value object to make up an option
+ * @param {string} name property og object to be displayed
+ * @returns an option in the dropddown
+ */
 function addOptions(value, name) {
     return <option value={value.id}>{value[name]}</option>
   }
 
-  function showField(fieldProperties, landlordInfo, setLandlordInfo, updateLandlordInfo, props) {
-    switch (fieldProperties.type) {
-      case 'text':
-      case 'date':
-        return (
-          <div className='flex flex-row col-6' key={fieldProperties.name}>
-            <div className='w-1/3 text-end mr-2 flex justify-end items-center'>
-              <label className='label-style'>{fieldProperties.label}</label>
-              {fieldProperties.required ? <label className='asterisk-field'>*</label> : null}
-            </div>
-            <div className='w-2/3'>
-              <input placeholder={fieldProperties.placeholder}
-                type = {fieldProperties.type}
-                value={landlordInfo.hasOwnProperty([fieldProperties.name]) ? landlordInfo[fieldProperties.name] : null}
-                className='input-field-style pl-4'
-                id={fieldProperties.name}
-                onChange={e => {
-                  setLandlordInfo({ ...landlordInfo, [fieldProperties.name]: e.target.value });
-                  props.handleChange(e);
-                }} />
-              {props.errors[fieldProperties.name] && <div className='validation-style'>{props.errors[fieldProperties.name] }</div>}
-            </div>
-            
+  /**
+   * @function showField to display input field dynamically
+   * @param {object} fieldProperties attributes of field
+   * @param {object} landlordInfo current state
+   * @param {function} setLandlordInfo to update state
+   * @param {function} updateLandlordInfo to update reducer
+   * @param {object} props formik validation
+   * @returns field on the UI
+   */
+function showField(fieldProperties, landlordInfo, setLandlordInfo, updateLandlordInfo, props) {
+  switch (fieldProperties.type) {
+    case 'text':
+    case 'date':
+      return (
+        <div className='flex flex-row col-6' key={fieldProperties.name}>
+          <div className='w-1/3 text-end mr-2 flex justify-end items-center'>
+            <label className='label-style'>{fieldProperties.label}</label>
+            {fieldProperties.required ? <label className='asterisk-field'>*</label> : null}
           </div>
-        )
-
-      case 'select':
-        return (
-          <div className='flex flex-row col-6' key={fieldProperties.name}>
-            <div className='basis-1/3 text-end mr-2 flex justify-end items-center'>
-              <label className='label-style'>{fieldProperties.label}</label>
-              {fieldProperties.required ? <label className='asterisk-field'>*</label> : null}
-            </div>
-            <select name={fieldProperties.name}
-              value={landlordInfo.hasOwnProperty(fieldProperties.name) ?
-                landlordInfo[fieldProperties.name].id :
-                  null
-                }
-              className='basis-2/3 input-field-style pl-4'
+          <div className='w-2/3'>
+            <input placeholder={fieldProperties.placeholder}
+              type = {fieldProperties.type}
+              value={landlordInfo.hasOwnProperty([fieldProperties.name]) ? landlordInfo[fieldProperties.name] : null}
+              className='input-field-style pl-4'
+              id={fieldProperties.name}
               onChange={e => {
-                setLandlordInfo({...landlordInfo, [fieldProperties.name]: {id: e.target.value, optionName: e.target.selectedOptions[0].label}});
-                props.handleChange(e)
+                setLandlordInfo({ ...landlordInfo, [fieldProperties.name]: e.target.value });
+                props.handleChange(e);
+              }} />
+            {props.errors[fieldProperties.name] && <div className='validation-style'>{props.errors[fieldProperties.name] }</div>}
+          </div>
+          
+        </div>
+      )
+
+    case 'select':
+      return (
+        <div className='flex flex-row col-6' key={fieldProperties.name}>
+          <div className='basis-1/3 text-end mr-2 flex justify-end items-center'>
+            <label className='label-style'>{fieldProperties.label}</label>
+            {fieldProperties.required ? <label className='asterisk-field'>*</label> : null}
+          </div>
+          <select name={fieldProperties.name}
+            value={landlordInfo.hasOwnProperty(fieldProperties.name) ?
+              landlordInfo[fieldProperties.name].id :
+                null
+              }
+            className='basis-2/3 input-field-style pl-4'
+            onChange={e => {
+              setLandlordInfo({...landlordInfo, [fieldProperties.name]: {id: e.target.value, optionName: e.target.selectedOptions[0].label}});
+              props.handleChange(e)
+            }}
+          >
+            <option hidden selected value>--- Select {fieldProperties.placeholder} ---</option>
+            {fieldProperties.options.map(option => addOptions(option, fieldProperties.field))}
+          </select>
+        </div>
+      )
+
+    case 'phone':
+      return (
+        <div className='flex flex-row col-6' key={fieldProperties.name}>
+          <div className='w-1/3 text-end mr-2 flex justify-end items-center'>
+            <label className='label-style'>{fieldProperties.label}</label>
+            {fieldProperties.required ? <label className='asterisk-field'>*</label> : null}
+          </div>
+          <div className='w-2/3'>
+            <PhoneInput
+              country={'us'}
+              placeholder={fieldProperties.placeholder}
+              value={landlordInfo.hasOwnProperty([fieldProperties.name]) ? landlordInfo[fieldProperties.name] : null}
+              buttonClass='border-none bg-phone-dropdown-bg'
+              containerClass='w-full h-10 pl-0'
+              dropdownClass='flex flex-column items-start'
+              inputClass='h-full w-full'
+              onChange={number => {
+                setLandlordInfo({ ...landlordInfo, [fieldProperties.name]: number });
               }}
-            >
-              <option hidden selected value>--- Select {fieldProperties.placeholder} ---</option>
-              {fieldProperties.options.map(option => addOptions(option, fieldProperties.field))}
-            </select>
+              inputProps={{required:true}}
+            /> 
+            {props.errors[fieldProperties.name] && <div className='validation-style'>{props.errors[fieldProperties.name] }</div>}
           </div>
-        )
-
-      case 'phone':
-        return (
-          <div className='flex flex-row col-6' key={fieldProperties.name}>
-            <div className='w-1/3 text-end mr-2 flex justify-end items-center'>
-              <label className='label-style'>{fieldProperties.label}</label>
-              {fieldProperties.required ? <label className='asterisk-field'>*</label> : null}
-            </div>
-            <div className='w-2/3'>
-              <PhoneInput
-                country={'us'}
-                placeholder={fieldProperties.placeholder}
-                value={landlordInfo.hasOwnProperty([fieldProperties.name]) ? landlordInfo[fieldProperties.name] : null}
-                buttonClass='border-none bg-phone-dropdown-bg'
-                containerClass='w-full h-10 pl-0'
-                dropdownClass='flex flex-column items-start'
-                inputClass='h-full w-full'
-                onChange={number => {
-                  setLandlordInfo({ ...landlordInfo, [fieldProperties.name]: number });
-                }}
-                inputProps={{required:true}}
-              /> 
-              {props.errors[fieldProperties.name] && <div className='validation-style'>{props.errors[fieldProperties.name] }</div>}
-            </div>
-            
-          </div>
-        )
-      default:
-        break;
-    }
-
+          
+        </div>
+      )
+    default:
+      break;
   }
 
+}
+
+/**
+ * @function LandlordInformation to display a section of landlord information
+ * @param {array} countries countries on dropdown
+ * @param {array} idDocuments types dropdown
+ * @param {object} currentState from reducer
+ * @param {function} updateLandlordInfo dispatch update action
+ * @param {object} props for formik validation
+ * @returns A section of landlord information
+ */
 function LandlordInformation({countries, idDocuments, currentState, updateLandlordInfo, props}) {
+    /**
+     * propoerties of fields to be displayed in this section
+     */
     const fields = [
         { name: "landlordFirstName", type: 'text', placeholder: 'First Name', value: '', required: true, label: 'First Name ' },
         { name: "landlordMiddleName", type: 'text', placeholder: 'Middle Name', value: '', required: false, label: 'Middle Name ' },
@@ -125,15 +165,19 @@ function LandlordInformation({countries, idDocuments, currentState, updateLandlo
     const fieldsCorporate = [
       { name: "companyName", type: 'text', placeholder: 'Company Name', value: '', required: true, label: 'Company Name ' },
       { name: "address", type: 'text', placeholder: 'Address', value: '', required: true, label: 'Address ' },
-      { name: "mobileNo", type: 'text', placeholder: '7743****', value: '', required: true, label: 'Registered Mobile Number ' },
+      { name: "mobileNo", type: 'phone', placeholder: '7743****', value: '', required: true, label: 'Registered Mobile Number ' },
       { name: "email", type: 'text', placeholder: 'sample@example.com', value: '', required: false, label: 'Email ' },
       { name: "country", type: 'select', placeholder: 'Country', value: {}, required: true, label: 'Nationality ' , options: countries, field: 'countryName'},
       { name: "tin", type: 'text', placeholder: 'TIN', value: '', required: true, label: 'TIN ' },
       { name: "registrationDate", type: 'date', placeholder: 'DD/mm/YYYY', value: '', required: true, label: 'Registration Date '},
   ]
-
+  /**
+   * State to be used in the form retrieved from reducer
+   */
     const [landlordInfo, setLandlordInfo] = useState(currentState.landlordInfo);
-
+  /**
+   * Dispatch state to reducer
+   */
     useEffect(() => {
       updateLandlordInfo(landlordInfo);
     },[landlordInfo])

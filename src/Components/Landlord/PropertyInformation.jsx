@@ -1,13 +1,23 @@
+/**
+ * @author Mesh
+ * @classdesc Component displaying basic information of the class
+ */
 import React from 'react';
 import '../CSS/landlord.css';
 import SegmentSeparator from './SegmentSeparator';
 import PropertyFinancialInformation from './PropertyFinancialInformation';
 import { useState, useEffect } from 'react';
 import { AddButton, EntityTrackerTableProperty } from './EntityTrackerTable';
-
+import PhoneInput from 'react-phone-input-2'
+import 'react-phone-input-2/lib/style.css'
 import {connect} from 'react-redux';
 import * as ACTIONS from '../../actions/actions'
 
+/**
+ * @function mapStateToProps to get state from reducer
+ * @param {object} state from reducer
+ * @returns state in the reducer
+ */
 function mapStateToProps(state){
   return {
     currentState: {
@@ -16,21 +26,37 @@ function mapStateToProps(state){
   }
 }
 
+/**
+ * @function mapDispatchToProps get dispatcher function
+ * @param {function} dispatch changes to reducer
+ * @returns a reducer function
+ */
 function mapDispatchToProps(dispatch){
   return{
     updateProperties: (properties) => dispatch(ACTIONS.property_info(properties))
   }
 }
 
-function removeProperty(index, properties, updateProperties){
-  var newProperties = properties.filter(property => property.index === index);
-  updateProperties(newProperties)
-}
-
+/**
+ * @function addOptions to display option
+ * @param {object} value 
+ * @param {string} name of property to be displayed
+ * @returns option field
+ */
 function addOptions(value, name) {
   return <option value={value.id}>{value[name]}</option>
 }
 
+/**
+ * @function showField to display a field based on properties
+ * @param {object} fieldProperties containing attributes of field to be displayed
+ * @param {object} propertyInfo with state being updated
+ * @param {function} setPropertyInfo to change state
+ * @param {array} properties properties from reducer
+ * @param {function} updateProperties dispatch properties
+ * @param {object} props for formik validation
+ * @returns A field
+ */
 function showField(fieldProperties, propertyInfo, setPropertyInfo, props) {
   switch (fieldProperties.type) {
     case 'text':
@@ -81,18 +107,57 @@ function showField(fieldProperties, propertyInfo, setPropertyInfo, props) {
           </select>
         </div>
       )
+
+    case 'phone':
+      return (
+        <div className='flex flex-row col-6' key={fieldProperties.name}>
+          <div className='w-1/3 text-end mr-2 flex justify-end items-center'>
+            <label className='label-style'>{fieldProperties.label}</label>
+            {fieldProperties.required ? <label className='asterisk-field'>*</label> : null}
+          </div>
+          <div className='w-2/3'>
+            <PhoneInput
+              country={'us'}
+              placeholder={fieldProperties.placeholder}
+              value={propertyInfo.hasOwnProperty([fieldProperties.name]) ? propertyInfo[fieldProperties.name] : null}
+              buttonClass='border-none bg-phone-dropdown-bg'
+              containerClass='w-full h-10 pl-0'
+              dropdownClass='flex flex-column items-start'
+              inputClass='h-full w-full'
+              onChange={number => {
+                setPropertyInfo({ ...propertyInfo, [fieldProperties.name]: number });
+              }}
+              inputProps={{ required: true }}
+            />
+            {props.errors[fieldProperties.name] && <div className='validation-style'>{props.errors[fieldProperties.name]}</div>}
+          </div>
+
+        </div>
+      )
     default:
       break;
   }
   
 }
 
+/**
+ * @function PropertyInformation to display property information section
+ * @param {array} propertyTypes to be displayed in the dropdown 
+ * @param {array} bedrooms to be displayed in the dropdown 
+ * @param {array} regions to be displayed in the dropdown 
+ * @param {object} currentState from reducer
+ * @param {function} updateProperties to dispatch to reducer
+ * @returns Section of property information
+ */
 function PropertyInformation({ propertyTypes, bedrooms, regions, currentState, updateProperties, props}) {
+  /**
+   * Displays attributes of fields to ne displayed
+   */
   const fields = [
     {name: "propertyType", type: 'select', placeholder: 'Type', value: '', required: true, label: 'Property Type ', options: propertyTypes, field: 'propertyType'},
     {name: "address", type: 'text', placeholder: 'Address', value: '', required: true, label: 'Address '},
     {name: "propertyName", type: 'text', placeholder: 'Property Name', value: '', required: true, label: 'Property Name '},
-    {name: "mobile", type: 'text', placeholder: '700*****', value: '', required: true, label: 'Registered Mobile No '},
+    {name: "mobile", type: 'phone', placeholder: '700*****', value: '', required: true, label: 'Registered Mobile No '},
     {name: "bedroom", type: 'select', placeholder: 'No of Bedrooms', value: '', required: true, label: 'Bedroom', options: bedrooms, field: 'description'},
     {name: "email", type: 'text', placeholder: 'sample@example.com', value: '', required: false, label: 'Email '},
     {name: "propertyIdentity", type: 'text', placeholder: 'House 10', value: '', required: true, label: 'Property Identity '},
@@ -103,9 +168,18 @@ function PropertyInformation({ propertyTypes, bedrooms, regions, currentState, u
     {name: "threeMonthRent", type: 'text', placeholder: '5000000', value: '', required: false, label: '3 Month rent '},
   ] ;
 
+  /**
+   * Index of the property being updated
+   */
   const [propertyIndex, setPropertyIndex] = useState(0);
+  /**
+   * State of property to edited in the form
+   */
   const [propertyInfo, setPropertyInfo] = useState({});
 
+  /**
+   * Update state when index changes
+   */
   useEffect(() => {
     var propertyFromState = currentState.properties.find(p => p.index === propertyIndex);
     if (typeof propertyFromState === 'undefined') {
@@ -114,12 +188,21 @@ function PropertyInformation({ propertyTypes, bedrooms, regions, currentState, u
     setPropertyInfo(propertyFromState);
   },[propertyIndex])
 
+  /**
+   * Update state in reducer
+   */
   useEffect(() => {
     let propertiesCopy = [...currentState.properties];
     propertiesCopy[propertyInfo.index]= propertyInfo;
     updateProperties(propertiesCopy);
   },[propertyInfo])
 
+/**
+ * @function removeProperty remove a property from displayed table
+ * @param {number} index of property to be removed
+ * @param {array} properties from reducer
+ * @param {function} updateProperties dispatch update function
+ */
   const removeProperty = (index) => {
     let properties = currentState.properties.filter((p) => p.index !== index)
     updateProperties(properties)

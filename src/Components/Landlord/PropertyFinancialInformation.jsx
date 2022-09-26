@@ -1,9 +1,17 @@
+/**
+ * @classdesc A section of the property information for displaying details concerning finance
+ */
 import React from 'react';
 import '../CSS/landlord.css';
 import {connect} from 'react-redux';
 import * as ACTIONS from '../../actions/actions';
 import { useState, useEffect } from 'react';
 
+/**
+ * @function mapStateToProps map state to props
+ * @param {object} state state from reducer
+ * @returns returns the current state
+ */
 function mapStateToProps(state){
   return {
     currentState: {
@@ -12,20 +20,37 @@ function mapStateToProps(state){
   }
 }
 
+/**
+ * @function mapDispatchToProps defines the function to dispatch an action
+ * @param {function} dispatch 
+ * @returns function to dispatch an action
+ */
 function mapDispatchToProps(dispatch){
   return{
     updateProperties: (properties) => dispatch(ACTIONS.property_info(properties))
   }
 }
 
-
-
-const selectDummy = ['a','b','c','d']
-
-function addOptions(value) {
-  return <option value={value}>{value}</option>
+/**
+ * @function addOptions to display option
+ * @param {object} value 
+ * @param {string} name of property to be displayed
+ * @returns option field
+ */
+function addOptions(value, name) {
+  return <option value={value.id}>{value[name]}</option>
 }
 
+/**
+ * @function showField to display a field based on properties
+ * @param {object} fieldProperties containing attributes of field to be displayed
+ * @param {object} propertyInfo with state being updated
+ * @param {function} setPropertyInfo to change state
+ * @param {array} properties properties from reducer
+ * @param {function} updateProperties dispatch properties
+ * @param {object} props for formik validation
+ * @returns A field
+ */
 function showField(fieldProperties, propertyInfo, setPropertyInfo, properties, updateProperties, props) {
   
   switch (fieldProperties.type) {
@@ -74,7 +99,7 @@ function showField(fieldProperties, propertyInfo, setPropertyInfo, properties, u
               props.handleChange(e)
             }}>
               <option hidden selected value>--- Select {fieldProperties.placeholder} ---</option>
-            {selectDummy.map(addOptions)}
+            {fieldProperties.options.map((option) => {addOptions(option, fieldProperties.name)})}
           </select>
         </div>
       )
@@ -84,6 +109,9 @@ function showField(fieldProperties, propertyInfo, setPropertyInfo, properties, u
 }
 
 function PropertyFinancialInformation({propertyIndex, currentState, updateProperties, props}) {
+  /**
+   * Field attributes of fields to display
+   */
   const fields = [
   {name: "minimumOccupancyPeriod", type: 'text', placeholder: '12 Months', value: '', required: true, label: 'MinimumOccupancyPeriod '},
   {name: "totalDeposit", type: 'text', placeholder: '433000', value: '', required: false, label: 'Total Deposit '},
@@ -93,8 +121,14 @@ function PropertyFinancialInformation({propertyIndex, currentState, updateProper
   {name: "landlordDisbursement", type: 'text', placeholder: '545000', value: '', required: false, label: 'Landlord Disbursemnt '},
 ]
 
+/**
+ * State to be used in the form
+ */
 const [propertyInfo, setPropertyInfo] = useState({});
 
+/**
+ * Update the correct state when index is changed
+ */
 useEffect(() => {
   var propertyFromState = currentState.properties.find(p => p.index === propertyIndex);
   if (typeof propertyFromState === 'undefined') {
@@ -103,13 +137,18 @@ useEffect(() => {
   setPropertyInfo(propertyFromState);
 },[propertyIndex])
 
+/**
+ * Update reducer state when state of the form changes
+ */
 useEffect(() => {
   let propertiesCopy = [...currentState.properties];
   propertiesCopy[propertyInfo.index]= propertyInfo;
   updateProperties(propertiesCopy);
 },[propertyInfo])
 
-
+/**
+ * Display section for financial information
+ */
   return (
     <div className='flex flex-column'>
       <div className='flex flex-row flex-wrap justify-center space-y-3' >

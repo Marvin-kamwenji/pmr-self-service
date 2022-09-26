@@ -20,6 +20,8 @@ import * as ACTIONS from '../../actions/actions';
 import { Formik, Form, Field } from 'formik';
 import { LandlordInfoSchema } from "./ValidationSchema";
 import { EntityTrackerTableNextOfKin } from "./EntityTrackerTable";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const steps = ['Personal Information', 'Property Information', 'Confirmation']
 
@@ -43,7 +45,9 @@ function mapDispatchToProps(dispatch){
 
 function LandlordStepper({currentState, submitSuccessful, submitFailed, updateAttachmentFiles, updateLandlordFromStorage}) {
 
-
+  /**
+   * States of dropdowns
+   */
   const [activeStep, setActiveStep] = useState(0);
   const [completed, setCompleted] = useState({});
   const [countries, setCountries] = useState([]);
@@ -103,7 +107,14 @@ function LandlordStepper({currentState, submitSuccessful, submitFailed, updateAt
       if(res.status === 200 && res.data.code === 200){
         submitSuccessful();
       } else {
-        submitFailed(res.data)
+        if(res.status === 200){
+          submitFailed(res.data.message);
+          notify(res.data.message)
+        }
+        else{
+          submitFailed(res.data);
+          notify(res.data)
+        }
       }
     }
     )
@@ -116,6 +127,18 @@ function LandlordStepper({currentState, submitSuccessful, submitFailed, updateAt
     setActiveStep(0);
     setCompleted({});
   };
+
+  const notify = (message) => {
+    return toast.error(message, {
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      });
+  }
 
   useEffect(() => {
     ApiUtil(
@@ -133,14 +156,14 @@ function LandlordStepper({currentState, submitSuccessful, submitFailed, updateAt
  
 // Feature: Retrieve state from local storage
 
-  // useEffect(() => {
-  //   try {
-  //     const landlord = JSON.parse(localStorage.getItem('landlord_state'));
-  //     updateLandlordFromStorage(landlord);
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // },[])
+  useEffect(() => {
+    try {
+      const landlord = JSON.parse(localStorage.getItem('landlord_state'));
+      updateLandlordFromStorage(landlord);
+    } catch (error) {
+      console.log(error)
+    }
+  },[])
 
 
   const showComponent = (step, props) => {
@@ -275,9 +298,11 @@ function LandlordStepper({currentState, submitSuccessful, submitFailed, updateAt
                             </Typography>
                           ) : (
                             <Button type="submit" disabled = {props.isValid === false}>
-                              {isLastStep()
+                              {
+                                isLastStep()
                                 ? 'Finish'
-                                : ''}
+                                : ''
+                              }
                             </Button>
                           ))}
                       </Box>
@@ -293,6 +318,7 @@ function LandlordStepper({currentState, submitSuccessful, submitFailed, updateAt
           
         </Box>
       </div>
+      <ToastContainer/>
     </div>
   )
 }

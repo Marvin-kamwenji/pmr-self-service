@@ -1,12 +1,22 @@
+/**
+ * @author Mesh
+ * Page shown after successfull submission of the form
+ */
 import React from 'react';
 import AnimatedCheckmark, { MODES } from 'react-animated-checkmark';
 import '../CSS/landlord.css';
 import { Link } from 'react-router-dom';
 
+/** 
+ * Action to clear the state stored in local storage 
+ */
 const clearStorage = () => {
   localStorage.removeItem('landlord_state')
 }
 
+/**
+ * Display successfull page
+ */
 function LandlordSuccess() {
   return (
     <div className='flex justify-center success-container items-center'>
