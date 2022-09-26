@@ -5,6 +5,7 @@ import history from './history';
 import MainPage from '../Components/MainPage';
 import LandLordRegistration from '../Components/Registration/LandLordRegistration';
 import TenantRegistration from '../Components/Registration/TenantRegistration';
+import TenantTrial from '../Components/Tenant/TenantTrial';
 
 export default class Routes extends Component {
   render() {
@@ -15,6 +16,7 @@ export default class Routes extends Component {
                 <Route>
                     <Route path='/' element={<MainPage />} />
                     <Route path='/tenantRegistration' element={<TenantRegistration />} />
+                    <Route path='/tenantTrial' element={<TenantTrial />} />
                     <Route path='/landlordRegistration' element={<LandLordRegistration />} />
                 </Route>
             </Router>

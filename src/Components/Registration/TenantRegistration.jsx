@@ -29,6 +29,7 @@ function TenantRegistration() {
   const steps = ['Personal Information', 'Landlord & Property', 'Confirmation']
 
   const [formData, setFormData] = useState({
+    tenantType: 'INDIVIDUAL',
     firstName: "",   identificationDocumentNo: "",
     middleName: "",  tin: "",
     lastName: "",    tenantAddress: "",
