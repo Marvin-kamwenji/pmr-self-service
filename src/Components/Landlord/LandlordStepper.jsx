@@ -154,16 +154,16 @@ function LandlordStepper({currentState, submitSuccessful, submitFailed, updateAt
     
   },[]);
  
-// Feature: Retrieve state from local storage
+// Feature: Retrieve state from local storage still WIP
 
-  useEffect(() => {
-    try {
-      const landlord = JSON.parse(localStorage.getItem('landlord_state'));
-      updateLandlordFromStorage(landlord);
-    } catch (error) {
-      console.log(error)
-    }
-  },[])
+  // useEffect(() => {
+  //   try {
+  //     const landlord = JSON.parse(localStorage.getItem('landlord_state'));
+  //     updateLandlordFromStorage(landlord);
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // },[])
 
 
   const showComponent = (step, props) => {
