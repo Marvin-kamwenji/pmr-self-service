@@ -12,11 +12,7 @@ import TenantServiceProvidersList from '../EntityLists/TenantServiceProviders';
 
 function IndividualPersonalInformation({formData, setFormData}) {
 
-    const submitHandler = event => {
-       event.preventDefault();
-       console.log(formData);
-       axios.post('http://localhost:8080/rest/services/selfOnBoardTenant/selfOnBoard')
-     }
+
 
     return ( 
         <div>
@@ -33,12 +29,14 @@ function IndividualPersonalInformation({formData, setFormData}) {
                </label>
                <div className="col-sm-3">
                  <div className="form-check form-check-inline">
-                   <input className="form-check-input tenanttyperadio" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"/>
+                   <input className="form-check-input tenanttyperadio" type="radio" name="inlineRadioOptions" id="inlineRadio1" value= {formData.tenantType === 'INDIVIDUAL' }
+                     checked = {formData.tenantType === 'INDIVIDUAL'} onChange={(e)=>{setFormData(e.target.value)}}/>
                    <label className="form-check-label tenanttyperadiolabel" htmlFor="inlineRadio1">Individual</label>
                  </div>
 
                 <div className="form-check form-check-inline ">
-                  <input className="form-check-input tenanttyperadio" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2" />
+                  <input className="form-check-input tenanttyperadio" type="radio" name="inlineRadioOptions" id="inlineRadio2" value={formData.tenantType === 'CORPORATE' }
+                    checked = {formData.tenantType === 'CORPORATE'} onChange ={(e)=>{setFormData(e.target.value)}} />
                   <label className="form-check-label tenanttyperadiolabel" htmlFor="inlineRadio2">Corporate</label>
                 </div>
                 </div>

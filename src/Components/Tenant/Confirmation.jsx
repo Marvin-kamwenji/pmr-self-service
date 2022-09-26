@@ -14,21 +14,21 @@ function Confirmation(props) {
           <div className="form-group row">
             <label htmlFor="staticTenantFirstName" className="col-sm-2 col-form-label">First Name </label>
                <div className="col-sm-4">
-                  <h3>{props.formData.firstName}</h3>
+                  <h3>{props.tenant.tenantInformation.tenantFirstName}</h3>
               </div>
             </div>
-
+         
             <div className="form-group row">
             <label htmlFor="staticTenantLastName" className="col-sm-2 col-form-label">Last Name</label>
                <div className="col-sm-4">
-               <h3>{props.formData.lastName}</h3>
+               <h3>{props.tenant.tenantInformation.tenantLastName}</h3>
               </div>
             </div>
 
             <div className="form-group row">
             <label htmlFor="staticTenantNationality" className="col-sm-2 col-form-label">Nationality</label>
                <div className="col-sm-4">
-               <h3>{props.formData.nationality}</h3>
+               {/* <h3>{props.tenant.tenantInformation.country}</h3> */}
               </div>
               </div>
 
@@ -44,7 +44,7 @@ function Confirmation(props) {
             <div className="form-group row">
             <label htmlFor="staticTenantAddress" className="col-sm-2 col-form-label">Address</label>
                <div className="col-sm-4">
-                  <h3>{props.formData.tenantAddress}</h3>
+                  <h3>{props.tenant.tenantInformation.address}</h3>
               </div>
             </div>
 
@@ -52,7 +52,7 @@ function Confirmation(props) {
             <div className="form-group row">
             <label htmlFor="staticTenantMobileNumber" className="col-sm-2 col-form-label">Mobile Number</label>
                <div className="col-sm-4">
-                 <h3>{props.formData.tenantMobileNumber}</h3>
+                 <h3>{props.tenant.tenantInformation.mobileNo}</h3>
               </div>
             </div>
 
@@ -60,7 +60,7 @@ function Confirmation(props) {
             <div className="form-group row">
             <label htmlFor="staticTenantEmail" className="col-sm-2 col-form-label">E-Mail Address</label>
                <div className="col-sm-4">
-                  <h3>{props.formData.tenantEmailAddress}</h3>
+                  <h3>{props.tenant.tenantInformation.email}</h3>
               </div>
             </div>
 
@@ -84,14 +84,14 @@ function Confirmation(props) {
             <div className="form-group row">
             <label htmlFor="staticEmployerName" className="col-sm-2 col-form-label">Employer Name</label>
                <div className="col-sm-4">
-                  <h3>{props.formData.employerName}</h3>
+                  <h3>{props.tenant.tenantEmployer.employerName}</h3>
               </div>
             </div>
 
             <div className="form-group row">
             <label htmlFor="staticEmployerAddress" className="col-sm-2 col-form-label">Address</label>
                <div className="col-sm-4">
-                 <h3>{props.formData.employerAddress}</h3>
+                 <h3>{props.tenant.tenantEmployer.address}</h3>
               </div>
               </div>
 
@@ -99,7 +99,7 @@ function Confirmation(props) {
             <div className="form-group row">
             <label htmlFor="staticEmployerContactNumber" className="col-sm-2 col-form-label">Contact Number</label>
                <div className="col-sm-4">
-                  <h3>{props.formData.employerMobileNumber}</h3>
+                  <h3>{props.tenant.tenantEmployer.mobileNumber}</h3>
               </div>
             </div>
 
@@ -107,7 +107,7 @@ function Confirmation(props) {
             <div className="form-group row">
             <label htmlFor="staticEmployerEmailAddress" className="col-sm-2 col-form-label">E-Mail Address</label>
                <div className="col-sm-4">
-                  <h3>{props.formData.employerEmailAddress}</h3>
+                  <h3>{props.tenant.tenantEmployer.emailAddress}</h3>
               </div>
             </div>
 
@@ -115,7 +115,7 @@ function Confirmation(props) {
             <div className="form-group row">
             <label htmlFor="staticEmployerSalary" className="col-sm-2 col-form-label">Current Net Salary</label>
                <div className="col-sm-4">
-                  <h3>{props.formData.monthlyNetSalary}</h3>
+                  <h3>{props.tenant.tenantEmployer.monthlyNetSalary}</h3>
               </div>
             </div>
 
@@ -154,7 +154,7 @@ function Confirmation(props) {
             <div className="form-group row">
             <label htmlFor="staticAccountNumber" className="col-sm-2 col-form-label">Account Number</label>
                <div className="col-sm-4">
-                 <h3>{props.formData.bankAccountNumber}</h3>
+                 <h3>{props.tenant.bankDetail.accountNumber}</h3>
               </div>
             </div>
 
@@ -170,14 +170,14 @@ function Confirmation(props) {
           <div className="form-group row">
             <label htmlFor="staticKinFirstName" className="col-sm-2 col-form-label">First Name</label>
                <div className="col-sm-4">
-                 <h3>{props.formData.kinFirstName}</h3>
+                 <h3>{props.tenant.nextOfKin.kinFirstName}</h3>
               </div>
             </div>
 
             <div className="form-group row">
             <label htmlFor="staticKinLastName" className="col-sm-2 col-form-label">Last Name</label>
                <div className="col-sm-4">
-                  <h3>{props.formData.kinLastName}</h3>
+                  <h3>{props.tenant.nextOfKin.kinLastName}</h3>
               </div>
             </div>
 
@@ -200,7 +200,7 @@ function Confirmation(props) {
             <div className="form-group row">
             <label htmlFor="staticKinAddress" className="col-sm-2 col-form-label">Address</label>
                <div className="col-sm-4">
-                  <h3>{props.formData.kinAddress}</h3>
+                  <h3>{props.tenant.nextOfKin.kinAddress}</h3>
               </div>
             </div>
 
@@ -208,7 +208,7 @@ function Confirmation(props) {
             <div className="form-group row">
             <label htmlFor="staticKinMobileNumber" className="col-sm-2 col-form-label">Mobile Number</label>
                <div className="col-sm-4">
-                  <h3>{props.formData.kinMobileNumber}</h3>
+                  <h3>{props.tenant.nextOfKin.kinMobileNo}</h3>
               </div>
             </div>
 
@@ -216,7 +216,7 @@ function Confirmation(props) {
             <div className="form-group row">
             <label htmlFor="staticKinEmailAddress" className="col-sm-2 col-form-label">E-Mail Address</label>
                <div className="col-sm-4">
-                  <h3>{props.formData.kinMobileNumber}</h3>
+                  <h3>{props.tenant.nextOfKin.kinEmail}</h3>
               </div>
             </div>
 

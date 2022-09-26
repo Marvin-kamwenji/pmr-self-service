@@ -1,6 +1,7 @@
 import React from 'react';
 import Cards from './Common/Cards';
 import TenantRegistration from './Registration/TenantRegistration';
+import TenantTrial from './Tenant/TenantTrial';
 import house1 from './Assets/mainPageImages/house1.jpg';
 import house2 from './Assets/mainPageImages/house2.png';
 import house3 from './Assets/mainPageImages/house3.jpeg';
@@ -157,7 +158,7 @@ function MainPage() {
                                 personal information, landlord information <br />
                                 and property information
                             </p>
-                            <Link to='/tenantRegistration'>
+                            <Link to='/tenantTrial'>
                                 <button className="tenantAndLandlordButton py-2 px-4 ml-5 mt-4 rounded">
                                     Register as a Tenant
                                 </button>
