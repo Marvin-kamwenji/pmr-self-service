@@ -6,7 +6,7 @@ const TenantInfoSchema = Yup.object().shape(
         tenantMiddleName: Yup.string().max(20, 'Too Long'),
         tenantLastName: Yup.string().max(20, 'Too Long').required('Required field'),
         identificationNo: Yup.string().min(6, 'Id incomplete').required('Identification Number required'),
-        email: Yup.string().email('Enter a valid email').required('Email required'),
+        // email: Yup.string().email('Enter a valid email').required('Email required'),
         address: Yup.string().required('Address Required'),
         mobileNo: Yup.number('Enter a valid number').required('Mobile number required'),
         tin: Yup.string().required('TIN required'),

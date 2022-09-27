@@ -119,7 +119,7 @@ function BankDetails({bankName, serviceProviders,currentState, updateBankDetail,
         { name: "bankBranch", type: 'select', placeholder: 'Bank Branch', value: {}, required: true, label: 'Bank Branch ' , options: bankBranches, field: 'bankBranchName'},
         { name: "accountNumber", type: 'text', placeholder: 'Account Number', value: '', required: true, label: 'Account Number ' },
         { name: "serviceProvider", type: 'select', placeholder: 'Mobile Network Provider', value: {}, required: true, label: 'Network Provider ' , options: serviceProviders, field: 'name'},
-        { name: "mobileNumber", type: 'phone', placeholder: '700 *** ****', value: '', required: true, label: 'Phone Number ' },
+        { name: "mobileNo", type: 'phone', placeholder: '700 *** ****', value: '', required: true, label: 'Registered Mobile Number ' },
 
     ]
 

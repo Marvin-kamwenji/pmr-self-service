@@ -113,7 +113,7 @@ function EmploymentDetails({employmentType, contractType, currentState, updateTe
         { name: "monthlyNetSalary", type: 'text', placeholder: '300,000', value: '', required: true, label: 'Monthly Net Salary ' },
         { name: "employerName", type: 'text', placeholder: 'Employer Name', value: '', required: true, label: 'Employer Name ' },
         { name: "address", type: 'text', placeholder: 'Address', value: '', required: true, label: 'Address ' },
-        { name: "mobileNumber", type: 'phone', placeholder: '700 *** ****', value: '', required: true, label: 'Mobile Number ' },
+        { name: "mobileNo", type: 'phone', placeholder: '700 *** ****', value: '', required: false, label: 'Registered Mobile Number ' },
         { name: "emailAddress", type: 'text', placeholder: 'sample@gmail.com', value: '', required: true, label: 'E-mail Address ' },
 
     ]

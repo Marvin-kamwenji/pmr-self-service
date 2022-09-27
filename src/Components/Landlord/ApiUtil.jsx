@@ -89,6 +89,14 @@ function filterDocumentTypes(docTypes){
   )
 }
 
+function filterTenantDocumentTypes(docTypes){
+  return docTypes.filter(
+    docType => 
+    docType.hasOwnProperty('tenant') 
+    && docType.tenant === true
+  )
+}
+
 /**
  * @function PostFile post a file to REST and awat a response
  * @param {object} formData Form data object for posting to files API endpoint
@@ -163,7 +171,7 @@ function TenantApiUtil(
         setContractTypes(response[3].data);
         setBanks(response[4].data);
         setProviders(response[5].data);
-        updateAttachments(updateAttachmentFiles, response[6].data);
+        updateAttachments(updateAttachmentFiles, filterTenantDocumentTypes(response[6].data));
         setPropertyTypes(response[7].data);
         setGeographicRegions(response[8].data);
         setBedrooms(response[9].data);
