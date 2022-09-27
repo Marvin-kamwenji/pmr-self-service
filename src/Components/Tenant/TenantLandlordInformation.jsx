@@ -115,7 +115,7 @@ function TenantLandlordInformation({currentState, updateLandlordInformation, pro
         { name: "middleName", type: 'text', placeholder: 'Middle Name', value: '', required: false, label: 'Middle Name ' },
         { name: "lastName", type: 'text', placeholder: 'Last Name', value: '', required: true, label: 'Last Name ' },
         { name: "address", type: 'text', placeholder: 'Address', value: '', required: true, label: 'Address ' },
-        { name: "mobileNumber", type: 'phone', placeholder: '700 *** ****', value: '', required: true, label: 'Mobile Number ' },
+        { name: "mobileNo", type: 'phone', placeholder: '700 *** ****', value: '', required: true, label: 'Mobile Number ' },
         { name: "emailAddress", type: 'text', placeholder: 'sample@gmail.com', value: '', required: false, label: 'E-mail Address ' },
 
     ]

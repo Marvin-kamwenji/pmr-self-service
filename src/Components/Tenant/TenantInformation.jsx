@@ -128,7 +128,7 @@ function TenantInformation ({countries, idDocuments, currentState, updateTenantI
         { name: "registrationDate", type: 'date', placeholder: 'DD/MM/YYYY', value: '', required: true, label: 'Registration Date '},
         { name: "tin", type: 'text', placeholder: 'GH00000023', value: '', required: true, label: 'TIN ' },
         { name: "address", type: 'text', placeholder: 'Address', value: '', required: true, label: 'Address ' },
-        { name: "mobileNo", type: 'text', placeholder: '700*** ****', value: '', required: true, label: 'Registered Mobile Number ' },
+        { name: "mobileNo", type: 'text', placeholder: '700*** ****', value: '', required: true, label: 'Mobile Number ' },
         { name: "email", type: 'text', placeholder: 'sample@example.com', value: '', required: false, label: 'Email ' },
     ]
 

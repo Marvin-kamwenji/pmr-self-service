@@ -134,7 +134,7 @@ function TenantNextOfKin({ currentState, updateNextOfKin, props}) {
     {name: "kinMiddleName", type: 'text', placeholder: 'Middle Name', value: '', required: false, label: 'Middle Name '},
     {name: "kinLastName", type: 'text', placeholder: 'Last Name', value: '', required: true, label: 'Last Name '},
     {name: "kinAddress", type: 'text', placeholder: 'Address', value: '', required: true, label: 'Address '},
-    {name: "kinMobileNo", type: 'phone', placeholder: '7743****', value: '', required: true, label: 'Registered Mobile Number '},
+    {name: "kinMobileNo", type: 'phone', placeholder: '7743****', value: '', required: true, label: 'Mobile Number '},
     {name: "kinEmail", type: 'text', placeholder: 'sample@example.com', value: '', required: false, label: 'Email '}
   ]
 

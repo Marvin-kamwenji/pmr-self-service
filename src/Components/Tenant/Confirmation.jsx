@@ -99,7 +99,7 @@ function Confirmation(props) {
             <div className="form-group row">
             <label htmlFor="staticEmployerContactNumber" className="col-sm-2 col-form-label">Contact Number</label>
                <div className="col-sm-4">
-                  <h3>{props.tenant.tenantEmployer.mobileNumber}</h3>
+                  <h3>{props.tenant.tenantEmployer.mobileNo}</h3>
               </div>
             </div>
 
