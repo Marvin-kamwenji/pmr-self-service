@@ -26,83 +26,122 @@ function mapStateToProps(state){
 
   function showField(fieldProperties, tenantInformation, setTenantInformation, updateTenantInformation, props) {
     switch (fieldProperties.type) {
-        case 'text':
-        case 'date':
+      case "text":
+      case "date":
         return (
-          <div className='flex flex-row col-6' key={fieldProperties.name}>
-            <div className='w-1/3 text-end mr-2 flex justify-end items-center'>
-              <label className='label-style'>{fieldProperties.label}</label>
-              {fieldProperties.required ? <label className='asterisk-field'>*</label> : null}
+          <div className="flex flex-row col-6" key={fieldProperties.name}>
+            <div className="w-1/3 text-end mr-2 flex justify-end items-center">
+              <label className="label-style">{fieldProperties.label}</label>
+              {fieldProperties.required ? (
+                <label className="asterisk-field">*</label>
+              ) : null}
             </div>
-            <div className='w-2/3'>
-              <input placeholder={fieldProperties.placeholder}
-                type = {fieldProperties.type}
-                value={tenantInformation.hasOwnProperty([fieldProperties.name]) ? tenantInformation[fieldProperties.name] : null}
-                className='input-field-style pl-4'
-                id={fieldProperties.name}
-                onChange={e => {
-                    setTenantInformation({ ...tenantInformation, [fieldProperties.name]: e.target.value });
-                  props.handleChange(e);
-                }} />
-              {props.errors[fieldProperties.name] && <div className='validation-style'>{props.errors[fieldProperties.name] }</div>}
-            </div>
-            
-          </div>
-        )
-
-        case 'select':
-            return (
-              <div className='flex flex-row col-6' key={fieldProperties.name}>
-                <div className='basis-1/3 text-end mr-2 flex justify-end items-center'>
-                  <label className='label-style'>{fieldProperties.label}</label>
-                  {fieldProperties.required ? <label className='asterisk-field'>*</label> : null}
-                </div>
-                <select name={fieldProperties.name}
-                  value={tenantInformation.hasOwnProperty(fieldProperties.name) ?
-                    tenantInformation[fieldProperties.name].id :
-                      null
-                    }
-                  className='basis-2/3 input-field-style pl-4'
-                  onChange={e => {
-                    setTenantInformation({...tenantInformation, [fieldProperties.name]: {id: e.target.value, optionName: e.target.selectedOptions[0].label}});
-                    props.handleChange(e)
-                  }}
-                >
-                  <option hidden selected value>--- Select {fieldProperties.placeholder} ---</option>
-                  {fieldProperties.options.map(option => addOptions(option, fieldProperties.field))}
-                </select>
-              </div>
-            )
-
-            case 'phone':
-        return (
-          <div className='flex flex-row col-6' key={fieldProperties.name}>
-            <div className='w-1/3 text-end mr-2 flex justify-end items-center'>
-              <label className='label-style'>{fieldProperties.label}</label>
-              {fieldProperties.required ? <label className='asterisk-field'>*</label> : null}
-            </div>
-            <div className='w-2/3'>
-              <PhoneInput
-                country={'us'}
+            <div className="w-2/3">
+              <input
                 placeholder={fieldProperties.placeholder}
-                value={tenantInformation.hasOwnProperty([fieldProperties.name]) ? tenantInformation[fieldProperties.name] : null}
-                buttonClass='border-none bg-phone-dropdown-bg'
-                containerClass='w-full h-10 pl-0'
-                dropdownClass='flex flex-column items-start'
-                inputClass='h-full w-full'
-                onChange={number => {
-                    setTenantInformation({ ...tenantInformation, [fieldProperties.name]: number });
+                type={fieldProperties.type}
+                value={
+                  tenantInformation.hasOwnProperty([fieldProperties.name])
+                    ? tenantInformation[fieldProperties.name]
+                    : null
+                }
+                className="input-field-style pl-4"
+                id={fieldProperties.name}
+                onChange={(e) => {
+                  setTenantInformation({
+                    ...tenantInformation,
+                    [fieldProperties.name]: e.target.value,
+                  });
+                  props.handleChange(e);
                 }}
-                inputProps={{required:true}}
-              /> 
-              {props.errors[fieldProperties.name] && <div className='validation-style'>{props.errors[fieldProperties.name] }</div>}
+              />
+              {props.errors[fieldProperties.name] && (
+                <div className="validation-style">
+                  {props.errors[fieldProperties.name]}
+                </div>
+              )}
             </div>
-            
           </div>
-        )
+        );
+
+      case "select":
+        return (
+          <div className="flex flex-row col-6" key={fieldProperties.name}>
+            <div className="basis-1/3 text-end mr-2 flex justify-end items-center">
+              <label className="label-style">{fieldProperties.label}</label>
+              {fieldProperties.required ? (
+                <label className="asterisk-field">*</label>
+              ) : null}
+            </div>
+            <select
+              name={fieldProperties.name}
+              value={
+                tenantInformation.hasOwnProperty(fieldProperties.name)
+                  ? tenantInformation[fieldProperties.name].id
+                  : null
+              }
+              className="basis-2/3 input-field-style pl-4"
+              onChange={(e) => {
+                setTenantInformation({
+                  ...tenantInformation,
+                  [fieldProperties.name]: {
+                    id: e.target.value,
+                    optionName: e.target.selectedOptions[0].label,
+                  },
+                });
+                props.handleChange(e);
+              }}
+            >
+              <option hidden selected value>
+                --- Select {fieldProperties.placeholder} ---
+              </option>
+              {fieldProperties.options.map((option) =>
+                addOptions(option, fieldProperties.field)
+              )}
+            </select>
+          </div>
+        );
+
+      case "phone":
+        return (
+          <div className="flex flex-row col-6" key={fieldProperties.name}>
+            <div className="w-1/3 text-end mr-2 flex justify-end items-center">
+              <label className="label-style">{fieldProperties.label}</label>
+              {fieldProperties.required ? (
+                <label className="asterisk-field">*</label>
+              ) : null}
+            </div>
+            <div className="w-2/3">
+              <PhoneInput
+                country={"us"}
+                placeholder={fieldProperties.placeholder}
+                value={
+                  tenantInformation.hasOwnProperty([fieldProperties.name])
+                    ? tenantInformation[fieldProperties.name]
+                    : null
+                }
+                buttonClass="border-none bg-phone-dropdown-bg"
+                containerClass="w-full h-10 pl-0"
+                dropdownClass="flex flex-column items-start"
+                inputClass="h-full w-full"
+                onChange={(number) => {
+                  setTenantInformation({
+                    ...tenantInformation,
+                    [fieldProperties.name]: number,
+                  });
+                }}
+                inputProps={{ required: true }}
+              />
+              {props.errors[fieldProperties.name] && (
+                <div className="validation-style">
+                  {props.errors[fieldProperties.name]}
+                </div>
+              )}
+            </div>
+          </div>
+        );
       default:
         break;
-
     }
 
   }
@@ -118,7 +157,7 @@ function TenantInformation ({countries, idDocuments, currentState, updateTenantI
         { name: "identificationType", type: 'select', placeholder: 'Identification Document', value: {}, required: true, label: 'Identification Document ', options: idDocuments, field: 'identificationName'},
         { name: "identificationNo", type: 'text', placeholder: '709790609', value: '', required: true, label: 'Identification Number '},
         { name: "address", type: 'text', placeholder: 'Address', value: '', required: true, label: 'Address ' },
-        { name: "mobileNo", type: 'phone', placeholder: '700*** ****', value: '', required: true, label: 'Registered Mobile Number ' },
+        { name: "mobileNo", type: 'phone', placeholder: '700 *** ****', value: '', required: true, label: 'Registered Mobile Number ' },
         { name: "email", type: 'text', placeholder: 'sample@example.com', value: '', required: false, label: 'Email ' },
     ]
 

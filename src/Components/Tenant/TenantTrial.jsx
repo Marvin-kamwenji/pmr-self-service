@@ -241,7 +241,6 @@ function TenantTrial({currentState, submitSuccessful, submitFailed, updateAttach
             initialValues={{...currentState.tenant}}
             onSubmit={handleComplete}
             validationSchema={TenantInfoSchema}
-            // validationSchema = {LandlordInfoSchema}
           >
             {props => (
               <form onSubmit={props.handleSubmit}>
@@ -295,7 +294,9 @@ function TenantTrial({currentState, submitSuccessful, submitFailed, updateAttach
                               Step {activeStep + 1} already completed
                             </Typography>
                           ) : (
-                            <Button type="submit" disabled = {props.isValid === false}>
+                            <Button type="submit" 
+                            disabled = {props.isValid === false}
+                            >
                               {isLastStep()
                                 ? 'Finish'
                                 : ''}
